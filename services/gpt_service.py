@@ -15,11 +15,30 @@ from services.event_manager import EventHandler
 
 logger = get_logger("LLMService")
 
-'''
-Author: Sean Baker
-Date: 2024-07-22 
-Description: GPT-LIBRARY WITH INTERRUPTS HANDLERS AND EVENT HANDLING 
-'''
+
+def validate_function_args(args):
+    try:
+        return json.loads(args)
+    except json.JSONDecodeError:
+        logger.info('Warning: Invalid function arguments returned by LLM:', args)
+        return {}
+
+
+def split_into_sentences(text):
+    # Split the text into sentences, keeping the separators
+    sentences = re.split(r'([.!?])', text)
+    # Pair the sentences with their separators
+    sentences = [''.join(sentences[i:i + 2]) for i in range(0, len(sentences), 2)]
+    return sentences
+
+
+def prepare_test_args(function_name):
+    # This method should be implemented to return appropriate test arguments for each function
+    # based on the function's expected parameters.
+    # For simplicity, we return an empty dictionary here, but you should customize this.
+    return {}
+
+
 class AbstractLLMService(EventHandler, ABC):
     def __init__(self, context: CallContext):
         super().__init__()
@@ -33,6 +52,7 @@ class AbstractLLMService(EventHandler, ABC):
         self.partial_response_index = 0
         self.available_functions = {}
         for tool in tools:
+            print(tool)
             function_name = tool['function']['name']
             module = importlib.import_module(f'functions.{function_name}')
             self.available_functions[function_name] = getattr(module, function_name)
@@ -56,23 +76,9 @@ class AbstractLLMService(EventHandler, ABC):
     def reset(self):
         self.partial_response_index = 0
 
-    def validate_function_args(self, args):
-        try:
-            return json.loads(args)
-        except json.JSONDecodeError:
-            logger.info('Warning: Invalid function arguments returned by LLM:', args)
-            return {}
-
-    def split_into_sentences(self, text):
-        # Split the text into sentences, keeping the separators
-        sentences = re.split(r'([.!?])', text)
-        # Pair the sentences with their separators
-        sentences = [''.join(sentences[i:i + 2]) for i in range(0, len(sentences), 2)]
-        return sentences
-
     async def emit_complete_sentences(self, text, interaction_count):
         self.sentence_buffer += text
-        sentences = self.split_into_sentences(self.sentence_buffer)
+        sentences = split_into_sentences(self.sentence_buffer)
 
         # Emit all complete sentences
         for sentence in sentences[:-1]:
@@ -85,6 +91,31 @@ class AbstractLLMService(EventHandler, ABC):
         # Keep the last (potentially incomplete) sentence in the buffer
         self.sentence_buffer = sentences[-1] if sentences else ""
 
+    def test_all_functions(self):
+        for function_name, function in self.available_functions.items():
+            try:
+                # Prepare test arguments based on the function's expected parameters
+                test_args = prepare_test_args(function_name)
+                result = function(self.context, test_args)
+                logger.info(f"Function {function_name} executed successfully with result: {result}")
+            except Exception as e:
+                logger.error(f"Error testing function {function_name}: {str(e)}")
+
+
+async def _handle_tool_call(tool_call):
+    """
+    Handles a tool call and returns the function name and arguments.
+
+    Args:
+        tool_call: The tool call.
+
+    Returns:
+        tuple: The function name and arguments.
+    """
+    function_name = tool_call.function.name
+    function_args = tool_call.function.arguments or ""
+    logger.info(f"Function call detected: {function_name}")
+    return function_name, function_args
 
 
 class OpenAIService(AbstractLLMService):
@@ -92,7 +123,7 @@ class OpenAIService(AbstractLLMService):
     A class that represents the OpenAI service for language model completion.
 
     Args:
-        context (CallDetails): The call context.
+        context (CallContext): The call context.
 
     Attributes:
         openai (AsyncOpenAI): An instance of the AsyncOpenAI class.
@@ -143,7 +174,6 @@ class OpenAIService(AbstractLLMService):
             list: The list of messages.
         """
         return [{"role": "system", "content": self.system_message}] + self.user_context
-
     async def _create_completion_stream(self, messages):
         """
         Creates a completion stream for the given messages.
@@ -181,7 +211,7 @@ class OpenAIService(AbstractLLMService):
             if tool_calls:
                 for tool_call in tool_calls:
                     if tool_call.function and tool_call.function.name:
-                        function_name, function_args = await self._handle_tool_call(tool_call)
+                        function_name, function_args = await _handle_tool_call(tool_call)
             else:
                 complete_response += content
                 await self.emit_complete_sentences(content, interaction_count)
@@ -190,21 +220,6 @@ class OpenAIService(AbstractLLMService):
                 await self._handle_function_call(function_name, function_args, interaction_count)
 
         self.user_context.append({"role": "assistant", "content": complete_response})
-
-    async def _handle_tool_call(self, tool_call):
-        """
-        Handles a tool call and returns the function name and arguments.
-
-        Args:
-            tool_call: The tool call.
-
-        Returns:
-            tuple: The function name and arguments.
-        """
-        function_name = tool_call.function.name
-        function_args = tool_call.function.arguments or ""
-        logger.info(f"Function call detected: {function_name}")
-        return function_name, function_args
 
     async def _handle_function_call(self, function_name, function_args, interaction_count):
         """
@@ -216,7 +231,7 @@ class OpenAIService(AbstractLLMService):
             interaction_count (int): The number of interactions with the language model.
         """
         function_to_call = self.available_functions[function_name]
-        function_args = self.validate_function_args(function_args)
+        function_args = validate_function_args(function_args)
 
         tool_data = next((tool for tool in tools if tool['function']['name'] == function_name), None)
         say = tool_data['function']['say']
@@ -247,42 +262,3 @@ class OpenAIService(AbstractLLMService):
             "partialResponse": self.sentence_buffer.strip()
         }, interaction_count)
         self.sentence_buffer = ""
-
-
-class GeminiService(AbstractLLMService):
-    def __init__(self, context: CallContext):
-        super().__init__(context)
-        genai.configure(api_key=os.getenv("GOOGLE_GENERATIVE_AI_API_KEY"))
-
-    async def completion(self, text: str, interaction_count: int, role: str = 'user', name: str = 'user'):
-        try:
-            self.user_context.append({"role": role, "content": text, "name": name})
-            messages = [{"role": "system", "content": self.system_message}] + self.user_context
-            prompt = "\n".join([msg["content"] for msg in messages])
-
-            response = genai.generate_text(
-                model="models/text-bison-001",
-                prompt=prompt,
-                temperature=0.2,
-                top_p=0.95,
-                top_k=40,
-            )
-
-            # Process response and emit
-            complete_response = response.result
-            await self.emit_complete_sentences(complete_response, interaction_count)
-            self.user_context.append({"role": "assistant", "content": complete_response})
-
-        except Exception as e:
-            logger.error(f"Error in GeminiService completion: {str(e)}")
-
-
-class LLMFactory:
-    @staticmethod
-    def get_llm_service(service_name: str, context: CallContext) -> AbstractLLMService:
-        if service_name.lower() == "openai":
-            return OpenAIService(context)
-        elif service_name.lower() == "gemini":
-            return GeminiService(context)
-        else:
-            raise ValueError(f"Unsupported LLM service: {service_name}")
