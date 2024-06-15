@@ -9,7 +9,6 @@ logger = get_logger("Transcription")
 
 '''
 Author: Sean Baker
-Date: 2024-07-22 
 Description: Transcription service utilizing deepgram helps with logger and user input to pass to gpt 
 '''
 class TranscriptionService(EventHandler):
