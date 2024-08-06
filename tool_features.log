@@ -1,0 +1,27 @@
+2024-07-24 10:37:39,182 - INFO - -- BEGIN Twilio API Request --
+2024-07-24 10:37:39,182 - INFO - POST Request: https://api.twilio.com/2010-04-01/Accounts/AC67d89900ee6cb8582e3dedd6d06b2774/Calls/CAf99a8a2e36ad31b2ec72501161dac6c5/Recordings.json
+2024-07-24 10:37:39,182 - INFO - Headers:
+2024-07-24 10:37:39,182 - INFO - Content-Type : application/x-www-form-urlencoded
+2024-07-24 10:37:39,182 - INFO - User-Agent : twilio-python/9.2.3 (Linux x86_64) Python/3.10.14
+2024-07-24 10:37:39,183 - INFO - X-Twilio-Client : python-9.2.3
+2024-07-24 10:37:39,183 - INFO - Accept-Charset : utf-8
+2024-07-24 10:37:39,183 - INFO - Accept : application/json
+2024-07-24 10:37:39,183 - INFO - -- END Twilio API Request --
+2024-07-24 10:37:39,435 - INFO - Response Status Code: 201
+2024-07-24 10:37:39,435 - INFO - Response Headers: {'Date': 'Wed, 24 Jul 2024 14:37:39 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '703', 'Connection': 'keep-alive', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Accept, Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, Idempotency-Key', 'Access-Control-Allow-Credentials': 'true', 'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS', 'Access-Control-Expose-Headers': 'ETag', 'Twilio-Request-Id': 'RQ8ba155210ed176214d42f7649faf22e1', 'Twilio-Request-Duration': '0.099', 'Twilio-Concurrent-Requests': '1', 'X-Shenanigans': 'none', 'X-Powered-By': 'AT-5000', 'X-Home-Region': 'us1', 'X-API-Domain': 'api.twilio.com'}
+2024-07-24 10:37:39,902 - INFO - HTTP Request: POST https://api.deepgram.com/v1/speak?model=aura-asteria-en&encoding=mulaw&sample_rate=8000 "HTTP/1.1 200 OK"
+2024-07-24 10:38:08,938 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-07-24 10:38:09,243 - INFO - HTTP Request: POST https://api.deepgram.com/v1/speak?model=aura-asteria-en&encoding=mulaw&sample_rate=8000 "HTTP/1.1 200 OK"
+2024-07-24 10:38:09,615 - INFO - HTTP Request: POST https://api.deepgram.com/v1/speak?model=aura-asteria-en&encoding=mulaw&sample_rate=8000 "HTTP/1.1 200 OK"
+2024-07-24 10:38:09,890 - INFO - HTTP Request: POST https://api.deepgram.com/v1/speak?model=aura-asteria-en&encoding=mulaw&sample_rate=8000 "HTTP/1.1 200 OK"
+2024-07-24 10:38:17,073 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-07-24 10:38:17,428 - INFO - HTTP Request: POST https://api.deepgram.com/v1/speak?model=aura-asteria-en&encoding=mulaw&sample_rate=8000 "HTTP/1.1 200 OK"
+2024-07-24 10:38:17,675 - INFO - HTTP Request: POST https://api.deepgram.com/v1/speak?model=aura-asteria-en&encoding=mulaw&sample_rate=8000 "HTTP/1.1 200 OK"
+2024-07-24 10:38:17,974 - INFO - HTTP Request: POST https://api.deepgram.com/v1/speak?model=aura-asteria-en&encoding=mulaw&sample_rate=8000 "HTTP/1.1 200 OK"
+2024-07-24 10:38:23,824 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2024-07-24 10:38:24,273 - INFO - HTTP Request: POST https://api.deepgram.com/v1/speak?model=aura-asteria-en&encoding=mulaw&sample_rate=8000 "HTTP/1.1 200 OK"
+2024-07-24 10:38:24,860 - INFO - HTTP Request: POST https://api.deepgram.com/v1/speak?model=aura-asteria-en&encoding=mulaw&sample_rate=8000 "HTTP/1.1 200 OK"
+2024-07-24 10:38:25,504 - INFO - HTTP Request: POST https://api.deepgram.com/v1/speak?model=aura-asteria-en&encoding=mulaw&sample_rate=8000 "HTTP/1.1 200 OK"
+2024-07-24 10:38:26,039 - INFO - HTTP Request: POST https://api.deepgram.com/v1/speak?model=aura-asteria-en&encoding=mulaw&sample_rate=8000 "HTTP/1.1 200 OK"
+2024-07-24 10:38:26,525 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+2024-07-24 10:38:33,573 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"

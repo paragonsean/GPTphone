@@ -1,0 +1,288 @@
+import importlib
+import json
+import os
+import re
+from abc import ABC, abstractmethod
+
+import google.generativeai as genai
+from IPython.core.events import EventManager
+from openai import AsyncOpenAI
+
+from functions.function_manifest import tools
+from Utils.logger_config import get_logger
+from services.call_details import CallDetails
+from services.event_manager import EventHandler
+
+logger = get_logger("LLMService")
+
+'''
+Author: Sean Baker
+Date: 2024-07-22 
+Description: GPT-LIBRARY WITH INTERRUPTS HANDLERS AND EVENT HANDLING 
+'''
+class AbstractLLMService(EventHandler, ABC):
+    def __init__(self, context: CallDetails):
+        super().__init__()
+        self.system_message = context.system_message
+        self.initial_message = context.initial_message
+        self.context = context
+        self.user_context = [
+            {"role": "user", "content": "Hello"},
+            {"role": "assistant", "content": self.initial_message}
+        ]
+        self.partial_response_index = 0
+        self.available_functions = {}
+        for tool in tools:
+            function_name = tool['function']['name']
+            module = importlib.import_module(f'functions.{function_name}')
+            self.available_functions[function_name] = getattr(module, function_name)
+        self.sentence_buffer = ""
+        context.user_context = self.user_context
+
+    def set_call_context(self, context: CallDetails):
+        self.context = context
+        self.user_context = [
+            {"role": "user", "content": "Hello"},
+            {"role": "assistant", "content": context.initial_message}
+        ]
+        context.user_context = self.user_context
+        self.system_message = context.system_message
+        self.initial_message = context.initial_message
+
+    @abstractmethod
+    async def completion(self, text: str, interaction_count: int, role: str = 'user', name: str = 'user'):
+        pass
+
+    def reset(self):
+        self.partial_response_index = 0
+
+    def validate_function_args(self, args):
+        try:
+            return json.loads(args)
+        except json.JSONDecodeError:
+            logger.info('Warning: Invalid function arguments returned by LLM:', args)
+            return {}
+
+    def split_into_sentences(self, text):
+        # Split the text into sentences, keeping the separators
+        sentences = re.split(r'([.!?])', text)
+        # Pair the sentences with their separators
+        sentences = [''.join(sentences[i:i + 2]) for i in range(0, len(sentences), 2)]
+        return sentences
+
+    async def emit_complete_sentences(self, text, interaction_count):
+        self.sentence_buffer += text
+        sentences = self.split_into_sentences(self.sentence_buffer)
+
+        # Emit all complete sentences
+        for sentence in sentences[:-1]:
+            await self.createEvent('llmreply', {
+                "partialResponseIndex": self.partial_response_index,
+                "partialResponse": sentence.strip()
+            }, interaction_count)
+            self.partial_response_index += 1
+
+        # Keep the last (potentially incomplete) sentence in the buffer
+        self.sentence_buffer = sentences[-1] if sentences else ""
+
+
+
+class OpenAIService(AbstractLLMService):
+    """
+    A class that represents the OpenAI service for language model completion.
+
+    Args:
+        context (CallDetails): The call context.
+
+    Attributes:
+        openai (AsyncOpenAI): An instance of the AsyncOpenAI class.
+    """
+
+    def __init__(self, context: CallDetails):
+        super().__init__(context)
+        self.openai = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+    async def completion(self, text: str, interaction_count: int, role: str = 'user', name: str = 'user'):
+        """
+        Performs language model completion for the given text.
+
+        Args:
+            text (str): The input text to be completed.
+            interaction_count (int): The number of interactions with the language model.
+            role (str, optional): The role of the user. Defaults to 'user'.
+            name (str, optional): The name of the user. Defaults to 'user'.
+        """
+        try:
+            await self._process_user_input(text, role, name)
+            messages = await self._prepare_messages()
+            stream = await self._create_completion_stream(messages)
+            await self._process_stream(stream, interaction_count)
+
+            if self.sentence_buffer.strip():
+                await self._emit_remaining_content(interaction_count)
+
+        except Exception as e:
+            logger.error(f"Error in OpenAIService completion: {str(e)}")
+
+    async def _process_user_input(self, text: str, role: str, name: str):
+        """
+        Processes the user input and appends it to the user context.
+
+        Args:
+            text (str): The user input text.
+            role (str): The role of the user.
+            name (str): The name of the user.
+        """
+        self.user_context.append({"role": role, "content": text, "name": name})
+
+    async def _prepare_messages(self):
+        """
+        Prepares the messages to be sent to the language model.
+
+        Returns:
+            list: The list of messages.
+        """
+        return [{"role": "system", "content": self.system_message}] + self.user_context
+
+    async def _create_completion_stream(self, messages):
+        """
+        Creates a completion stream for the given messages.
+
+        Args:
+            messages (list): The list of messages.
+
+        Returns:
+            stream: The completion stream.
+        """
+        return await self.openai.chat.completions.create(
+            model="gpt-4o",
+            messages=messages,
+            tools=tools,
+            stream=True,
+        )
+
+    async def _process_stream(self, stream, interaction_count):
+        """
+        Processes the completion stream and handles the responses.
+
+        Args:
+            stream: The completion stream.
+            interaction_count (int): The number of interactions with the language model.
+        """
+        complete_response = ""
+        function_name = ""
+        function_args = ""
+
+        async for chunk in stream:
+            delta = chunk.choices[0].delta
+            content = delta.content or ""
+            tool_calls = delta.tool_calls
+
+            if tool_calls:
+                for tool_call in tool_calls:
+                    if tool_call.function and tool_call.function.name:
+                        function_name, function_args = await self._handle_tool_call(tool_call)
+            else:
+                complete_response += content
+                await self.emit_complete_sentences(content, interaction_count)
+
+            if chunk.choices[0].finish_reason == "tool_calls":
+                await self._handle_function_call(function_name, function_args, interaction_count)
+
+        self.user_context.append({"role": "assistant", "content": complete_response})
+
+    async def _handle_tool_call(self, tool_call):
+        """
+        Handles a tool call and returns the function name and arguments.
+
+        Args:
+            tool_call: The tool call.
+
+        Returns:
+            tuple: The function name and arguments.
+        """
+        function_name = tool_call.function.name
+        function_args = tool_call.function.arguments or ""
+        logger.info(f"Function call detected: {function_name}")
+        return function_name, function_args
+
+    async def _handle_function_call(self, function_name, function_args, interaction_count):
+        """
+        Handles a function call and performs the necessary actions.
+
+        Args:
+            function_name (str): The name of the function.
+            function_args: The arguments of the function.
+            interaction_count (int): The number of interactions with the language model.
+        """
+        function_to_call = self.available_functions[function_name]
+        function_args = self.validate_function_args(function_args)
+
+        tool_data = next((tool for tool in tools if tool['function']['name'] == function_name), None)
+        say = tool_data['function']['say']
+
+        await self.createEvent('llmreply', {
+            "partialResponseIndex": None,
+            "partialResponse": say
+        }, interaction_count)
+
+        self.user_context.append({"role": "assistant", "content": say})
+
+        function_response = await function_to_call(self.context, function_args)
+
+        logger.info(f"Function {function_name} called with args: {function_args}")
+
+        if function_name != "end_call":
+            await self.completion(function_response, interaction_count, 'function', function_name)
+
+    async def _emit_remaining_content(self, interaction_count):
+        """
+        Emits the remaining content as a response.
+
+        Args:
+            interaction_count (int): The number of interactions with the language model.
+        """
+        await self.createEvent('llmreply', {
+            "partialResponseIndex": self.partial_response_index,
+            "partialResponse": self.sentence_buffer.strip()
+        }, interaction_count)
+        self.sentence_buffer = ""
+
+
+class GeminiService(AbstractLLMService):
+    def __init__(self, context: CallDetails):
+        super().__init__(context)
+        genai.configure(api_key=os.getenv("GOOGLE_GENERATIVE_AI_API_KEY"))
+
+    async def completion(self, text: str, interaction_count: int, role: str = 'user', name: str = 'user'):
+        try:
+            self.user_context.append({"role": role, "content": text, "name": name})
+            messages = [{"role": "system", "content": self.system_message}] + self.user_context
+            prompt = "\n".join([msg["content"] for msg in messages])
+
+            response = genai.generate_text(
+                model="models/text-bison-001",
+                prompt=prompt,
+                temperature=0.2,
+                top_p=0.95,
+                top_k=40,
+            )
+
+            # Process response and emit
+            complete_response = response.result
+            await self.emit_complete_sentences(complete_response, interaction_count)
+            self.user_context.append({"role": "assistant", "content": complete_response})
+
+        except Exception as e:
+            logger.error(f"Error in GeminiService completion: {str(e)}")
+
+
+class LLMFactory:
+    @staticmethod
+    def get_llm_service(service_name: str, context: CallDetails) -> AbstractLLMService:
+        if service_name.lower() == "openai":
+            return OpenAIService(context)
+        elif service_name.lower() == "gemini":
+            return GeminiService(context)
+        else:
+            raise ValueError(f"Unsupported LLM service: {service_name}")
