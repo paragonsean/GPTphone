@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Function to delete __pycache__ directories and .pyc files
 delete_pycache() {
     local directory="$1"
     
