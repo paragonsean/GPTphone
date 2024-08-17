@@ -77,9 +77,8 @@ class ExampleUsage:
         # Randomly choose one of the events to trigger
         events = ['roll_number', 'pick_number']
         chosen_event = random.choice(events)
-
         print(f"Triggering event: {chosen_event}")
-        await self.handler.createEvent(chosen_event
+        await self.handler.createEvent(chosen_event)
 
 
 # Running the example
