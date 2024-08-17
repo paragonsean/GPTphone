@@ -1,0 +1,208 @@
+\doxysection{Gemini\+Service Class Reference}
+\hypertarget{classservices_1_1gpt__service_1_1_gemini_service}{}\label{classservices_1_1gpt__service_1_1_gemini_service}\index{GeminiService@{GeminiService}}
+
+
+Inheritance diagram for Gemini\+Service\+:
+% FIG 0
+
+
+Collaboration diagram for Gemini\+Service\+:
+% FIG 1
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classservices_1_1gpt__service_1_1_gemini_service_a94330cbe2648fc548c84dd4150df1294}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{classservices_1_1call__details_1_1_call_context}{Call\+Context}} \mbox{\hyperlink{classservices_1_1gpt__service_1_1_abstract_l_l_m_service_a261f9f58ccbeaa962c4e675e4212c9cc}{context}})
+\item 
+\mbox{\hyperlink{classservices_1_1gpt__service_1_1_gemini_service_a8683968d4e3145b6c20b2c3cca00edde}{completion}} (self, str text, int interaction\+\_\+count, str role=\textquotesingle{}user\textquotesingle{}, str name=\textquotesingle{}user\textquotesingle{})
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classservices_1_1gpt__service_1_1_abstract_l_l_m_service}{Abstract\+LLMService}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classservices_1_1gpt__service_1_1_abstract_l_l_m_service_a7216638541d56b2229d92d53e68ec58d}{set\+\_\+call\+\_\+context}} (self, \mbox{\hyperlink{classservices_1_1call__details_1_1_call_context}{Call\+Context}} \mbox{\hyperlink{classservices_1_1gpt__service_1_1_abstract_l_l_m_service_a261f9f58ccbeaa962c4e675e4212c9cc}{context}})
+\item 
+\mbox{\hyperlink{classservices_1_1gpt__service_1_1_abstract_l_l_m_service_aecbc052233262275fc20a8ee8dfb8a47}{reset}} (self)
+\item 
+\mbox{\hyperlink{classservices_1_1gpt__service_1_1_abstract_l_l_m_service_a9ebe2dbe41c7c6d0f87f7ddd7e623f90}{validate\+\_\+function\+\_\+args}} (self, args)
+\item 
+\mbox{\hyperlink{classservices_1_1gpt__service_1_1_abstract_l_l_m_service_a0273afee408d6d770b3dfcac0adbf045}{split\+\_\+into\+\_\+sentences}} (self, text)
+\item 
+\mbox{\hyperlink{classservices_1_1gpt__service_1_1_abstract_l_l_m_service_a01682f7dddb2777b9499737564c132cf}{emit\+\_\+complete\+\_\+sentences}} (self, text, interaction\+\_\+count)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler}{Event\+Handler}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_a504c5b2b70ced47ef9e67e57738a213c}{on}} (self, str event, Callable callback)
+\item 
+\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_af0b13c52d513139510df47781cf94ab9}{create\+Event}} (self, str event, \texorpdfstring{$\ast$}{*}Any args, \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}Any kwargs)
+\item 
+\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_aff0cd190f2fae5b016d4faf3c1c8e073}{on\+\_\+event}} (self, event)
+\item 
+\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_ae941d8bdb10c17fe7bca834a1f24038a}{on\+\_\+text\+\_\+created}} (self, text)
+\item 
+\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_a8cb3855bd5daa733879e2626db9ad227}{on\+\_\+text\+\_\+delta}} (self, delta, snapshot)
+\item 
+\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_ad4402d96c3f2f5a5c2a53aebbf7b343d}{on\+\_\+text\+\_\+done}} (self, text)
+\item 
+\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_a388bc733a67fc1ac664c79116b82a2c4}{on\+\_\+tool\+\_\+call\+\_\+created}} (self, tool\+\_\+call)
+\item 
+\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_a12334a2e56f9b3c7be63a4128e71aeaa}{on\+\_\+tool\+\_\+call\+\_\+delta}} (self, delta, snapshot)
+\item 
+\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_aae25b48c0a1a615b819caf177dd00a94}{on\+\_\+tool\+\_\+call\+\_\+done}} (self, tool\+\_\+call)
+\item 
+\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_abeee6d6dac7e998703cc4c5e9d623075}{submit\+\_\+tool\+\_\+outputs}} (self, tool\+\_\+outputs)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Data Fields inherited from \mbox{\hyperlink{classservices_1_1gpt__service_1_1_abstract_l_l_m_service}{Abstract\+LLMService}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classservices_1_1gpt__service_1_1_abstract_l_l_m_service_a0cd0ea91f0087e9eec8e7cd3abf43dbd}{system\+\_\+message}} = context.\+system\+\_\+message
+\item 
+\mbox{\hyperlink{classservices_1_1gpt__service_1_1_abstract_l_l_m_service_aed6dd1341f109bf1914b47f3a5e35436}{initial\+\_\+message}} = context.\+initial\+\_\+message
+\item 
+\mbox{\hyperlink{classservices_1_1gpt__service_1_1_abstract_l_l_m_service_a261f9f58ccbeaa962c4e675e4212c9cc}{context}} = context
+\item 
+list \mbox{\hyperlink{classservices_1_1gpt__service_1_1_abstract_l_l_m_service_a61ad86d80ae0ff3617e8d3bfdd41bee6}{user\+\_\+context}}
+\item 
+int \mbox{\hyperlink{classservices_1_1gpt__service_1_1_abstract_l_l_m_service_a1d0403c1bae0049869594a30230c932d}{partial\+\_\+response\+\_\+index}} = 0
+\item 
+dict \mbox{\hyperlink{classservices_1_1gpt__service_1_1_abstract_l_l_m_service_a7e5cb5af7805001ab446024551471af4}{available\+\_\+functions}} = \{\}
+\item 
+str \mbox{\hyperlink{classservices_1_1gpt__service_1_1_abstract_l_l_m_service_a17cc21a98b55bbc913288439e57334ff}{sentence\+\_\+buffer}} = "{}"{}
+\end{DoxyCompactItemize}
+\doxysubsection*{Data Fields inherited from \mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler}{Event\+Handler}}}
+\begin{DoxyCompactItemize}
+\item 
+list \mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_acb6617135b0fd32aae7e8bcd4491cf44}{\+\_\+events}} = \mbox{[}$\,$\mbox{]}
+\item 
+\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_ad5bc32b75da65fe60067f501a4bb6665}{client}} = client
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler}{Event\+Handler}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_a142819f6f7c8639f2a664c46b80f337a}{\+\_\+run\+\_\+callback}} (self, Callable callback, \texorpdfstring{$\ast$}{*}Any args, \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}Any kwargs)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler}{Event\+Handler}}}
+\begin{DoxyCompactItemize}
+\item 
+dict \mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_af82f490d6136d2e39721b932d274778f}{\+\_\+events}} = \{\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}GeminiService
+
+This class provides a service for interacting with the Gemini generative AI model.
+
+__init__(self, context: CallContext)
+    Initialize the GeminiService with the provided CallContext.
+
+    Parameters:
+        - context (CallContext): The CallContext object.
+
+completion(self, text: str, interaction_count: int, role: str = 'user', name: str = 'user')
+    Generate a completion using the Gemini generative AI model based on the provided text.
+
+    Parameters:
+        - text (str): The input text to generate a completion for.
+        - interaction_count (int): The number of interactions that have occurred.
+        - role (str): The role of the user in the interaction. Defaults to 'user'.
+        - name (str): The name of the user. Defaults to 'user'.
+
+    Raises:
+        - Exception: If an error occurs during the completion process.
+
+    Returns:
+        None
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classservices_1_1gpt__service_1_1_gemini_service_a94330cbe2648fc548c84dd4150df1294}\index{GeminiService@{GeminiService}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!GeminiService@{GeminiService}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{classservices_1_1gpt__service_1_1_gemini_service_a94330cbe2648fc548c84dd4150df1294} 
+\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{\mbox{\hyperlink{classservices_1_1call__details_1_1_call_context}{Call\+Context}}}]{context}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Initializes an instance of the EventEmitter class.
+\end{DoxyVerb}
+ 
+
+Reimplemented from \mbox{\hyperlink{classservices_1_1gpt__service_1_1_abstract_l_l_m_service_a94330cbe2648fc548c84dd4150df1294}{Abstract\+LLMService}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00352\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ context:\ CallContext):}
+\DoxyCodeLine{00353\ \ \ \ \ \ \ \ \ super().\_\_init\_\_(context)}
+\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ genai.configure(api\_key=os.getenv(\textcolor{stringliteral}{"{}GOOGLE\_GENERATIVE\_AI\_API\_KEY"{}}))}
+\DoxyCodeLine{00355\ }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00352}{Gemini\+Service.\+\_\+\+\_\+init\+\_\+\+\_\+()}}.
+
+
+
+Referenced by \mbox{\hyperlink{l00352}{Gemini\+Service.\+\_\+\+\_\+init\+\_\+\+\_\+()}}.
+
+Here is the call graph for this function\+:
+% FIG 2
+Here is the caller graph for this function\+:
+% FIG 3
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classservices_1_1gpt__service_1_1_gemini_service_a8683968d4e3145b6c20b2c3cca00edde}\index{GeminiService@{GeminiService}!completion@{completion}}
+\index{completion@{completion}!GeminiService@{GeminiService}}
+\doxysubsubsection{\texorpdfstring{completion()}{completion()}}
+{\footnotesize\ttfamily \label{classservices_1_1gpt__service_1_1_gemini_service_a8683968d4e3145b6c20b2c3cca00edde} 
+completion (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{str}]{text}{, }\item[{int}]{interaction\+\_\+count}{, }\item[{str }]{role}{ = {\ttfamily \textquotesingle{}user\textquotesingle{}}, }\item[{str }]{name}{ = {\ttfamily \textquotesingle{}user\textquotesingle{}}}\end{DoxyParamCaption})}
+
+
+
+Reimplemented from \mbox{\hyperlink{classservices_1_1gpt__service_1_1_abstract_l_l_m_service_a8683968d4e3145b6c20b2c3cca00edde}{Abstract\+LLMService}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00356\ \ \ \ \ \textcolor{keyword}{async\ def\ }completion(self,\ text:\ str,\ interaction\_count:\ int,\ role:\ str\ =\ \textcolor{stringliteral}{'user'},\ name:\ str\ =\ \textcolor{stringliteral}{'user'}):}
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00358\ \ \ \ \ \ \ \ \ \ \ \ \ self.user\_context.append(\{\textcolor{stringliteral}{"{}role"{}}:\ role,\ \textcolor{stringliteral}{"{}content"{}}:\ text,\ \textcolor{stringliteral}{"{}name"{}}:\ name\})}
+\DoxyCodeLine{00359\ \ \ \ \ \ \ \ \ \ \ \ \ messages\ =\ [\{\textcolor{stringliteral}{"{}role"{}}:\ \textcolor{stringliteral}{"{}system"{}},\ \textcolor{stringliteral}{"{}content"{}}:\ self.system\_message\}]\ +\ self.user\_context}
+\DoxyCodeLine{00360\ \ \ \ \ \ \ \ \ \ \ \ \ prompt\ =\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}}.join([msg[\textcolor{stringliteral}{"{}content"{}}]\ \textcolor{keywordflow}{for}\ msg\ \textcolor{keywordflow}{in}\ messages])}
+\DoxyCodeLine{00361\ }
+\DoxyCodeLine{00362\ \ \ \ \ \ \ \ \ \ \ \ \ response\ =\ genai.generate\_text(}
+\DoxyCodeLine{00363\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ model=\textcolor{stringliteral}{"{}models/text-\/bison-\/001"{}},}
+\DoxyCodeLine{00364\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ prompt=prompt,}
+\DoxyCodeLine{00365\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temperature=0.2,}
+\DoxyCodeLine{00366\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ top\_p=0.95,}
+\DoxyCodeLine{00367\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ top\_k=40,}
+\DoxyCodeLine{00368\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{00369\ }
+\DoxyCodeLine{00370\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Process\ response\ and\ emit}}
+\DoxyCodeLine{00371\ \ \ \ \ \ \ \ \ \ \ \ \ complete\_response\ =\ response.result}
+\DoxyCodeLine{00372\ \ \ \ \ \ \ \ \ \ \ \ \ await\ self.emit\_complete\_sentences(complete\_response,\ interaction\_count)}
+\DoxyCodeLine{00373\ \ \ \ \ \ \ \ \ \ \ \ \ self.user\_context.append(\{\textcolor{stringliteral}{"{}role"{}}:\ \textcolor{stringliteral}{"{}assistant"{}},\ \textcolor{stringliteral}{"{}content"{}}:\ complete\_response\})}
+\DoxyCodeLine{00374\ }
+\DoxyCodeLine{00375\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ Exception\ \textcolor{keyword}{as}\ e:}
+\DoxyCodeLine{00376\ \ \ \ \ \ \ \ \ \ \ \ \ logger.error(f\textcolor{stringliteral}{"{}Error\ in\ GeminiService\ completion:\ \{str(e)\}"{}})}
+\DoxyCodeLine{00377\ }
+\DoxyCodeLine{00378\ }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00082}{Abstract\+LLMService.\+emit\+\_\+complete\+\_\+sentences()}}, \mbox{\hyperlink{l00014}{Call\+Context.\+system\+\_\+message}}, \mbox{\hyperlink{l00032}{Abstract\+LLMService.\+system\+\_\+message}}, \mbox{\hyperlink{l00013}{Call\+Context.\+user\+\_\+context}}, and \mbox{\hyperlink{l00035}{Abstract\+LLMService.\+user\+\_\+context}}.
+
+
+
+Referenced by \mbox{\hyperlink{l00258}{Open\+AIService.\+completion()}}.
+
+Here is the call graph for this function\+:
+% FIG 4
+Here is the caller graph for this function\+:
+% FIG 5
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/seanbaker/\+Downloads/\+GPTPhone (2)/services/\mbox{\hyperlink{gpt__service_8py}{gpt\+\_\+service.\+py}}\end{DoxyCompactItemize}

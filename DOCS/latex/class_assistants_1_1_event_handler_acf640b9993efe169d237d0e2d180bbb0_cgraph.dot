@@ -1,0 +1,19 @@
+digraph "Assistants.EventHandler.on_text_done"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [id="Node000001",label="Assistants.EventHandler.on\l_text_done",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [id="edge7_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="Assistants.EventHandler.format\l_annotation",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_assistants_1_1_event_handler.html#ab5d0ae325a0eab3a63e84447a384aa03",tooltip=" "];
+  Node2 -> Node3 [id="edge8_Node000002_Node000003",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="Assistants.EventHandler.create\l_file_link",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_assistants_1_1_event_handler.html#af45ca7cb36b12473ed39b4fb4e5c4b4f",tooltip=" "];
+  Node2 -> Node4 [id="edge9_Node000002_Node000004",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="AssistantsAsync.EventHandler.create\l_file_link",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_assistants_async_1_1_event_handler.html#a84aa72bdc9936208d13519cf3b1a7a25",tooltip=" "];
+  Node1 -> Node5 [id="edge10_Node000001_Node000005",color="steelblue1",style="solid",tooltip=" "];
+  Node5 [id="Node000005",label="AssistantsAsync.EventHandler.format\l_annotation",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$class_assistants_async_1_1_event_handler.html#a0fd0a955e2cc92a09204a5781d0379a2",tooltip=" "];
+  Node5 -> Node3 [id="edge11_Node000005_Node000003",color="steelblue1",style="solid",tooltip=" "];
+  Node5 -> Node4 [id="edge12_Node000005_Node000004",color="steelblue1",style="solid",tooltip=" "];
+}

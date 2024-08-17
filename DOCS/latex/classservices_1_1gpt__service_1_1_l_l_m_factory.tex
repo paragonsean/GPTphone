@@ -1,0 +1,37 @@
+\doxysection{LLMFactory Class Reference}
+\hypertarget{classservices_1_1gpt__service_1_1_l_l_m_factory}{}\label{classservices_1_1gpt__service_1_1_l_l_m_factory}\index{LLMFactory@{LLMFactory}}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classservices_1_1gpt__service_1_1_abstract_l_l_m_service}{Abstract\+LLMService}} \mbox{\hyperlink{classservices_1_1gpt__service_1_1_l_l_m_factory_aa7ace8bc4197b4ddbf55c61f6e9edab8}{get\+\_\+llm\+\_\+service}} (str service\+\_\+name, \mbox{\hyperlink{classservices_1_1call__details_1_1_call_context}{Call\+Context}} context)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Factory class for creating instances of AbstractLLMService based on the provided service name.
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classservices_1_1gpt__service_1_1_l_l_m_factory_aa7ace8bc4197b4ddbf55c61f6e9edab8}\index{LLMFactory@{LLMFactory}!get\_llm\_service@{get\_llm\_service}}
+\index{get\_llm\_service@{get\_llm\_service}!LLMFactory@{LLMFactory}}
+\doxysubsubsection{\texorpdfstring{get\_llm\_service()}{get\_llm\_service()}}
+{\footnotesize\ttfamily \label{classservices_1_1gpt__service_1_1_l_l_m_factory_aa7ace8bc4197b4ddbf55c61f6e9edab8} 
+ \mbox{\hyperlink{classservices_1_1gpt__service_1_1_abstract_l_l_m_service}{Abstract\+LLMService}} get\+\_\+llm\+\_\+service (\begin{DoxyParamCaption}\item[{str}]{service\+\_\+name}{, }\item[{\mbox{\hyperlink{classservices_1_1call__details_1_1_call_context}{Call\+Context}}}]{context}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00384\ \ \ \ \ \textcolor{keyword}{def\ }get\_llm\_service(service\_name:\ str,\ context:\ CallContext)\ -\/>\ AbstractLLMService:}
+\DoxyCodeLine{00385\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ service\_name.lower()\ ==\ \textcolor{stringliteral}{"{}openai"{}}\ \textcolor{keywordflow}{or}\ service\_name.lower()\ ==\ \textcolor{stringliteral}{"{}assistant"{}}:}
+\DoxyCodeLine{00386\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ AssistantService(context)}
+\DoxyCodeLine{00387\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ service\_name.lower()\ ==\ \textcolor{stringliteral}{"{}gemini"{}}:}
+\DoxyCodeLine{00388\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ GeminiService(context)}
+\DoxyCodeLine{00389\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00390\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(f\textcolor{stringliteral}{"{}Unsupported\ LLM\ service:\ \{service\_name\}"{}})}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/seanbaker/\+Downloads/\+GPTPhone (2)/services/\mbox{\hyperlink{gpt__service_8py}{gpt\+\_\+service.\+py}}\end{DoxyCompactItemize}

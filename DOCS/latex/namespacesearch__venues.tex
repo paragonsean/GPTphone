@@ -1,0 +1,111 @@
+\doxysection{search\+\_\+venues Namespace Reference}
+\hypertarget{namespacesearch__venues}{}\label{namespacesearch__venues}\index{search\_venues@{search\_venues}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacesearch__venues_a6323980edeebc2d22a6575cd1b8880ea}{search\+\_\+events}} (\mbox{\hyperlink{namespacesearch__venues_a70651ad93f531b836bca3257d615c95e}{api\+\_\+key}}, params)
+\item 
+\mbox{\hyperlink{namespacesearch__venues_aa85765bf24130fa44ae8a9c3c19dee19}{search\+\_\+venues}} (\mbox{\hyperlink{namespacesearch__venues_a70651ad93f531b836bca3257d615c95e}{api\+\_\+key}}, params)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacesearch__venues_a70651ad93f531b836bca3257d615c95e}{api\+\_\+key}} = os.\+getenv(\textquotesingle{}TICKET\+\_\+\+MASTER\+\_\+\+API\+\_\+\+KEY\textquotesingle{})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespacesearch__venues_a6323980edeebc2d22a6575cd1b8880ea}\index{search\_venues@{search\_venues}!search\_events@{search\_events}}
+\index{search\_events@{search\_events}!search\_venues@{search\_venues}}
+\doxysubsubsection{\texorpdfstring{search\_events()}{search\_events()}}
+{\footnotesize\ttfamily \label{namespacesearch__venues_a6323980edeebc2d22a6575cd1b8880ea} 
+search\+\_\+events (\begin{DoxyParamCaption}\item[{}]{api\+\_\+key}{, }\item[{}]{params}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Searches for events using the Ticketmaster Discovery API.
+
+:param api_key: Your API key for accessing the Ticketmaster Discovery API.
+:param params: A dictionary of parameters to filter the search.
+:return: A list of events or an error message.
+\end{DoxyVerb}
+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00011\ \textcolor{keyword}{def\ }search\_events(api\_key,\ params):}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00013\ \textcolor{stringliteral}{\ \ \ \ Searches\ for\ events\ using\ the\ Ticketmaster\ Discovery\ API.}}
+\DoxyCodeLine{00014\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{00015\ \textcolor{stringliteral}{\ \ \ \ :param\ api\_key:\ Your\ API\ key\ for\ accessing\ the\ Ticketmaster\ Discovery\ API.}}
+\DoxyCodeLine{00016\ \textcolor{stringliteral}{\ \ \ \ :param\ params:\ A\ dictionary\ of\ parameters\ to\ filter\ the\ search.}}
+\DoxyCodeLine{00017\ \textcolor{stringliteral}{\ \ \ \ :return:\ A\ list\ of\ events\ or\ an\ error\ message.}}
+\DoxyCodeLine{00018\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00019\ \ \ \ \ url\ =\ \textcolor{stringliteral}{"{}https://app.ticketmaster.com/discovery/v2/events.json"{}}}
+\DoxyCodeLine{00020\ \ \ \ \ params[\textcolor{stringliteral}{'apikey'}]\ =\ api\_key}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ response\ =\ requests.get(url,\ params=params)}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ response.raise\_for\_status()\ \ \textcolor{comment}{\#\ Raise\ an\ exception\ for\ HTTP\ errors}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ events\_data\ =\ response.json()}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{stringliteral}{'\_embedded'}\ \textcolor{keywordflow}{in}\ events\_data\ \textcolor{keywordflow}{and}\ \textcolor{stringliteral}{'events'}\ \textcolor{keywordflow}{in}\ events\_data[\textcolor{stringliteral}{'\_embedded'}]:}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ events\ =\ events\_data[\textcolor{stringliteral}{'\_embedded'}][\textcolor{stringliteral}{'events'}]}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ events}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}No\ events\ found\ for\ the\ given\ parameters."{}}}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordflow}{except}\ requests.exceptions.HTTPError\ \textcolor{keyword}{as}\ http\_err:}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ f\textcolor{stringliteral}{"{}HTTP\ error\ occurred:\ \{http\_err\}"{}}}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordflow}{except}\ Exception\ \textcolor{keyword}{as}\ err:}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ f\textcolor{stringliteral}{"{}Other\ error\ occurred:\ \{err\}"{}}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{l00039}{search\+\_\+venues()}}.
+
+Here is the caller graph for this function\+:
+% FIG 0
+\Hypertarget{namespacesearch__venues_aa85765bf24130fa44ae8a9c3c19dee19}\index{search\_venues@{search\_venues}!search\_venues@{search\_venues}}
+\index{search\_venues@{search\_venues}!search\_venues@{search\_venues}}
+\doxysubsubsection{\texorpdfstring{search\_venues()}{search\_venues()}}
+{\footnotesize\ttfamily \label{namespacesearch__venues_aa85765bf24130fa44ae8a9c3c19dee19} 
+search\+\_\+venues (\begin{DoxyParamCaption}\item[{}]{api\+\_\+key}{, }\item[{}]{params}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00039\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacesearch__venues}{search\_venues}}(api\_key,\ params):}
+\DoxyCodeLine{00040\ \ \ \ \ api\_key\ =\ os.getenv(\textcolor{stringliteral}{'TICKET\_MASTER\_API\_KEY'})\ \ \textcolor{comment}{\#\ Retrieve\ API\ key\ from\ environment\ variable}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ api\_key:}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{raise}\ ValueError(\textcolor{stringliteral}{"{}Please\ set\ the\ TICKET\_MASTER\_API\_KEY\ environment\ variable."{}})}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ search\_params\ =\ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'keyword'}:\ \textcolor{stringliteral}{'music'},}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'city'}:\ \textcolor{stringliteral}{'Los\ Angeles'},}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'stateCode'}:\ \textcolor{stringliteral}{'CA'},}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'classificationName'}:\ \textcolor{stringliteral}{'Music'},}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'size'}:\ \textcolor{stringliteral}{'5'}}
+\DoxyCodeLine{00051\ \ \ \ \ \}}
+\DoxyCodeLine{00052\ \ \ \ \ events\ =\ search\_events(api\_key,\ search\_params)}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordflow}{if}\ isinstance(events,\ list):}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ event\ \textcolor{keywordflow}{in}\ events:}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ print(event[\textcolor{stringliteral}{'name'}])}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ print(events)}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00011}{search\+\_\+events()}}.
+
+Here is the call graph for this function\+:
+% FIG 1
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespacesearch__venues_a70651ad93f531b836bca3257d615c95e}\index{search\_venues@{search\_venues}!api\_key@{api\_key}}
+\index{api\_key@{api\_key}!search\_venues@{search\_venues}}
+\doxysubsubsection{\texorpdfstring{api\_key}{api\_key}}
+{\footnotesize\ttfamily \label{namespacesearch__venues_a70651ad93f531b836bca3257d615c95e} 
+api\+\_\+key = os.\+getenv(\textquotesingle{}TICKET\+\_\+\+MASTER\+\_\+\+API\+\_\+\+KEY\textquotesingle{})}
+

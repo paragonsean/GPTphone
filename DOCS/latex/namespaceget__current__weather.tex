@@ -1,0 +1,76 @@
+\doxysection{get\+\_\+current\+\_\+weather Namespace Reference}
+\hypertarget{namespaceget__current__weather}{}\label{namespaceget__current__weather}\index{get\_current\_weather@{get\_current\_weather}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespaceget__current__weather_a20de30a302954a92042cb4ca5ecd799e}{get\+\_\+current\+\_\+weather}} (context, args)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespaceget__current__weather_a0b14e488ae28d98d262453f3e9cd6e4d}{logger}} = logging.\+get\+Logger(\+\_\+\+\_\+name\+\_\+\+\_\+)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespaceget__current__weather_a20de30a302954a92042cb4ca5ecd799e}\index{get\_current\_weather@{get\_current\_weather}!get\_current\_weather@{get\_current\_weather}}
+\index{get\_current\_weather@{get\_current\_weather}!get\_current\_weather@{get\_current\_weather}}
+\doxysubsubsection{\texorpdfstring{get\_current\_weather()}{get\_current\_weather()}}
+{\footnotesize\ttfamily \label{namespaceget__current__weather_a20de30a302954a92042cb4ca5ecd799e} 
+get\+\_\+current\+\_\+weather (\begin{DoxyParamCaption}\item[{}]{context}{, }\item[{}]{args}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Retrieves current weather data for a location.
+
+Args:
+    context: The context object (not used in this function).
+    args: A dictionary containing the location to retrieve the weather for.
+
+Returns:
+    A string with the weather data or an error message.
+\end{DoxyVerb}
+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00006\ \textcolor{keyword}{async\ def\ }\mbox{\hyperlink{namespaceget__current__weather}{get\_current\_weather}}(context,\ args):}
+\DoxyCodeLine{00007\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00008\ \textcolor{stringliteral}{\ \ \ \ Retrieves\ current\ weather\ data\ for\ a\ location.}}
+\DoxyCodeLine{00009\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{00010\ \textcolor{stringliteral}{\ \ \ \ Args:}}
+\DoxyCodeLine{00011\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ context:\ The\ context\ object\ (not\ used\ in\ this\ function).}}
+\DoxyCodeLine{00012\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ args:\ A\ dictionary\ containing\ the\ location\ to\ retrieve\ the\ weather\ for.}}
+\DoxyCodeLine{00013\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{00014\ \textcolor{stringliteral}{\ \ \ \ Returns:}}
+\DoxyCodeLine{00015\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ A\ string\ with\ the\ weather\ data\ or\ an\ error\ message.}}
+\DoxyCodeLine{00016\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00017\ \ \ \ \ location\ =\ args.get(\textcolor{stringliteral}{"{}location"{}})}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordflow}{if}\ location\ \textcolor{keywordflow}{is}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Please\ provide\ the\ location\ to\ retrieve\ the\ weather\ for."{}}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ api\_url\ =\ \textcolor{stringliteral}{"{}https://weather.example.com/location"{}}}
+\DoxyCodeLine{00022\ \ \ \ \ params\ =\ \{\textcolor{stringliteral}{"{}location"{}}:\ location\}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ response\ =\ requests.get(api\_url,\ params=params)}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ response.raise\_for\_status()}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ weather\_data\ =\ response.json()}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Extract\ relevant\ weather\ information\ from\ the\ response}}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ temperature\ =\ weather\_data.get(\textcolor{stringliteral}{"{}temperature"{}})}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ temperature:}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ f\textcolor{stringliteral}{"{}The\ current\ temperature\ in\ \{location\}\ is\ \{temperature\}°."{}}}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Could\ not\ retrieve\ temperature\ information."{}}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordflow}{except}\ requests.RequestException\ \textcolor{keyword}{as}\ e:}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ logger.error(f\textcolor{stringliteral}{"{}Error\ retrieving\ weather\ data:\ \{e\}"{}})}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Error\ retrieving\ weather\ data."{}}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespaceget__current__weather_a0b14e488ae28d98d262453f3e9cd6e4d}\index{get\_current\_weather@{get\_current\_weather}!logger@{logger}}
+\index{logger@{logger}!get\_current\_weather@{get\_current\_weather}}
+\doxysubsubsection{\texorpdfstring{logger}{logger}}
+{\footnotesize\ttfamily \label{namespaceget__current__weather_a0b14e488ae28d98d262453f3e9cd6e4d} 
+logger = logging.\+get\+Logger(\+\_\+\+\_\+name\+\_\+\+\_\+)}
+

@@ -1,0 +1,45 @@
+\doxysection{chatlibrary.\+py}
+\hypertarget{chatlibrary_8py_source}{}\label{chatlibrary_8py_source}\index{/Users/seanbaker/Downloads/GPTPhone (2)/chatlibrary.py@{/Users/seanbaker/Downloads/GPTPhone (2)/chatlibrary.py}}
+\mbox{\hyperlink{chatlibrary_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00001}\mbox{\hyperlink{namespacechatlibrary}{00001}}\ \textcolor{keyword}{import}\ asyncio}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00002}00002\ \textcolor{keyword}{from}\ \mbox{\hyperlink{namespaceservices_1_1call__details}{services.call\_details}}\ \textcolor{keyword}{import}\ CallContext}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00003}00003\ \textcolor{keyword}{from}\ \mbox{\hyperlink{namespaceservices_1_1gpt__service}{services.gpt\_service}}\ \textcolor{keyword}{import}\ LLMFactory\ \ \textcolor{comment}{\#\ Replace\ \`{}your\_module`\ with\ the\ correct\ module\ where\ the\ classes\ are\ defined}}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00004}00004\ \textcolor{keyword}{from}\ \mbox{\hyperlink{namespaceservices_1_1call__details}{services.call\_details}}\ \textcolor{keyword}{import}\ \ CallContext}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00005}00005\ \textcolor{keyword}{from}\ Utils.logger\_config\ \textcolor{keyword}{import}\ wrap\_services}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00006}00006\ \textcolor{keyword}{import}\ os}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00007}00007\ \textcolor{keyword}{from}\ dotenv\ \textcolor{keyword}{import}\ load\_dotenv}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00009}00009\ load\_dotenv()}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00010}00010\ wrap\_services()}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00012}\mbox{\hyperlink{namespacechatlibrary_af3ed2aad157b67aeeccaa63aab1bf14e}{00012}}\ \textcolor{keyword}{async\ def\ }\mbox{\hyperlink{namespacechatlibrary_af3ed2aad157b67aeeccaa63aab1bf14e}{main}}():}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00013}00013\ \ \ \ \ print(\textcolor{stringliteral}{"{}Welcome\ to\ the\ LLM\ Chat\ Interface!"{}})}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00014}00014\ \ \ \ \ service\_name\ =\ input(\textcolor{stringliteral}{"{}Please\ select\ a\ service\ (OpenAI,\ Assistant,\ Gemini):\ "{}})}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00016}00016\ \ \ \ \ context\ =\ \mbox{\hyperlink{classservices_1_1call__details_1_1_call_context}{CallContext}}()}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00017}00017\ \ \ \ \ context.system\_message=\textcolor{stringliteral}{"{}You\ are\ a\ helpful\ assistant."{}},}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00018}00018\ \ \ \ \ context.initial\_message=\textcolor{stringliteral}{"{}How\ can\ I\ assist\ you\ today?"{}}}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00021}00021\ \ \ \ \ \textcolor{comment}{\#\ Instantiate\ the\ LLM\ service\ using\ the\ factory}}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00022}00022\ \ \ \ \ llm\_service\ =\ LLMFactory.get\_llm\_service(service\_name,\ context)}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00024}00024\ \ \ \ \ print(f\textcolor{stringliteral}{"{}Chatting\ with\ \{service\_name\}\ service.\ Type\ 'exit'\ to\ quit."{}})}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00026}00026\ \ \ \ \ interaction\_count\ =\ 0}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00027}00027\ \ \ \ \ \textcolor{keywordflow}{while}\ \textcolor{keyword}{True}:}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00028}00028\ \ \ \ \ \ \ \ \ user\_input\ =\ input(\textcolor{stringliteral}{"{}You:\ "{}})}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ user\_input.lower()\ ==\ \textcolor{stringliteral}{'exit'}:}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break}}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00032}00032\ \ \ \ \ \ \ \ \ interaction\_count\ +=\ 1}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00033}00033\ \ \ \ \ \ \ \ \ await\ llm\_service.completion(user\_input,\ interaction\_count)}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00035}00035\ \ \ \ \ print(\textcolor{stringliteral}{"{}Goodbye!"{}})}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00038}00038\ \textcolor{keywordflow}{if}\ \_\_name\_\_\ ==\ \textcolor{stringliteral}{"{}\_\_main\_\_"{}}:}
+\DoxyCodeLine{\Hypertarget{chatlibrary_8py_source_l00039}00039\ \ \ \ \ asyncio.run(\mbox{\hyperlink{namespacechatlibrary_af3ed2aad157b67aeeccaa63aab1bf14e}{main}}())}
+
+\end{DoxyCode}

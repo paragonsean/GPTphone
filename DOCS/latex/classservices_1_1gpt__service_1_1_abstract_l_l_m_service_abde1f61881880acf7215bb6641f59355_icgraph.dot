@@ -1,0 +1,22 @@
+digraph "services.gpt_service.AbstractLLMService.split_into_sentences"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="RL";
+  Node1 [id="Node000001",label="services.gpt_service.Abstract\lLLMService.split_into_sentences",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [id="edge9_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="services.gpt_service.Abstract\lLLMService.emit_complete\l_sentences",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classservices_1_1gpt__service_1_1_abstract_l_l_m_service.html#aea094f3cafaecafd3f0b46807677f7d4",tooltip=" "];
+  Node2 -> Node3 [id="edge10_Node000002_Node000003",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="services.gpt_service.Gemini\lService.completion",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classservices_1_1gpt__service_1_1_gemini_service.html#a964d5feeb7fadc0631a0b740fe359b2f",tooltip=" "];
+  Node3 -> Node4 [id="edge11_Node000003_Node000004",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="services.gpt_service.Open\lAIService.completion",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classservices_1_1gpt__service_1_1_open_a_i_service.html#aa069d843d4ce3347e4896c0f4230892d",tooltip=" "];
+  Node4 -> Node4 [id="edge12_Node000004_Node000004",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 -> Node4 [id="edge13_Node000002_Node000004",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 -> Node5 [id="edge14_Node000002_Node000005",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node5 [id="Node000005",label="services.gpt_service.Assistant\lService.handle_streaming\l_response",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classservices_1_1gpt__service_1_1_assistant_service.html#aae5d80c11eed2be1787e88ab2f3ad907",tooltip=" "];
+  Node5 -> Node6 [id="edge15_Node000005_Node000006",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node6 [id="Node000006",label="services.gpt_service.Assistant\lService.completion",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classservices_1_1gpt__service_1_1_assistant_service.html#a903ea81b34f5ded63a9ce269ee2a17df",tooltip=" "];
+  Node6 -> Node4 [id="edge16_Node000006_Node000004",dir="back",color="steelblue1",style="solid",tooltip=" "];
+}

@@ -1,0 +1,212 @@
+\doxysection{Test\+Event\+Handler Class Reference}
+\hypertarget{classunittests_1_1basiceventhandlertest_1_1_test_event_handler}{}\label{classunittests_1_1basiceventhandlertest_1_1_test_event_handler}\index{TestEventHandler@{TestEventHandler}}
+
+
+Inheritance diagram for Test\+Event\+Handler\+:
+% FIG 0
+
+
+Collaboration diagram for Test\+Event\+Handler\+:
+% FIG 1
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classunittests_1_1basiceventhandlertest_1_1_test_event_handler_a8265f43e817bd81e8ee0479d9cf942f1}{set\+Up}} (self)
+\item 
+\mbox{\hyperlink{classunittests_1_1basiceventhandlertest_1_1_test_event_handler_aacd5d4e13ce05a20d0ebdedbf5457116}{trigger\+\_\+event}} (self, event\+\_\+name, \texorpdfstring{$\ast$}{*}args, \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}kwargs)
+\item 
+\mbox{\hyperlink{classunittests_1_1basiceventhandlertest_1_1_test_event_handler_aba9b4fa9af34a8114532c29f4a8315b3}{test\+\_\+on\+\_\+event\+\_\+registration}} (self)
+\item 
+\mbox{\hyperlink{classunittests_1_1basiceventhandlertest_1_1_test_event_handler_a5ff4cd7465f99c5a3bc590506db4f11f}{test\+\_\+on\+\_\+event\+\_\+multiple\+\_\+callbacks}} (self)
+\item 
+\mbox{\hyperlink{classunittests_1_1basiceventhandlertest_1_1_test_event_handler_a3f5e727e9ae3a9bfe0de77569ee7eb1a}{test\+\_\+trigger\+\_\+event}} (self)
+\item 
+\mbox{\hyperlink{classunittests_1_1basiceventhandlertest_1_1_test_event_handler_af0004535b2d48e18726f93ab5c7098c2}{test\+\_\+trigger\+\_\+event\+\_\+with\+\_\+multiple\+\_\+callbacks}} (self)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classunittests_1_1basiceventhandlertest_1_1_test_event_handler_a102eb58abd9e7bfba6da36709364673c}{event\+\_\+handler}} = \mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler}{Event\+Handler}}()
+\item 
+\mbox{\hyperlink{classunittests_1_1basiceventhandlertest_1_1_test_event_handler_a44a841b5e43385fc83a62bdb1208f577}{mock\+\_\+callback\+\_\+1}} = Async\+Mock()
+\item 
+\mbox{\hyperlink{classunittests_1_1basiceventhandlertest_1_1_test_event_handler_a99fdfbd660eca1f2159c2af892f58b21}{mock\+\_\+callback\+\_\+2}} = Async\+Mock()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classunittests_1_1basiceventhandlertest_1_1_test_event_handler_a8265f43e817bd81e8ee0479d9cf942f1}\index{TestEventHandler@{TestEventHandler}!setUp@{setUp}}
+\index{setUp@{setUp}!TestEventHandler@{TestEventHandler}}
+\doxysubsubsection{\texorpdfstring{setUp()}{setUp()}}
+{\footnotesize\ttfamily \label{classunittests_1_1basiceventhandlertest_1_1_test_event_handler_a8265f43e817bd81e8ee0479d9cf942f1} 
+set\+Up (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{def\ }setUp(self):}
+\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Set\ up\ the\ event\ handler\ with\ mocked\ callbacks}}
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ self.event\_handler\ =\ EventHandler()}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ self.mock\_callback\_1\ =\ AsyncMock()}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ self.mock\_callback\_2\ =\ AsyncMock()}
+
+\end{DoxyCode}
+\Hypertarget{classunittests_1_1basiceventhandlertest_1_1_test_event_handler_a5ff4cd7465f99c5a3bc590506db4f11f}\index{TestEventHandler@{TestEventHandler}!test\_on\_event\_multiple\_callbacks@{test\_on\_event\_multiple\_callbacks}}
+\index{test\_on\_event\_multiple\_callbacks@{test\_on\_event\_multiple\_callbacks}!TestEventHandler@{TestEventHandler}}
+\doxysubsubsection{\texorpdfstring{test\_on\_event\_multiple\_callbacks()}{test\_on\_event\_multiple\_callbacks()}}
+{\footnotesize\ttfamily \label{classunittests_1_1basiceventhandlertest_1_1_test_event_handler_a5ff4cd7465f99c5a3bc590506db4f11f} 
+test\+\_\+on\+\_\+event\+\_\+multiple\+\_\+callbacks (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{def\ }test\_on\_event\_multiple\_callbacks(self):}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Register\ multiple\ callbacks\ for\ the\ same\ event}}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ self.event\_handler.on(\textcolor{stringliteral}{"{}test\_event"{}},\ self.mock\_callback\_1)}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ self.event\_handler.on(\textcolor{stringliteral}{"{}test\_event"{}},\ self.mock\_callback\_2)}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Check\ if\ both\ callbacks\ are\ registered\ correctly}}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ self.assertIn(self.mock\_callback\_1,\ self.event\_handler.\_events[\textcolor{stringliteral}{"{}test\_event"{}}])}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ self.assertIn(self.mock\_callback\_2,\ self.event\_handler.\_events[\textcolor{stringliteral}{"{}test\_event"{}}])}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00012}{Test\+Event\+Handler.\+event\+\_\+handler}}, \mbox{\hyperlink{l00008}{Test\+Assistant\+Event\+Handler.\+event\+\_\+handler}}, \mbox{\hyperlink{l00013}{Test\+Event\+Handler.\+mock\+\_\+callback\+\_\+1}}, and \mbox{\hyperlink{l00014}{Test\+Event\+Handler.\+mock\+\_\+callback\+\_\+2}}.
+
+\Hypertarget{classunittests_1_1basiceventhandlertest_1_1_test_event_handler_aba9b4fa9af34a8114532c29f4a8315b3}\index{TestEventHandler@{TestEventHandler}!test\_on\_event\_registration@{test\_on\_event\_registration}}
+\index{test\_on\_event\_registration@{test\_on\_event\_registration}!TestEventHandler@{TestEventHandler}}
+\doxysubsubsection{\texorpdfstring{test\_on\_event\_registration()}{test\_on\_event\_registration()}}
+{\footnotesize\ttfamily \label{classunittests_1_1basiceventhandlertest_1_1_test_event_handler_aba9b4fa9af34a8114532c29f4a8315b3} 
+test\+\_\+on\+\_\+event\+\_\+registration (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{def\ }test\_on\_event\_registration(self):}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Register\ a\ callback}}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ self.event\_handler.on(\textcolor{stringliteral}{"{}test\_event"{}},\ self.mock\_callback\_1)}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Check\ if\ the\ event\ is\ registered\ correctly}}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ self.assertIn(\textcolor{stringliteral}{"{}test\_event"{}},\ self.event\_handler.\_events)}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ self.assertIn(self.mock\_callback\_1,\ self.event\_handler.\_events[\textcolor{stringliteral}{"{}test\_event"{}}])}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00012}{Test\+Event\+Handler.\+event\+\_\+handler}}, \mbox{\hyperlink{l00008}{Test\+Assistant\+Event\+Handler.\+event\+\_\+handler}}, and \mbox{\hyperlink{l00013}{Test\+Event\+Handler.\+mock\+\_\+callback\+\_\+1}}.
+
+\Hypertarget{classunittests_1_1basiceventhandlertest_1_1_test_event_handler_a3f5e727e9ae3a9bfe0de77569ee7eb1a}\index{TestEventHandler@{TestEventHandler}!test\_trigger\_event@{test\_trigger\_event}}
+\index{test\_trigger\_event@{test\_trigger\_event}!TestEventHandler@{TestEventHandler}}
+\doxysubsubsection{\texorpdfstring{test\_trigger\_event()}{test\_trigger\_event()}}
+{\footnotesize\ttfamily \label{classunittests_1_1basiceventhandlertest_1_1_test_event_handler_a3f5e727e9ae3a9bfe0de77569ee7eb1a} 
+test\+\_\+trigger\+\_\+event (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{def\ }test\_trigger\_event(self):}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Register\ the\ callback}}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ self.event\_handler.on(\textcolor{stringliteral}{"{}test\_event"{}},\ self.mock\_callback\_1)}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Trigger\ the\ event\ and\ verify\ if\ the\ callback\ was\ called}}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ asyncio.run(self.trigger\_event(\textcolor{stringliteral}{"{}test\_event"{}},\ \textcolor{stringliteral}{"{}arg1"{}},\ key=\textcolor{stringliteral}{"{}value"{}}))}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ self.mock\_callback\_1.assert\_called\_once\_with(\textcolor{stringliteral}{"{}arg1"{}},\ key=\textcolor{stringliteral}{"{}value"{}})}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00012}{Test\+Event\+Handler.\+event\+\_\+handler}}, \mbox{\hyperlink{l00008}{Test\+Assistant\+Event\+Handler.\+event\+\_\+handler}}, \mbox{\hyperlink{l00013}{Test\+Event\+Handler.\+mock\+\_\+callback\+\_\+1}}, and \mbox{\hyperlink{l00016}{Test\+Event\+Handler.\+trigger\+\_\+event()}}.
+
+Here is the call graph for this function\+:
+% FIG 2
+\Hypertarget{classunittests_1_1basiceventhandlertest_1_1_test_event_handler_af0004535b2d48e18726f93ab5c7098c2}\index{TestEventHandler@{TestEventHandler}!test\_trigger\_event\_with\_multiple\_callbacks@{test\_trigger\_event\_with\_multiple\_callbacks}}
+\index{test\_trigger\_event\_with\_multiple\_callbacks@{test\_trigger\_event\_with\_multiple\_callbacks}!TestEventHandler@{TestEventHandler}}
+\doxysubsubsection{\texorpdfstring{test\_trigger\_event\_with\_multiple\_callbacks()}{test\_trigger\_event\_with\_multiple\_callbacks()}}
+{\footnotesize\ttfamily \label{classunittests_1_1basiceventhandlertest_1_1_test_event_handler_af0004535b2d48e18726f93ab5c7098c2} 
+test\+\_\+trigger\+\_\+event\+\_\+with\+\_\+multiple\+\_\+callbacks (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{def\ }test\_trigger\_event\_with\_multiple\_callbacks(self):}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Register\ multiple\ callbacks}}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ self.event\_handler.on(\textcolor{stringliteral}{"{}test\_event"{}},\ self.mock\_callback\_1)}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ self.event\_handler.on(\textcolor{stringliteral}{"{}test\_event"{}},\ self.mock\_callback\_2)}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Trigger\ the\ event\ and\ verify\ if\ both\ callbacks\ were\ called}}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ asyncio.run(self.trigger\_event(\textcolor{stringliteral}{"{}test\_event"{}},\ \textcolor{stringliteral}{"{}arg1"{}},\ key=\textcolor{stringliteral}{"{}value"{}}))}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ self.mock\_callback\_1.assert\_called\_once\_with(\textcolor{stringliteral}{"{}arg1"{}},\ key=\textcolor{stringliteral}{"{}value"{}})}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ self.mock\_callback\_2.assert\_called\_once\_with(\textcolor{stringliteral}{"{}arg1"{}},\ key=\textcolor{stringliteral}{"{}value"{}})}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{comment}{\#\ Assume\ the\ EventHandler\ class\ is\ already\ defined\ as\ provided}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00012}{Test\+Event\+Handler.\+event\+\_\+handler}}, \mbox{\hyperlink{l00008}{Test\+Assistant\+Event\+Handler.\+event\+\_\+handler}}, \mbox{\hyperlink{l00013}{Test\+Event\+Handler.\+mock\+\_\+callback\+\_\+1}}, \mbox{\hyperlink{l00014}{Test\+Event\+Handler.\+mock\+\_\+callback\+\_\+2}}, and \mbox{\hyperlink{l00016}{Test\+Event\+Handler.\+trigger\+\_\+event()}}.
+
+Here is the call graph for this function\+:
+% FIG 3
+\Hypertarget{classunittests_1_1basiceventhandlertest_1_1_test_event_handler_aacd5d4e13ce05a20d0ebdedbf5457116}\index{TestEventHandler@{TestEventHandler}!trigger\_event@{trigger\_event}}
+\index{trigger\_event@{trigger\_event}!TestEventHandler@{TestEventHandler}}
+\doxysubsubsection{\texorpdfstring{trigger\_event()}{trigger\_event()}}
+{\footnotesize\ttfamily \label{classunittests_1_1basiceventhandlertest_1_1_test_event_handler_aacd5d4e13ce05a20d0ebdedbf5457116} 
+trigger\+\_\+event (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{event\+\_\+name}{, }\item[{\texorpdfstring{$\ast$}{*}}]{args}{, }\item[{\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{kwargs}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{async\ def\ }trigger\_event(self,\ event\_name,\ *args,\ **kwargs):}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ await\ self.event\_handler.createEvent(event\_name,\ *args,\ **kwargs)}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00012}{Test\+Event\+Handler.\+event\+\_\+handler}}, and \mbox{\hyperlink{l00008}{Test\+Assistant\+Event\+Handler.\+event\+\_\+handler}}.
+
+
+
+Referenced by \mbox{\hyperlink{l00036}{Test\+Event\+Handler.\+test\+\_\+trigger\+\_\+event()}}, and \mbox{\hyperlink{l00044}{Test\+Event\+Handler.\+test\+\_\+trigger\+\_\+event\+\_\+with\+\_\+multiple\+\_\+callbacks()}}.
+
+Here is the caller graph for this function\+:
+% FIG 4
+
+
+\doxysubsection{Field Documentation}
+\Hypertarget{classunittests_1_1basiceventhandlertest_1_1_test_event_handler_a102eb58abd9e7bfba6da36709364673c}\index{TestEventHandler@{TestEventHandler}!event\_handler@{event\_handler}}
+\index{event\_handler@{event\_handler}!TestEventHandler@{TestEventHandler}}
+\doxysubsubsection{\texorpdfstring{event\_handler}{event\_handler}}
+{\footnotesize\ttfamily \label{classunittests_1_1basiceventhandlertest_1_1_test_event_handler_a102eb58abd9e7bfba6da36709364673c} 
+event\+\_\+handler = \mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler}{Event\+Handler}}()}
+
+
+
+Referenced by \mbox{\hyperlink{l00027}{Test\+Event\+Handler.\+test\+\_\+on\+\_\+event\+\_\+multiple\+\_\+callbacks()}}, \mbox{\hyperlink{l00019}{Test\+Event\+Handler.\+test\+\_\+on\+\_\+event\+\_\+registration()}}, \mbox{\hyperlink{l00021}{Test\+Assistant\+Event\+Handler.\+test\+\_\+on\+\_\+text\+\_\+created()}}, \mbox{\hyperlink{l00030}{Test\+Assistant\+Event\+Handler.\+test\+\_\+on\+\_\+text\+\_\+delta()}}, \mbox{\hyperlink{l00044}{Test\+Assistant\+Event\+Handler.\+test\+\_\+on\+\_\+tool\+\_\+call\+\_\+created()}}, \mbox{\hyperlink{l00057}{Test\+Assistant\+Event\+Handler.\+test\+\_\+on\+\_\+tool\+\_\+call\+\_\+delta()}}, \mbox{\hyperlink{l00036}{Test\+Event\+Handler.\+test\+\_\+trigger\+\_\+event()}}, \mbox{\hyperlink{l00044}{Test\+Event\+Handler.\+test\+\_\+trigger\+\_\+event\+\_\+with\+\_\+multiple\+\_\+callbacks()}}, and \mbox{\hyperlink{l00016}{Test\+Event\+Handler.\+trigger\+\_\+event()}}.
+
+\Hypertarget{classunittests_1_1basiceventhandlertest_1_1_test_event_handler_a44a841b5e43385fc83a62bdb1208f577}\index{TestEventHandler@{TestEventHandler}!mock\_callback\_1@{mock\_callback\_1}}
+\index{mock\_callback\_1@{mock\_callback\_1}!TestEventHandler@{TestEventHandler}}
+\doxysubsubsection{\texorpdfstring{mock\_callback\_1}{mock\_callback\_1}}
+{\footnotesize\ttfamily \label{classunittests_1_1basiceventhandlertest_1_1_test_event_handler_a44a841b5e43385fc83a62bdb1208f577} 
+mock\+\_\+callback\+\_\+1 = Async\+Mock()}
+
+
+
+Referenced by \mbox{\hyperlink{l00027}{Test\+Event\+Handler.\+test\+\_\+on\+\_\+event\+\_\+multiple\+\_\+callbacks()}}, \mbox{\hyperlink{l00019}{Test\+Event\+Handler.\+test\+\_\+on\+\_\+event\+\_\+registration()}}, \mbox{\hyperlink{l00036}{Test\+Event\+Handler.\+test\+\_\+trigger\+\_\+event()}}, and \mbox{\hyperlink{l00044}{Test\+Event\+Handler.\+test\+\_\+trigger\+\_\+event\+\_\+with\+\_\+multiple\+\_\+callbacks()}}.
+
+\Hypertarget{classunittests_1_1basiceventhandlertest_1_1_test_event_handler_a99fdfbd660eca1f2159c2af892f58b21}\index{TestEventHandler@{TestEventHandler}!mock\_callback\_2@{mock\_callback\_2}}
+\index{mock\_callback\_2@{mock\_callback\_2}!TestEventHandler@{TestEventHandler}}
+\doxysubsubsection{\texorpdfstring{mock\_callback\_2}{mock\_callback\_2}}
+{\footnotesize\ttfamily \label{classunittests_1_1basiceventhandlertest_1_1_test_event_handler_a99fdfbd660eca1f2159c2af892f58b21} 
+mock\+\_\+callback\+\_\+2 = Async\+Mock()}
+
+
+
+Referenced by \mbox{\hyperlink{l00027}{Test\+Event\+Handler.\+test\+\_\+on\+\_\+event\+\_\+multiple\+\_\+callbacks()}}, and \mbox{\hyperlink{l00044}{Test\+Event\+Handler.\+test\+\_\+trigger\+\_\+event\+\_\+with\+\_\+multiple\+\_\+callbacks()}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/seanbaker/\+Downloads/\+GPTPhone (2)/unittests/\mbox{\hyperlink{basiceventhandlertest_8py}{basiceventhandlertest.\+py}}\end{DoxyCompactItemize}

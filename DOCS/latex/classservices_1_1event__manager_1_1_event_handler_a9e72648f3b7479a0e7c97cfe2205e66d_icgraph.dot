@@ -1,0 +1,34 @@
+digraph "services.event_manager.EventHandler.createEvent"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="RL";
+  Node1 [id="Node000001",label="services.event_manager.Event\lHandler.createEvent",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [id="edge15_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="services.gpt_service.Abstract\lLLMService.emit_complete\l_sentences",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classservices_1_1gpt__service_1_1_abstract_l_l_m_service.html#aea094f3cafaecafd3f0b46807677f7d4",tooltip=" "];
+  Node2 -> Node3 [id="edge16_Node000002_Node000003",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="services.gpt_service.Gemini\lService.completion",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classservices_1_1gpt__service_1_1_gemini_service.html#a964d5feeb7fadc0631a0b740fe359b2f",tooltip=" "];
+  Node3 -> Node4 [id="edge17_Node000003_Node000004",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="services.gpt_service.Open\lAIService.completion",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classservices_1_1gpt__service_1_1_open_a_i_service.html#aa069d843d4ce3347e4896c0f4230892d",tooltip=" "];
+  Node4 -> Node4 [id="edge18_Node000004_Node000004",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 -> Node4 [id="edge19_Node000002_Node000004",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node2 -> Node5 [id="edge20_Node000002_Node000005",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node5 [id="Node000005",label="services.gpt_service.Assistant\lService.handle_streaming\l_response",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classservices_1_1gpt__service_1_1_assistant_service.html#aae5d80c11eed2be1787e88ab2f3ad907",tooltip=" "];
+  Node5 -> Node6 [id="edge21_Node000005_Node000006",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node6 [id="Node000006",label="services.gpt_service.Assistant\lService.completion",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classservices_1_1gpt__service_1_1_assistant_service.html#a903ea81b34f5ded63a9ce269ee2a17df",tooltip=" "];
+  Node6 -> Node4 [id="edge22_Node000006_Node000004",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node1 -> Node7 [id="edge23_Node000001_Node000007",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node7 [id="Node000007",label="services.tts_service.Deepgram\lTTS.generate",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classservices_1_1tts__service_1_1_deepgram_t_t_s.html#a5aa00c3ecc52ad77dcc3519d86a732d1",tooltip=" "];
+  Node1 -> Node8 [id="edge24_Node000001_Node000008",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node8 [id="Node000008",label="services.tts_service.Eleven\lLabsTTS.generate",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classservices_1_1tts__service_1_1_eleven_labs_t_t_s.html#a1a7685266e86d5200c88e0135e25992a",tooltip=" "];
+  Node1 -> Node9 [id="edge25_Node000001_Node000009",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node9 [id="Node000009",label="services.stt_service.Transcription\lService.handle_transcription",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classservices_1_1stt__service_1_1_transcription_service.html#a5b5a71f5e5de550953851159aaf0d66b",tooltip=" "];
+  Node1 -> Node10 [id="edge26_Node000001_Node000010",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node10 [id="Node000010",label="services.stt_service.Transcription\lService.handle_utterance_end",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classservices_1_1stt__service_1_1_transcription_service.html#a4d911531fbf455f419ab8ca851dae51a",tooltip=" "];
+  Node1 -> Node11 [id="edge27_Node000001_Node000011",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node11 [id="Node000011",label="services.streaming\l_service.StreamService.send_audio",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classservices_1_1streaming__service_1_1_stream_service.html#ad70a81abfbdd0a1c39c905e37d3b5282",tooltip=" "];
+  Node11 -> Node12 [id="edge28_Node000011_Node000012",dir="back",color="steelblue1",style="solid",tooltip=" "];
+  Node12 [id="Node000012",label="services.streaming\l_service.StreamService.buffer",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classservices_1_1streaming__service_1_1_stream_service.html#ad29e1d05de66d509176f6313a1459187",tooltip=" "];
+}

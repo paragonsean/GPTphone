@@ -1,0 +1,60 @@
+\doxysection{testspeed.\+py}
+\hypertarget{testspeed_8py_source}{}\label{testspeed_8py_source}\index{/Users/seanbaker/Downloads/GPTPhone (2)/testspeed.py@{/Users/seanbaker/Downloads/GPTPhone (2)/testspeed.py}}
+\mbox{\hyperlink{testspeed_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00001}\mbox{\hyperlink{namespacetestspeed}{00001}}\ \textcolor{keyword}{import}\ openai}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00002}00002\ \textcolor{keyword}{import}\ time}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00003}00003\ \textcolor{keyword}{import}\ numpy\ \textcolor{keyword}{as}\ np}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00006}\mbox{\hyperlink{namespacetestspeed_a18439b4666c59cc6c3bd29ba8d28aa86}{00006}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespacetestspeed_a18439b4666c59cc6c3bd29ba8d28aa86}{measure\_time\_openai}}():}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00007}00007\ \ \ \ \ client\_openai\ =\ openai.OpenAI()}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00009}00009\ \ \ \ \ start\_time\_openai\ =\ time.time()}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00010}00010\ \ \ \ \ sentence\_end\_time\_openai\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00011}00011\ \ \ \ \ text\_buffer\_openai\ =\ \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00013}00013\ \ \ \ \ stream\ =\ client\_openai.chat.completions.create(}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00014}00014\ \ \ \ \ \ \ \ \ model=\textcolor{stringliteral}{"{}gpt-\/4o"{}},}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00015}00015\ \ \ \ \ \ \ \ \ messages=[\{\textcolor{stringliteral}{"{}role"{}}:\textcolor{stringliteral}{"{}system"{}},\ \textcolor{stringliteral}{"{}content"{}}:\textcolor{stringliteral}{"{}Answer\ with\ only\ one\ sentence\ at\ a\ time."{}}\},}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00016}00016\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{"{}role"{}}:\ \textcolor{stringliteral}{"{}user"{}},\ \textcolor{stringliteral}{"{}content"{}}:\ \textcolor{stringliteral}{"{}Hello,\ how\ are\ you?"{}}\}],}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00017}00017\ \ \ \ \ \ \ \ \ stream=\textcolor{keyword}{True},}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00018}00018\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00020}00020\ \ \ \ \ \textcolor{keywordflow}{for}\ chunk\ \textcolor{keywordflow}{in}\ stream:}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00021}00021\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ chunk.choices[0].delta.content\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ current\_time\ =\ time.time()}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ text\_buffer\_openai\ +=\ chunk.choices[0].delta.content}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ print(chunk.choices[0].delta.content,\ end=\textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{stringliteral}{'.'}\ \textcolor{keywordflow}{in}\ text\_buffer\_openai\ \textcolor{keywordflow}{or}\ \textcolor{stringliteral}{'!'}\ \textcolor{keywordflow}{in}\ text\_buffer\_openai\ \textcolor{keywordflow}{or}\ \textcolor{stringliteral}{'?'}\ \textcolor{keywordflow}{in}\ text\_buffer\_openai:}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sentence\_end\_time\_openai\ =\ (current\_time\ -\/\ start\_time\_openai)\ *\ 1000\ \ \textcolor{comment}{\#\ Convert\ to\ milliseconds}}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break}}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00030}00030\ \ \ \ \ \textcolor{keywordflow}{return}\ sentence\_end\_time\_openai,\ text\_buffer\_openai}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00032}00032\ \textcolor{comment}{\#\ Run\ the\ tests\ 10\ times\ for\ each\ service}}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00034}\mbox{\hyperlink{namespacetestspeed_a43b79f535ce7c194688296078e28d4a8}{00034}}\ openai\_times\ =\ []}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00035}\mbox{\hyperlink{namespacetestspeed_a1d7492bdcd116d3f790595394f005ab5}{00035}}\ openai\_texts\ =\ []}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00037}00037\ \textcolor{keywordflow}{for}\ i\ \textcolor{keywordflow}{in}\ range(10):}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00038}00038\ \ \ \ \ print(f\textcolor{stringliteral}{"{}Running\ test\ \{i+1\}/10\ for\ OpenAI..."{}})}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00039}\mbox{\hyperlink{namespacetestspeed_a52e1d85ba19c54c1a7a9be94fe3f3257}{00039}}\ \ \ \ \ openai\_time,\ openai\_text\ =\ \mbox{\hyperlink{namespacetestspeed_a18439b4666c59cc6c3bd29ba8d28aa86}{measure\_time\_openai}}()}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00040}00040\ \ \ \ \ openai\_times.append(openai\_time)}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00041}00041\ \ \ \ \ openai\_texts.append(openai\_text)}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00043}00043\ \textcolor{comment}{\#\ Calculate\ statistics}}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00045}\mbox{\hyperlink{namespacetestspeed_a89ec9d9980541097e889534824b2a5fd}{00045}}\ openai\_avg\ =\ np.mean(openai\_times)}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00046}\mbox{\hyperlink{namespacetestspeed_a2d5ca099e8e03880d9f04642edefbe22}{00046}}\ openai\_std\ =\ np.std(openai\_times)}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00047}\mbox{\hyperlink{namespacetestspeed_a811e71b6c47e76540dde0f8e8e83496c}{00047}}\ openai\_min\ =\ np.min(openai\_times)}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00048}\mbox{\hyperlink{namespacetestspeed_a3112fcca322a5f93dce552c2c2dabca1}{00048}}\ openai\_max\ =\ np.max(openai\_times)}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00051}00051\ print(f\textcolor{stringliteral}{"{}\(\backslash\)nOpenAI\ -\/\ Avg:\ \{openai\_avg:.2f\}\ ms,\ Std:\ \{openai\_std:.2f\}\ ms,\ Min:\ \{openai\_min:.2f\}\ ms,\ Max:\ \{openai\_max:.2f\}\ ms"{}})}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00052}00052\ print(\textcolor{stringliteral}{"{}Returned\ texts\ from\ OpenAI:"{}})}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00053}00053\ \textcolor{keywordflow}{for}\ text\ \textcolor{keywordflow}{in}\ openai\_texts:}
+\DoxyCodeLine{\Hypertarget{testspeed_8py_source_l00054}00054\ \ \ \ \ print(f\textcolor{stringliteral}{"{}-\/\ \{text\}"{}})}
+
+\end{DoxyCode}

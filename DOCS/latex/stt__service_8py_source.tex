@@ -1,0 +1,206 @@
+\doxysection{stt\+\_\+service.\+py}
+\hypertarget{stt__service_8py_source}{}\label{stt__service_8py_source}\index{/Users/seanbaker/Downloads/GPTPhone (2)/services/stt\_service.py@{/Users/seanbaker/Downloads/GPTPhone (2)/services/stt\_service.py}}
+\mbox{\hyperlink{stt__service_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00001}\mbox{\hyperlink{namespaceservices_1_1stt__service}{00001}}\ \textcolor{keyword}{import}\ os}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00003}00003\ \textcolor{keyword}{from}\ deepgram\ \textcolor{keyword}{import}\ DeepgramClient,\ LiveOptions,\ LiveTranscriptionEvents}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00005}00005\ \textcolor{keyword}{from}\ Utils.logger\_config\ \textcolor{keyword}{import}\ get\_logger}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00006}00006\ \textcolor{keyword}{from}\ \mbox{\hyperlink{namespaceservices_1_1event__manager}{services.event\_manager}}\ \textcolor{keyword}{import}\ EventHandler}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00008}\mbox{\hyperlink{namespaceservices_1_1stt__service_a605b9dc0fda6ea2c0f36adab57dcf6e1}{00008}}\ logger\ =\ get\_logger(\textcolor{stringliteral}{"{}Transcription"{}})}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00010}00010\ \textcolor{stringliteral}{'''}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00011}00011\ \textcolor{stringliteral}{Author:\ Sean\ Baker}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00012}00012\ \textcolor{stringliteral}{Date:\ 2024-\/07-\/22\ }}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00013}00013\ \textcolor{stringliteral}{Description:\ Transcription\ service\ utilizing\ deepgram\ helps\ with\ logger\ and\ user\ input\ to\ pass\ to\ gpt\ }}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00014}00014\ \textcolor{stringliteral}{'''}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00015}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service}{00015}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service}{TranscriptionService}}(\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler}{EventHandler}}):}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00016}00016\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00017}00017\ \textcolor{stringliteral}{\ \ \ \ A\ class\ that\ handles\ live\ transcription\ using\ the\ Deepgram\ API.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00018}00018\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00019}00019\ \textcolor{stringliteral}{\ \ \ \ Attributes:}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00020}00020\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ client\ (DeepgramClient):\ The\ Deepgram\ client\ used\ for\ transcription.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00021}00021\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ deepgram\_live\ (DeepgramLive):\ The\ Deepgram\ live\ transcription\ instance.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00022}00022\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ final\_result\ (str):\ The\ final\ transcription\ result.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00023}00023\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ speech\_final\ (bool):\ Indicates\ if\ the\ speech\ is\ final\ or\ not.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00024}00024\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ stream\_sid\ (str):\ The\ stream\ ID\ associated\ with\ the\ transcription.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00025}00025\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00026}00026\ \textcolor{stringliteral}{\ \ \ \ Methods:}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00027}00027\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ set\_stream\_sid:\ Sets\ the\ stream\ ID.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00028}00028\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ get\_stream\_sid:\ Returns\ the\ stream\ ID.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00029}00029\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ connect:\ Connects\ to\ the\ Deepgram\ API\ and\ starts\ live\ transcription.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00030}00030\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ handle\_utterance\_end:\ Handles\ the\ event\ when\ an\ utterance\ ends.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00031}00031\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ handle\_transcription:\ Handles\ the\ event\ when\ a\ transcription\ is\ received.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00032}00032\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ handle\_error:\ Handles\ the\ event\ when\ an\ error\ occurs.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00033}00033\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ handle\_warning:\ Handles\ the\ event\ when\ a\ warning\ occurs.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00034}00034\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ handle\_metadata:\ Handles\ the\ event\ when\ metadata\ is\ received.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00035}00035\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ handle\_close:\ Handles\ the\ event\ when\ the\ connection\ is\ closed.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00036}00036\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ send:\ Sends\ audio\ data\ to\ the\ Deepgram\ API\ for\ transcription.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00037}00037\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ disconnect:\ Disconnects\ from\ the\ Deepgram\ API.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00038}00038\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00040}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a9dcaf1c3979d8e654ef87061b345c936}{00040}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a9dcaf1c3979d8e654ef87061b345c936}{\_\_init\_\_}}(self):}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00041}00041\ \ \ \ \ \ \ \ \ super().\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a9dcaf1c3979d8e654ef87061b345c936}{\_\_init\_\_}}()}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00042}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a212b5676c180a7ad86c5d022ed02abf9}{00042}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_a8e717bb86884ae752031de7891ceb04d}{client}}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a212b5676c180a7ad86c5d022ed02abf9}{client}}\ =\ DeepgramClient(os.getenv(\textcolor{stringliteral}{"{}DEEPGRAM\_API\_KEY"{}}))}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00043}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_ac3235c57b55541f46978698ab4fe71a8}{00043}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_ac3235c57b55541f46978698ab4fe71a8}{deepgram\_live}}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a42d17519e8d47c2525be23936e582327}{deepgram\_live}}\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00044}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a188a592259535cebcd076da6b239c962}{00044}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a188a592259535cebcd076da6b239c962}{final\_result}}\ =\ \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00045}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_aeafeaac5866b2b49a60b58985bf55ced}{00045}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_aeafeaac5866b2b49a60b58985bf55ced}{speech\_final}}\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00046}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a88a8c5f6749cfadf7d05b3aa13f0c775}{00046}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a88a8c5f6749cfadf7d05b3aa13f0c775}{stream\_sid}}\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00048}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_af0c7f48f011f75f7e85e234a42e84180}{00048}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_af0c7f48f011f75f7e85e234a42e84180}{set\_stream\_sid}}(self,\ stream\_id):}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00049}00049\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00050}00050\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Sets\ the\ stream\ ID\ associated\ with\ the\ transcription.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00051}00051\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00052}00052\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Args:}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00053}00053\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ stream\_id\ (str):\ The\ stream\ ID.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00054}00054\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00055}00055\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a88a8c5f6749cfadf7d05b3aa13f0c775}{stream\_sid}}\ =\ stream\_id}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00057}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a306d06c154d57157a70a63df433e876e}{00057}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a306d06c154d57157a70a63df433e876e}{get\_stream\_sid}}(self):}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00058}00058\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00059}00059\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Returns\ the\ stream\ ID\ associated\ with\ the\ transcription.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00060}00060\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00061}00061\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Returns:}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00062}00062\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ str:\ The\ stream\ ID.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00063}00063\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00064}00064\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a88a8c5f6749cfadf7d05b3aa13f0c775}{stream\_sid}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00066}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_ab103eb8bababab82e68555efa2280591}{00066}}\ \ \ \ \ \textcolor{keyword}{async\ def\ }\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_ab103eb8bababab82e68555efa2280591}{connect}}(self):}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00067}00067\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00068}00068\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Connects\ to\ the\ Deepgram\ API\ and\ starts\ live\ transcription.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00069}00069\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00070}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a42d17519e8d47c2525be23936e582327}{00070}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_ac3235c57b55541f46978698ab4fe71a8}{deepgram\_live}}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a42d17519e8d47c2525be23936e582327}{deepgram\_live}}\ =\ self.\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_a8e717bb86884ae752031de7891ceb04d}{client}}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a212b5676c180a7ad86c5d022ed02abf9}{client}}.listen.asynclive.v(\textcolor{stringliteral}{"{}1"{}})}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00071}00071\ \ \ \ \ \ \ \ \ await\ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_ac3235c57b55541f46978698ab4fe71a8}{deepgram\_live}}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a42d17519e8d47c2525be23936e582327}{deepgram\_live}}.start(LiveOptions(}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ model=\textcolor{stringliteral}{"{}nova-\/2"{}},}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ language=\textcolor{stringliteral}{"{}en-\/US"{}},}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ encoding=\textcolor{stringliteral}{"{}mulaw"{}},}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ sample\_rate=8000,}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ channels=1,}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ punctuate=\textcolor{keyword}{True},}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ interim\_results=\textcolor{keyword}{True},}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ endpointing=200,}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ utterance\_end\_ms=1000}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00081}00081\ \ \ \ \ \ \ \ \ ))}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00083}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a3667edbe47ff8abcef6d5e1c5928c178}{00083}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_ac3235c57b55541f46978698ab4fe71a8}{deepgram\_live}}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a42d17519e8d47c2525be23936e582327}{deepgram\_live}}.\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_a1327c875dc176ec4dfbf78385f08758c}{on}}(LiveTranscriptionEvents.Transcript,\ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a3667edbe47ff8abcef6d5e1c5928c178}{handle\_transcription}}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a5b5a71f5e5de550953851159aaf0d66b}{handle\_transcription}})}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00084}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a88e7597fc824dd5b9cb41e52b25545bf}{00084}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_ac3235c57b55541f46978698ab4fe71a8}{deepgram\_live}}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a42d17519e8d47c2525be23936e582327}{deepgram\_live}}.\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_a1327c875dc176ec4dfbf78385f08758c}{on}}(LiveTranscriptionEvents.Error,\ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a88e7597fc824dd5b9cb41e52b25545bf}{handle\_error}}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_ad23e46e15a575bef37db2ec88d068471}{handle\_error}})}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00085}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a056118d831af7c93ba622f6ff7b8e6ef}{00085}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_ac3235c57b55541f46978698ab4fe71a8}{deepgram\_live}}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a42d17519e8d47c2525be23936e582327}{deepgram\_live}}.\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_a1327c875dc176ec4dfbf78385f08758c}{on}}(LiveTranscriptionEvents.Close,\ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a056118d831af7c93ba622f6ff7b8e6ef}{handle\_close}}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a10c53a5987fd15ed3d72d3c600f9e1eb}{handle\_close}})}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00086}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a9096a48a39337fdd285cdbf14275676a}{00086}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_ac3235c57b55541f46978698ab4fe71a8}{deepgram\_live}}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a42d17519e8d47c2525be23936e582327}{deepgram\_live}}.\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_a1327c875dc176ec4dfbf78385f08758c}{on}}(LiveTranscriptionEvents.Warning,\ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a9096a48a39337fdd285cdbf14275676a}{handle\_warning}}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_aea4bb0689287e8e9b97c431109ec7b56}{handle\_warning}})}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00087}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a2014eab38eaa51b5396fbce525931ed8}{00087}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_ac3235c57b55541f46978698ab4fe71a8}{deepgram\_live}}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a42d17519e8d47c2525be23936e582327}{deepgram\_live}}.\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_a1327c875dc176ec4dfbf78385f08758c}{on}}(LiveTranscriptionEvents.Metadata,\ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a2014eab38eaa51b5396fbce525931ed8}{handle\_metadata}}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a3e58d7c2968e2fdbb916aec8de31fcb7}{handle\_metadata}})}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00088}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_affea6a5eaed32de183a35b33357a45e3}{00088}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_ac3235c57b55541f46978698ab4fe71a8}{deepgram\_live}}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a42d17519e8d47c2525be23936e582327}{deepgram\_live}}.\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_a1327c875dc176ec4dfbf78385f08758c}{on}}(LiveTranscriptionEvents.UtteranceEnd,\ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_affea6a5eaed32de183a35b33357a45e3}{handle\_utterance\_end}}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a4d911531fbf455f419ab8ca851dae51a}{handle\_utterance\_end}})}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00090}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a4d911531fbf455f419ab8ca851dae51a}{00090}}\ \ \ \ \ \textcolor{keyword}{async\ def\ }\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_affea6a5eaed32de183a35b33357a45e3}{handle\_utterance\_end}}(self,\ self\_obj,\ utterance\_end):}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00091}00091\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00092}00092\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Handles\ the\ event\ when\ an\ utterance\ ends.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00093}00093\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00094}00094\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Args:}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00095}00095\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ self\_obj:\ The\ self\ object.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00096}00096\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ utterance\_end:\ The\ utterance\ end\ event.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00097}00097\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00098}00098\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_aeafeaac5866b2b49a60b58985bf55ced}{speech\_final}}:}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ logger.info(}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ f\textcolor{stringliteral}{"{}UtteranceEnd\ received\ before\ speech\ was\ final,\ emit\ the\ text\ collected\ so\ far:\ \{self.final\_result\}"{}})}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ await\ self.\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_a9e72648f3b7479a0e7c97cfe2205e66d}{createEvent}}(\textcolor{stringliteral}{'transcription'},\ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a188a592259535cebcd076da6b239c962}{final\_result}})}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a188a592259535cebcd076da6b239c962}{final\_result}}\ =\ \textcolor{stringliteral}{''}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_aeafeaac5866b2b49a60b58985bf55ced}{speech\_final}}\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00108}00108\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ Exception\ \textcolor{keyword}{as}\ e:}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ logger.error(f\textcolor{stringliteral}{"{}Error\ while\ handling\ utterance\ end:\ \{e\}"{}})}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ e.print\_stack()}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00112}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a5b5a71f5e5de550953851159aaf0d66b}{00112}}\ \ \ \ \ \textcolor{keyword}{async\ def\ }\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a3667edbe47ff8abcef6d5e1c5928c178}{handle\_transcription}}(self,\ self\_obj,\ result):}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00113}00113\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00114}00114\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Handles\ the\ event\ when\ a\ transcription\ is\ received.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00115}00115\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00116}00116\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Args:}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00117}00117\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ self\_obj:\ The\ self\ object.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00118}00118\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ result:\ The\ transcription\ result.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00119}00119\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00120}00120\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ alternatives\ =\ result.channel.alternatives\ \textcolor{keywordflow}{if}\ hasattr(result,\ \textcolor{stringliteral}{'channel'})\ \textcolor{keywordflow}{else}\ []}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ text\ =\ alternatives[0].transcript\ \textcolor{keywordflow}{if}\ alternatives\ \textcolor{keywordflow}{else}\ \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00123}00123\ }
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ result.is\_final\ \textcolor{keywordflow}{and}\ text.strip():}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a188a592259535cebcd076da6b239c962}{final\_result}}\ +=\ f\textcolor{stringliteral}{"{}\ \{text\}"{}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ result.speech\_final:}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_aeafeaac5866b2b49a60b58985bf55ced}{speech\_final}}\ =\ \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ await\ self.\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_a9e72648f3b7479a0e7c97cfe2205e66d}{createEvent}}(\textcolor{stringliteral}{'transcription'},\ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a188a592259535cebcd076da6b239c962}{final\_result}})}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a188a592259535cebcd076da6b239c962}{final\_result}}\ =\ \textcolor{stringliteral}{''}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_aeafeaac5866b2b49a60b58985bf55ced}{speech\_final}}\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ text.strip():}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stream\_sid\ =\ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a88a8c5f6749cfadf7d05b3aa13f0c775}{stream\_sid}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ await\ self.\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_a9e72648f3b7479a0e7c97cfe2205e66d}{createEvent}}(\textcolor{stringliteral}{'utterance'},\ text,\ stream\_sid)}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00136}00136\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{except}\ Exception\ \textcolor{keyword}{as}\ e:}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ logger.error(f\textcolor{stringliteral}{"{}Error\ while\ handling\ transcription:\ \{e\}"{}})}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ e.print\_stack()}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00140}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_ad23e46e15a575bef37db2ec88d068471}{00140}}\ \ \ \ \ \textcolor{keyword}{async\ def\ }\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a88e7597fc824dd5b9cb41e52b25545bf}{handle\_error}}(self,\ self\_obj,\ error):}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00141}00141\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00142}00142\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Handles\ the\ event\ when\ an\ error\ occurs.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00143}00143\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00144}00144\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Args:}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00145}00145\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ self\_obj:\ The\ self\ object.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00146}00146\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ error:\ The\ error\ message.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00147}00147\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00148}00148\ \ \ \ \ \ \ \ \ logger.error(f\textcolor{stringliteral}{"{}Deepgram\ error:\ \{error\}"{}})}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00149}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a96a5c1a82d1a1fcb5e186e7229c862f6}{00149}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a96a5c1a82d1a1fcb5e186e7229c862f6}{is\_connected}}\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00150}00150\ }
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00151}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_aea4bb0689287e8e9b97c431109ec7b56}{00151}}\ \ \ \ \ \textcolor{keyword}{async\ def\ }\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a9096a48a39337fdd285cdbf14275676a}{handle\_warning}}(self,\ self\_obj,\ warning):}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00152}00152\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00153}00153\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Handles\ the\ event\ when\ a\ warning\ occurs.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00154}00154\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00155}00155\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Args:}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00156}00156\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ self\_obj:\ The\ self\ object.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00157}00157\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ warning:\ The\ warning\ message.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00158}00158\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00159}00159\ \ \ \ \ \ \ \ \ logger.info(\textcolor{stringliteral}{'Deepgram\ warning:'},\ warning)}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00160}00160\ }
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00161}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a3e58d7c2968e2fdbb916aec8de31fcb7}{00161}}\ \ \ \ \ \textcolor{keyword}{async\ def\ }\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a2014eab38eaa51b5396fbce525931ed8}{handle\_metadata}}(self,\ self\_obj,\ metadata):}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00162}00162\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00163}00163\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Handles\ the\ event\ when\ metadata\ is\ received.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00164}00164\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00165}00165\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Args:}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00166}00166\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ self\_obj:\ The\ self\ object.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00167}00167\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ metadata:\ The\ metadata.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00168}00168\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00169}00169\ \ \ \ \ \ \ \ \ logger.info(\textcolor{stringliteral}{'Deepgram\ metadata:'},\ metadata)}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00170}00170\ }
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00171}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a10c53a5987fd15ed3d72d3c600f9e1eb}{00171}}\ \ \ \ \ \textcolor{keyword}{async\ def\ }\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a056118d831af7c93ba622f6ff7b8e6ef}{handle\_close}}(self,\ self\_obj,\ close):}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00172}00172\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00173}00173\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Handles\ the\ event\ when\ the\ connection\ is\ closed.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00174}00174\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00175}00175\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Args:}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00176}00176\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ self\_obj:\ The\ self\ object.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00177}00177\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ close:\ The\ close\ event.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00178}00178\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00179}00179\ \ \ \ \ \ \ \ \ logger.info(\textcolor{stringliteral}{"{}Deepgram\ connection\ closed"{}})}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00180}00180\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a96a5c1a82d1a1fcb5e186e7229c862f6}{is\_connected}}\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00181}00181\ }
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00182}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a65b3d6379b6aead8c08c78e83043c8d5}{00182}}\ \ \ \ \ \textcolor{keyword}{async\ def\ }\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a65b3d6379b6aead8c08c78e83043c8d5}{send}}(self,\ payload:\ bytes):}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00183}00183\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00184}00184\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Sends\ audio\ data\ to\ the\ Deepgram\ API\ for\ transcription.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00185}00185\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00186}00186\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Args:}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00187}00187\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ payload\ (bytes):\ The\ audio\ data.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00188}00188\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00189}00189\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_ac3235c57b55541f46978698ab4fe71a8}{deepgram\_live}}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a42d17519e8d47c2525be23936e582327}{deepgram\_live}}:}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ await\ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_ac3235c57b55541f46978698ab4fe71a8}{deepgram\_live}}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a42d17519e8d47c2525be23936e582327}{deepgram\_live}}.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a65b3d6379b6aead8c08c78e83043c8d5}{send}}(payload)}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00191}00191\ }
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00192}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a4cfa528787b37a8f380fcb0b04471f64}{00192}}\ \ \ \ \ \textcolor{keyword}{async\ def\ }\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a4cfa528787b37a8f380fcb0b04471f64}{disconnect}}(self):}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00193}00193\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00194}00194\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Disconnects\ from\ the\ Deepgram\ API.}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00195}00195\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00196}00196\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_ac3235c57b55541f46978698ab4fe71a8}{deepgram\_live}}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a42d17519e8d47c2525be23936e582327}{deepgram\_live}}:}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ await\ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_ac3235c57b55541f46978698ab4fe71a8}{deepgram\_live}}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a42d17519e8d47c2525be23936e582327}{deepgram\_live}}.finish()}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_ac3235c57b55541f46978698ab4fe71a8}{deepgram\_live}}\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a42d17519e8d47c2525be23936e582327}{deepgram\_live}}\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00199}00199\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1stt__service_1_1_transcription_service_a96a5c1a82d1a1fcb5e186e7229c862f6}{is\_connected}}\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{stt__service_8py_source_l00200}00200\ \ \ \ \ \ \ \ \ logger.info(\textcolor{stringliteral}{"{}Disconnected\ from\ Deepgram"{}})}
+
+\end{DoxyCode}

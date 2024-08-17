@@ -1,0 +1,478 @@
+\doxysection{Database\+Manager Class Reference}
+\hypertarget{classdatabase__manager_1_1_database_manager}{}\label{classdatabase__manager_1_1_database_manager}\index{DatabaseManager@{DatabaseManager}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classdatabase__manager_1_1_database_manager_a3c6f91ccd4b4e87189cf58d2b0321697}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, str db\+\_\+url="{}sqlite+aiosqlite\+:///./Data\+Library/call\+\_\+contexts.\+db"{})
+\item 
+\mbox{\hyperlink{classdatabase__manager_1_1_database_manager_a004cc9b390ba88b81ed5a09ee15bf638}{get\+\_\+db}} (self)
+\item 
+\mbox{\hyperlink{classdatabase__manager_1_1_database_manager_a694c010d6106cfd77ed7d62df6aa4585}{create\+\_\+call\+\_\+context}} (self, Async\+Session db, call\+\_\+context)
+\item 
+\mbox{\hyperlink{classdatabase__manager_1_1_database_manager_a1bdb193544325311f469a67e172a9dbf}{get\+\_\+call\+\_\+context}} (self, Async\+Session db, str call\+\_\+sid)
+\item 
+\mbox{\hyperlink{classdatabase__manager_1_1_database_manager_a613989e7036a9ce02c3b9c18b0cec374}{update\+\_\+call\+\_\+context}} (self, Async\+Session db, str call\+\_\+sid, call\+\_\+context)
+\item 
+\mbox{\hyperlink{classdatabase__manager_1_1_database_manager_ad3c021c22b771504324ac59b4e205c99}{delete\+\_\+call\+\_\+context}} (self, Async\+Session db, str call\+\_\+sid)
+\item 
+\mbox{\hyperlink{classdatabase__manager_1_1_database_manager_a32bd1324eeba5ef1740474d85a2d217a}{get\+\_\+all\+\_\+call\+\_\+contexts}} (self, Async\+Session db)
+\item 
+\mbox{\hyperlink{classdatabase__manager_1_1_database_manager_a5d16c87fb8cb5a23a21393612310d85f}{create\+\_\+transcription}} (self, Async\+Session db, str call\+\_\+sid, str transcription\+\_\+text)
+\item 
+\mbox{\hyperlink{classdatabase__manager_1_1_database_manager_a9ee06e4225f63efe2baa390e89466324}{get\+\_\+transcription}} (self, Async\+Session db, str call\+\_\+sid)
+\item 
+\mbox{\hyperlink{classdatabase__manager_1_1_database_manager_a553eff1e000c9c99a45f4eba54d9cb0f}{delete\+\_\+transcription}} (self, Async\+Session db, str call\+\_\+sid)
+\item 
+\mbox{\hyperlink{classdatabase__manager_1_1_database_manager_ae998170396b34d9f687f23868aa354ec}{get\+\_\+all\+\_\+contacts}} (self, Async\+Session db)
+\item 
+\mbox{\hyperlink{classdatabase__manager_1_1_database_manager_a81fd2e01023016cc7408c96dd14cc830}{get\+\_\+contact\+\_\+by\+\_\+phone}} (self, Async\+Session db, str phone\+\_\+number)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classdatabase__manager_1_1_database_manager_a4720cf3b5a198cd8121ea0e55bdb2954}{engine}} = create\+\_\+async\+\_\+engine(db\+\_\+url, connect\+\_\+args=\{"{}check\+\_\+same\+\_\+thread"{}\+: False\})
+\item 
+\mbox{\hyperlink{classdatabase__manager_1_1_database_manager_a98f653d8193f8a3e114960aaa6342603}{Session\+Local}} = sessionmaker(autocommit=False, autoflush=False, bind=self.\+engine, class\+\_\+=Async\+Session)
+\item 
+\mbox{\hyperlink{classdatabase__manager_1_1_database_manager_a450696a95d6cb29d7723838846948340}{Base}} = declarative\+\_\+base()
+\item 
+\mbox{\hyperlink{classdatabase__manager_1_1_database_manager_a6f6e054758d34b83e86bea87d65dfe4e}{Contact\+Model}} = Contact\+Model
+\item 
+\mbox{\hyperlink{classdatabase__manager_1_1_database_manager_a6851420eef71769737e85a95b1157844}{Call\+Context\+Model}} = Call\+Context\+Model
+\item 
+\mbox{\hyperlink{classdatabase__manager_1_1_database_manager_a281a1c2cf3d24dc8eeb9df3af11b83b8}{Transcription\+Model}} = Transcription\+Model
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classdatabase__manager_1_1_database_manager_ab29215cbe99c6915a63394e8e695e6f1}{\+\_\+initialize\+\_\+tables}} (self)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}DatabaseManager is a class that manages the database operations for call contexts and transcriptions.
+
+Args:
+    db_url (str): The URL of the database. Default is "sqlite+aiosqlite:///./DataLibrary/call_contexts.db".
+
+Attributes:
+    engine (alchemy.AsyncEngine): The SQLAlchemy async engine for the database connection.
+    SessionLocal (alchemy.orm.session.Session): The SQLAlchemy async session for the database.
+    Base (alchemy.ext.declarative.api.DeclarativeMeta): The SQLAlchemy declarative base for table definitions.
+    ContactModel (alchemy.ext.declarative.api.DeclarativeMeta): The SQLAlchemy model class for contacts table.
+    CallContextModel (alchemy.ext.declarative.api.DeclarativeMeta): The SQLAlchemy model class for call_contexts table.
+    TranscriptionModel (alchemy.ext.declarative.api.DeclarativeMeta): The SQLAlchemy model class for transcriptions table.
+
+Methods:
+    _initialize_tables(): Initializes the tables in the database.
+    get_db(): Creates a database session and yields it for use.
+    create_call_context(db: AsyncSession, call_context): Creates a new call context in the database.
+    get_call_context(db: AsyncSession, call_sid: str): Retrieves a call context based on the call SID.
+    update_call_context(db: AsyncSession, call_sid: str, call_context): Updates a call context in the database.
+    delete_call_context(db: AsyncSession, call_sid: str): Deletes a call context from the database.
+    get_all_call_contexts(db: AsyncSession): Retrieves all call contexts from the database.
+    create_transcription(db: AsyncSession, call_sid: str, transcription_text: str): Creates a new transcription in the database.
+    get_transcription(db: AsyncSession, call_sid: str): Retrieves a transcription based on the call SID.
+    delete_transcription(db: AsyncSession, call_sid: str): Deletes a transcription from the database.
+    get_all_contacts(db: AsyncSession): Retrieves all contacts from the database.
+    get_contact_by_phone(db: AsyncSession, phone_number: str): Retrieves a contact based on the phone number.
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classdatabase__manager_1_1_database_manager_a3c6f91ccd4b4e87189cf58d2b0321697}\index{DatabaseManager@{DatabaseManager}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!DatabaseManager@{DatabaseManager}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{classdatabase__manager_1_1_database_manager_a3c6f91ccd4b4e87189cf58d2b0321697} 
+\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{str }]{db\+\_\+url}{ = {\ttfamily "{}sqlite+aiosqlite\+:///./DataLibrary/call\+\_\+contexts.db"{}}}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{def\ }\_\_init\_\_(self,\ db\_url:\ str\ =\ \textcolor{stringliteral}{"{}sqlite+aiosqlite:///./DataLibrary/call\_contexts.db"{}}):}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Ensure\ the\ DataLibrary\ folder\ exists}}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ os.path.exists(\textcolor{stringliteral}{'DataLibrary'}):}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ os.makedirs(\textcolor{stringliteral}{'DataLibrary'})}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ SQLAlchemy\ async\ setup\ with\ aiosqlite}}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ self.engine\ =\ create\_async\_engine(db\_url,\ connect\_args=\{\textcolor{stringliteral}{"{}check\_same\_thread"{}}:\ \textcolor{keyword}{False}\})}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ self.SessionLocal\ =\ sessionmaker(autocommit=\textcolor{keyword}{False},\ autoflush=\textcolor{keyword}{False},\ bind=self.engine,\ class\_=AsyncSession)}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ self.Base\ =\ declarative\_base()}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Initialize\ the\ tables}}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ self.\_initialize\_tables()}
+\DoxyCodeLine{00052\ }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classdatabase__manager_1_1_database_manager_ab29215cbe99c6915a63394e8e695e6f1}\index{DatabaseManager@{DatabaseManager}!\_initialize\_tables@{\_initialize\_tables}}
+\index{\_initialize\_tables@{\_initialize\_tables}!DatabaseManager@{DatabaseManager}}
+\doxysubsubsection{\texorpdfstring{\_initialize\_tables()}{\_initialize\_tables()}}
+{\footnotesize\ttfamily \label{classdatabase__manager_1_1_database_manager_ab29215cbe99c6915a63394e8e695e6f1} 
+\+\_\+initialize\+\_\+tables (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keyword}{def\ }\_initialize\_tables(self):}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }ContactModel(self.Base):}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_tablename\_\_\ =\ \textcolor{stringliteral}{"{}contacts"{}}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ contact\_id\ =\ Column(Integer,\ primary\_key=\textcolor{keyword}{True},\ index=\textcolor{keyword}{True})}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ phone\_number\ =\ Column(String,\ unique=\textcolor{keyword}{True},\ nullable=\textcolor{keyword}{False})}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ created\_at\ =\ Column(DateTime,\ default=datetime.utcnow)}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Relationship\ to\ Calls}}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ calls\ =\ relationship(\textcolor{stringliteral}{"{}CallContextModel"{}},\ back\_populates=\textcolor{stringliteral}{"{}contact"{}})}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }CallContextModel(self.Base):}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_tablename\_\_\ =\ \textcolor{stringliteral}{"{}call\_contexts"{}}}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ call\_sid\ =\ Column(String,\ primary\_key=\textcolor{keyword}{True},\ index=\textcolor{keyword}{True})}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ stream\_sid\ =\ Column(String,\ index=\textcolor{keyword}{True})}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ call\_ended\ =\ Column(Boolean,\ default=\textcolor{keyword}{False})}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ user\_context\ =\ Column(Text)}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ system\_message\ =\ Column(String)}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ initial\_message\ =\ Column(String)}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ start\_time\ =\ Column(DateTime,\ default=datetime.utcnow)}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ end\_time\ =\ Column(DateTime)}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ final\_status\ =\ Column(String)}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ to\_number\ =\ Column(String,\ nullable=\textcolor{keyword}{False})}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ from\_number\ =\ Column(String,\ nullable=\textcolor{keyword}{False})}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Foreign\ key\ to\ ContactModel}}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ contact\_id\ =\ Column(Integer,\ ForeignKey(\textcolor{stringliteral}{'contacts.contact\_id'}))}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ contact\ =\ relationship(\textcolor{stringliteral}{"{}ContactModel"{}},\ back\_populates=\textcolor{stringliteral}{"{}calls"{}})}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Relationship\ to\ Transcriptions}}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ transcription\ =\ relationship(\textcolor{stringliteral}{"{}TranscriptionModel"{}},\ back\_populates=\textcolor{stringliteral}{"{}call"{}},\ uselist=\textcolor{keyword}{False})}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }TranscriptionModel(self.Base):}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \_\_tablename\_\_\ =\ \textcolor{stringliteral}{"{}transcriptions"{}}}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ transcription\_id\ =\ Column(Integer,\ primary\_key=\textcolor{keyword}{True},\ index=\textcolor{keyword}{True})}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ call\_id\ =\ Column(String,\ ForeignKey(\textcolor{stringliteral}{'call\_contexts.call\_sid'}),\ nullable=\textcolor{keyword}{False})}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ transcription\_text\ =\ Column(Text,\ nullable=\textcolor{keyword}{False})}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ created\_at\ =\ Column(DateTime,\ default=datetime.utcnow)}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Relationship\ to\ CallContext}}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ call\ =\ relationship(\textcolor{stringliteral}{"{}CallContextModel"{}},\ back\_populates=\textcolor{stringliteral}{"{}transcription"{}})}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Save\ these\ classes\ as\ attributes\ of\ the\ DatabaseManager\ class}}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ self.ContactModel\ =\ ContactModel}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ self.CallContextModel\ =\ CallContextModel}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ self.TranscriptionModel\ =\ TranscriptionModel}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Create\ the\ database\ tables}}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \textcolor{keyword}{async\ def\ }create\_tables():}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{async}\ \textcolor{keyword}{with}\ self.engine.begin()\ \textcolor{keyword}{as}\ conn:}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ await\ conn.run\_sync(self.Base.metadata.create\_all)}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keyword}{import}\ asyncio}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ asyncio.run(create\_tables())}
+\DoxyCodeLine{00109\ }
+
+\end{DoxyCode}
+\Hypertarget{classdatabase__manager_1_1_database_manager_a694c010d6106cfd77ed7d62df6aa4585}\index{DatabaseManager@{DatabaseManager}!create\_call\_context@{create\_call\_context}}
+\index{create\_call\_context@{create\_call\_context}!DatabaseManager@{DatabaseManager}}
+\doxysubsubsection{\texorpdfstring{create\_call\_context()}{create\_call\_context()}}
+{\footnotesize\ttfamily \label{classdatabase__manager_1_1_database_manager_a694c010d6106cfd77ed7d62df6aa4585} 
+create\+\_\+call\+\_\+context (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{Async\+Session}]{db}{, }\item[{}]{call\+\_\+context}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keyword}{async\ def\ }create\_call\_context(self,\ db:\ AsyncSession,\ call\_context):}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ db\_call\_context\ =\ self.CallContextModel(}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ call\_sid=call\_context.call\_sid,}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ stream\_sid=call\_context.stream\_sid,}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ call\_ended=call\_context.call\_ended,}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ user\_context=json.dumps(call\_context.user\_context),}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ system\_message=call\_context.system\_message,}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ initial\_message=call\_context.initial\_message,}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \ \ start\_time=call\_context.start\_time,}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ end\_time=call\_context.end\_time,}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ final\_status=call\_context.final\_status,}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ to\_number=call\_context.to\_number,}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ from\_number=call\_context.from\_number,}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ contact\_id=call\_context.contact\_id}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ db.add(db\_call\_context)}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ await\ db.commit()}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ await\ db.refresh(db\_call\_context)}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ db\_call\_context}
+\DoxyCodeLine{00136\ }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00099}{Database\+Manager.\+Call\+Context\+Model}}.
+
+\Hypertarget{classdatabase__manager_1_1_database_manager_a5d16c87fb8cb5a23a21393612310d85f}\index{DatabaseManager@{DatabaseManager}!create\_transcription@{create\_transcription}}
+\index{create\_transcription@{create\_transcription}!DatabaseManager@{DatabaseManager}}
+\doxysubsubsection{\texorpdfstring{create\_transcription()}{create\_transcription()}}
+{\footnotesize\ttfamily \label{classdatabase__manager_1_1_database_manager_a5d16c87fb8cb5a23a21393612310d85f} 
+create\+\_\+transcription (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{Async\+Session}]{db}{, }\item[{str}]{call\+\_\+sid}{, }\item[{str}]{transcription\+\_\+text}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00170\ \ \ \ \ \textcolor{keyword}{async\ def\ }create\_transcription(self,\ db:\ AsyncSession,\ call\_sid:\ str,\ transcription\_text:\ str):}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ db\_transcription\ =\ self.TranscriptionModel(}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ call\_id=call\_sid,}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ transcription\_text=transcription\_text}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ db.add(db\_transcription)}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ await\ db.commit()}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ await\ db.refresh(db\_transcription)}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ db\_transcription}
+\DoxyCodeLine{00179\ }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00100}{Database\+Manager.\+Transcription\+Model}}.
+
+\Hypertarget{classdatabase__manager_1_1_database_manager_ad3c021c22b771504324ac59b4e205c99}\index{DatabaseManager@{DatabaseManager}!delete\_call\_context@{delete\_call\_context}}
+\index{delete\_call\_context@{delete\_call\_context}!DatabaseManager@{DatabaseManager}}
+\doxysubsubsection{\texorpdfstring{delete\_call\_context()}{delete\_call\_context()}}
+{\footnotesize\ttfamily \label{classdatabase__manager_1_1_database_manager_ad3c021c22b771504324ac59b4e205c99} 
+delete\+\_\+call\+\_\+context (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{Async\+Session}]{db}{, }\item[{str}]{call\+\_\+sid}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keyword}{async\ def\ }delete\_call\_context(self,\ db:\ AsyncSession,\ call\_sid:\ str):}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ db\_call\_context\ =\ await\ db.query(self.CallContextModel).filter(}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ self.CallContextModel.call\_sid\ ==\ call\_sid).first()}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ db\_call\_context:}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ await\ db.delete(db\_call\_context)}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ await\ db.commit()}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ db\_call\_context}
+\DoxyCodeLine{00166\ }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00099}{Database\+Manager.\+Call\+Context\+Model}}.
+
+\Hypertarget{classdatabase__manager_1_1_database_manager_a553eff1e000c9c99a45f4eba54d9cb0f}\index{DatabaseManager@{DatabaseManager}!delete\_transcription@{delete\_transcription}}
+\index{delete\_transcription@{delete\_transcription}!DatabaseManager@{DatabaseManager}}
+\doxysubsubsection{\texorpdfstring{delete\_transcription()}{delete\_transcription()}}
+{\footnotesize\ttfamily \label{classdatabase__manager_1_1_database_manager_a553eff1e000c9c99a45f4eba54d9cb0f} 
+delete\+\_\+transcription (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{Async\+Session}]{db}{, }\item[{str}]{call\+\_\+sid}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keyword}{async\ def\ }delete\_transcription(self,\ db:\ AsyncSession,\ call\_sid:\ str):}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ db\_transcription\ =\ await\ db.query(self.TranscriptionModel).filter(}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ self.TranscriptionModel.call\_id\ ==\ call\_sid).first()}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ db\_transcription:}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ await\ db.delete(db\_transcription)}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ await\ db.commit()}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ db\_transcription}
+\DoxyCodeLine{00190\ }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00100}{Database\+Manager.\+Transcription\+Model}}.
+
+\Hypertarget{classdatabase__manager_1_1_database_manager_a32bd1324eeba5ef1740474d85a2d217a}\index{DatabaseManager@{DatabaseManager}!get\_all\_call\_contexts@{get\_all\_call\_contexts}}
+\index{get\_all\_call\_contexts@{get\_all\_call\_contexts}!DatabaseManager@{DatabaseManager}}
+\doxysubsubsection{\texorpdfstring{get\_all\_call\_contexts()}{get\_all\_call\_contexts()}}
+{\footnotesize\ttfamily \label{classdatabase__manager_1_1_database_manager_a32bd1324eeba5ef1740474d85a2d217a} 
+get\+\_\+all\+\_\+call\+\_\+contexts (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{Async\+Session}]{db}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{keyword}{async\ def\ }get\_all\_call\_contexts(self,\ db:\ AsyncSession):}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ await\ db.query(self.CallContextModel).all()}
+\DoxyCodeLine{00169\ }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00099}{Database\+Manager.\+Call\+Context\+Model}}.
+
+\Hypertarget{classdatabase__manager_1_1_database_manager_ae998170396b34d9f687f23868aa354ec}\index{DatabaseManager@{DatabaseManager}!get\_all\_contacts@{get\_all\_contacts}}
+\index{get\_all\_contacts@{get\_all\_contacts}!DatabaseManager@{DatabaseManager}}
+\doxysubsubsection{\texorpdfstring{get\_all\_contacts()}{get\_all\_contacts()}}
+{\footnotesize\ttfamily \label{classdatabase__manager_1_1_database_manager_ae998170396b34d9f687f23868aa354ec} 
+get\+\_\+all\+\_\+contacts (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{Async\+Session}]{db}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00191\ \ \ \ \ \textcolor{keyword}{async\ def\ }get\_all\_contacts(self,\ db:\ AsyncSession):}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ await\ db.query(self.ContactModel).all()}
+\DoxyCodeLine{00193\ }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00098}{Database\+Manager.\+Contact\+Model}}.
+
+\Hypertarget{classdatabase__manager_1_1_database_manager_a1bdb193544325311f469a67e172a9dbf}\index{DatabaseManager@{DatabaseManager}!get\_call\_context@{get\_call\_context}}
+\index{get\_call\_context@{get\_call\_context}!DatabaseManager@{DatabaseManager}}
+\doxysubsubsection{\texorpdfstring{get\_call\_context()}{get\_call\_context()}}
+{\footnotesize\ttfamily \label{classdatabase__manager_1_1_database_manager_a1bdb193544325311f469a67e172a9dbf} 
+get\+\_\+call\+\_\+context (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{Async\+Session}]{db}{, }\item[{str}]{call\+\_\+sid}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keyword}{async\ def\ }get\_call\_context(self,\ db:\ AsyncSession,\ call\_sid:\ str):}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ await\ db.query(self.CallContextModel).filter(self.CallContextModel.call\_sid\ ==\ call\_sid).first()}
+\DoxyCodeLine{00139\ }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00099}{Database\+Manager.\+Call\+Context\+Model}}.
+
+\Hypertarget{classdatabase__manager_1_1_database_manager_a81fd2e01023016cc7408c96dd14cc830}\index{DatabaseManager@{DatabaseManager}!get\_contact\_by\_phone@{get\_contact\_by\_phone}}
+\index{get\_contact\_by\_phone@{get\_contact\_by\_phone}!DatabaseManager@{DatabaseManager}}
+\doxysubsubsection{\texorpdfstring{get\_contact\_by\_phone()}{get\_contact\_by\_phone()}}
+{\footnotesize\ttfamily \label{classdatabase__manager_1_1_database_manager_a81fd2e01023016cc7408c96dd14cc830} 
+get\+\_\+contact\+\_\+by\+\_\+phone (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{Async\+Session}]{db}{, }\item[{str}]{phone\+\_\+number}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00194\ \ \ \ \ \textcolor{keyword}{async\ def\ }get\_contact\_by\_phone(self,\ db:\ AsyncSession,\ phone\_number:\ str):}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ await\ db.query(self.ContactModel).filter(self.ContactModel.phone\_number\ ==\ phone\_number).first()}
+\DoxyCodeLine{00196\ }
+\DoxyCodeLine{00197\ }
+\DoxyCodeLine{00198\ \textcolor{comment}{\#\ Example\ usage\ of\ the\ DatabaseManager\ class:}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00098}{Database\+Manager.\+Contact\+Model}}.
+
+\Hypertarget{classdatabase__manager_1_1_database_manager_a004cc9b390ba88b81ed5a09ee15bf638}\index{DatabaseManager@{DatabaseManager}!get\_db@{get\_db}}
+\index{get\_db@{get\_db}!DatabaseManager@{DatabaseManager}}
+\doxysubsubsection{\texorpdfstring{get\_db()}{get\_db()}}
+{\footnotesize\ttfamily \label{classdatabase__manager_1_1_database_manager_a004cc9b390ba88b81ed5a09ee15bf638} 
+get\+\_\+db (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keyword}{async\ def\ }get\_db(self):}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{keyword}{async}\ \textcolor{keyword}{with}\ self.SessionLocal()\ \textcolor{keyword}{as}\ db:}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{yield}\ db}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{finally}:}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ await\ db.close()}
+\DoxyCodeLine{00116\ }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00047}{Database\+Manager.\+Session\+Local}}.
+
+\Hypertarget{classdatabase__manager_1_1_database_manager_a9ee06e4225f63efe2baa390e89466324}\index{DatabaseManager@{DatabaseManager}!get\_transcription@{get\_transcription}}
+\index{get\_transcription@{get\_transcription}!DatabaseManager@{DatabaseManager}}
+\doxysubsubsection{\texorpdfstring{get\_transcription()}{get\_transcription()}}
+{\footnotesize\ttfamily \label{classdatabase__manager_1_1_database_manager_a9ee06e4225f63efe2baa390e89466324} 
+get\+\_\+transcription (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{Async\+Session}]{db}{, }\item[{str}]{call\+\_\+sid}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00180\ \ \ \ \ \textcolor{keyword}{async\ def\ }get\_transcription(self,\ db:\ AsyncSession,\ call\_sid:\ str):}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ await\ db.query(self.TranscriptionModel).filter(self.TranscriptionModel.call\_id\ ==\ call\_sid).first()}
+\DoxyCodeLine{00182\ }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00100}{Database\+Manager.\+Transcription\+Model}}.
+
+\Hypertarget{classdatabase__manager_1_1_database_manager_a613989e7036a9ce02c3b9c18b0cec374}\index{DatabaseManager@{DatabaseManager}!update\_call\_context@{update\_call\_context}}
+\index{update\_call\_context@{update\_call\_context}!DatabaseManager@{DatabaseManager}}
+\doxysubsubsection{\texorpdfstring{update\_call\_context()}{update\_call\_context()}}
+{\footnotesize\ttfamily \label{classdatabase__manager_1_1_database_manager_a613989e7036a9ce02c3b9c18b0cec374} 
+update\+\_\+call\+\_\+context (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{Async\+Session}]{db}{, }\item[{str}]{call\+\_\+sid}{, }\item[{}]{call\+\_\+context}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{keyword}{async\ def\ }update\_call\_context(self,\ db:\ AsyncSession,\ call\_sid:\ str,\ call\_context):}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ db\_call\_context\ =\ await\ db.query(self.CallContextModel).filter(}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ self.CallContextModel.call\_sid\ ==\ call\_sid).first()}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ db\_call\_context:}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ db\_call\_context.stream\_sid\ =\ call\_context.stream\_sid}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ db\_call\_context.call\_ended\ =\ call\_context.call\_ended}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ db\_call\_context.user\_context\ =\ json.dumps(call\_context.user\_context)}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ db\_call\_context.system\_message\ =\ call\_context.system\_message}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ db\_call\_context.initial\_message\ =\ call\_context.initial\_message}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ db\_call\_context.start\_time\ =\ call\_context.start\_time}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ db\_call\_context.end\_time\ =\ call\_context.end\_time}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ db\_call\_context.final\_status\ =\ call\_context.final\_status}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ db\_call\_context.to\_number\ =\ call\_context.to\_number}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ db\_call\_context.from\_number\ =\ call\_context.from\_number}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ db\_call\_context.contact\_id\ =\ call\_context.contact\_id}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ await\ db.commit()}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ await\ db.refresh(db\_call\_context)}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ db\_call\_context}
+\DoxyCodeLine{00158\ }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{l00099}{Database\+Manager.\+Call\+Context\+Model}}.
+
+
+
+\doxysubsection{Field Documentation}
+\Hypertarget{classdatabase__manager_1_1_database_manager_a450696a95d6cb29d7723838846948340}\index{DatabaseManager@{DatabaseManager}!Base@{Base}}
+\index{Base@{Base}!DatabaseManager@{DatabaseManager}}
+\doxysubsubsection{\texorpdfstring{Base}{Base}}
+{\footnotesize\ttfamily \label{classdatabase__manager_1_1_database_manager_a450696a95d6cb29d7723838846948340} 
+Base = declarative\+\_\+base()}
+
+\Hypertarget{classdatabase__manager_1_1_database_manager_a6851420eef71769737e85a95b1157844}\index{DatabaseManager@{DatabaseManager}!CallContextModel@{CallContextModel}}
+\index{CallContextModel@{CallContextModel}!DatabaseManager@{DatabaseManager}}
+\doxysubsubsection{\texorpdfstring{CallContextModel}{CallContextModel}}
+{\footnotesize\ttfamily \label{classdatabase__manager_1_1_database_manager_a6851420eef71769737e85a95b1157844} 
+Call\+Context\+Model = Call\+Context\+Model}
+
+
+
+Referenced by \mbox{\hyperlink{l00117}{Database\+Manager.\+create\+\_\+call\+\_\+context()}}, \mbox{\hyperlink{l00159}{Database\+Manager.\+delete\+\_\+call\+\_\+context()}}, \mbox{\hyperlink{l00167}{Database\+Manager.\+get\+\_\+all\+\_\+call\+\_\+contexts()}}, \mbox{\hyperlink{l00137}{Database\+Manager.\+get\+\_\+call\+\_\+context()}}, and \mbox{\hyperlink{l00140}{Database\+Manager.\+update\+\_\+call\+\_\+context()}}.
+
+\Hypertarget{classdatabase__manager_1_1_database_manager_a6f6e054758d34b83e86bea87d65dfe4e}\index{DatabaseManager@{DatabaseManager}!ContactModel@{ContactModel}}
+\index{ContactModel@{ContactModel}!DatabaseManager@{DatabaseManager}}
+\doxysubsubsection{\texorpdfstring{ContactModel}{ContactModel}}
+{\footnotesize\ttfamily \label{classdatabase__manager_1_1_database_manager_a6f6e054758d34b83e86bea87d65dfe4e} 
+Contact\+Model = Contact\+Model}
+
+
+
+Referenced by \mbox{\hyperlink{l00191}{Database\+Manager.\+get\+\_\+all\+\_\+contacts()}}, and \mbox{\hyperlink{l00194}{Database\+Manager.\+get\+\_\+contact\+\_\+by\+\_\+phone()}}.
+
+\Hypertarget{classdatabase__manager_1_1_database_manager_a4720cf3b5a198cd8121ea0e55bdb2954}\index{DatabaseManager@{DatabaseManager}!engine@{engine}}
+\index{engine@{engine}!DatabaseManager@{DatabaseManager}}
+\doxysubsubsection{\texorpdfstring{engine}{engine}}
+{\footnotesize\ttfamily \label{classdatabase__manager_1_1_database_manager_a4720cf3b5a198cd8121ea0e55bdb2954} 
+engine = create\+\_\+async\+\_\+engine(db\+\_\+url, connect\+\_\+args=\{"{}check\+\_\+same\+\_\+thread"{}\+: False\})}
+
+\Hypertarget{classdatabase__manager_1_1_database_manager_a98f653d8193f8a3e114960aaa6342603}\index{DatabaseManager@{DatabaseManager}!SessionLocal@{SessionLocal}}
+\index{SessionLocal@{SessionLocal}!DatabaseManager@{DatabaseManager}}
+\doxysubsubsection{\texorpdfstring{SessionLocal}{SessionLocal}}
+{\footnotesize\ttfamily \label{classdatabase__manager_1_1_database_manager_a98f653d8193f8a3e114960aaa6342603} 
+Session\+Local = sessionmaker(autocommit=False, autoflush=False, bind=self.\+engine, class\+\_\+=Async\+Session)}
+
+
+
+Referenced by \mbox{\hyperlink{l00110}{Database\+Manager.\+get\+\_\+db()}}.
+
+\Hypertarget{classdatabase__manager_1_1_database_manager_a281a1c2cf3d24dc8eeb9df3af11b83b8}\index{DatabaseManager@{DatabaseManager}!TranscriptionModel@{TranscriptionModel}}
+\index{TranscriptionModel@{TranscriptionModel}!DatabaseManager@{DatabaseManager}}
+\doxysubsubsection{\texorpdfstring{TranscriptionModel}{TranscriptionModel}}
+{\footnotesize\ttfamily \label{classdatabase__manager_1_1_database_manager_a281a1c2cf3d24dc8eeb9df3af11b83b8} 
+Transcription\+Model = Transcription\+Model}
+
+
+
+Referenced by \mbox{\hyperlink{l00170}{Database\+Manager.\+create\+\_\+transcription()}}, \mbox{\hyperlink{l00183}{Database\+Manager.\+delete\+\_\+transcription()}}, and \mbox{\hyperlink{l00180}{Database\+Manager.\+get\+\_\+transcription()}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/seanbaker/\+Downloads/\+GPTPhone (2)/\+Data\+Library/\mbox{\hyperlink{database__manager_8py}{database\+\_\+manager.\+py}}\end{DoxyCompactItemize}

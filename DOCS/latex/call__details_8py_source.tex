@@ -1,0 +1,24 @@
+\doxysection{call\+\_\+details.\+py}
+\hypertarget{call__details_8py_source}{}\label{call__details_8py_source}\index{/Users/seanbaker/Downloads/GPTPhone (2)/services/call\_details.py@{/Users/seanbaker/Downloads/GPTPhone (2)/services/call\_details.py}}
+\mbox{\hyperlink{call__details_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{call__details_8py_source_l00001}\mbox{\hyperlink{namespaceservices_1_1call__details}{00001}}\ \textcolor{keyword}{from}\ typing\ \textcolor{keyword}{import}\ List,\ Optional}
+\DoxyCodeLine{\Hypertarget{call__details_8py_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{call__details_8py_source_l00003}00003\ \textcolor{keyword}{from}\ openai\ \textcolor{keyword}{import}\ BaseModel}
+\DoxyCodeLine{\Hypertarget{call__details_8py_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{call__details_8py_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{call__details_8py_source_l00006}\mbox{\hyperlink{classservices_1_1call__details_1_1_call_context}{00006}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classservices_1_1call__details_1_1_call_context}{CallContext}}:}
+\DoxyCodeLine{\Hypertarget{call__details_8py_source_l00007}00007\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}Store\ context\ for\ the\ current\ call."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{call__details_8py_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{call__details_8py_source_l00009}\mbox{\hyperlink{classservices_1_1call__details_1_1_call_context_aa55977f3aee73873d653e181f65d2038}{00009}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classservices_1_1call__details_1_1_call_context_aa55977f3aee73873d653e181f65d2038}{\_\_init\_\_}}(self):}
+\DoxyCodeLine{\Hypertarget{call__details_8py_source_l00010}\mbox{\hyperlink{classservices_1_1call__details_1_1_call_context_ac2fd59248c750ed8aeb64c5fe2fe13e4}{00010}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1call__details_1_1_call_context_ac2fd59248c750ed8aeb64c5fe2fe13e4}{stream\_sid}}:\ Optional[str]\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{call__details_8py_source_l00011}\mbox{\hyperlink{classservices_1_1call__details_1_1_call_context_acff07ad89fafd573b2529a90696bb6b1}{00011}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1call__details_1_1_call_context_acff07ad89fafd573b2529a90696bb6b1}{call\_sid}}:\ Optional[str]\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{call__details_8py_source_l00012}\mbox{\hyperlink{classservices_1_1call__details_1_1_call_context_a55ee48f05000ad38b1b0ce737c28af84}{00012}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1call__details_1_1_call_context_a55ee48f05000ad38b1b0ce737c28af84}{call\_ended}}:\ bool\ =\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{call__details_8py_source_l00013}\mbox{\hyperlink{classservices_1_1call__details_1_1_call_context_ad1edf7538497975c3623aa96ed0a08ff}{00013}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1call__details_1_1_call_context_ad1edf7538497975c3623aa96ed0a08ff}{user\_context}}:\ List\ =\ []}
+\DoxyCodeLine{\Hypertarget{call__details_8py_source_l00014}\mbox{\hyperlink{classservices_1_1call__details_1_1_call_context_ac16cd5452ec94e59cc4e19ec0e161129}{00014}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1call__details_1_1_call_context_ac16cd5452ec94e59cc4e19ec0e161129}{system\_message}}:\ str\ =\ \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{\Hypertarget{call__details_8py_source_l00015}\mbox{\hyperlink{classservices_1_1call__details_1_1_call_context_ab88f79b9c87baa3236fe5eae4b8011d5}{00015}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1call__details_1_1_call_context_ab88f79b9c87baa3236fe5eae4b8011d5}{initial\_message}}:\ str\ =\ \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{\Hypertarget{call__details_8py_source_l00016}\mbox{\hyperlink{classservices_1_1call__details_1_1_call_context_a45027b9eb563f05af278ab35f089b9b2}{00016}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1call__details_1_1_call_context_a45027b9eb563f05af278ab35f089b9b2}{start\_time}}:\ Optional[str]\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{call__details_8py_source_l00017}\mbox{\hyperlink{classservices_1_1call__details_1_1_call_context_ae1cee06d32ef845dfba6b95e74295fb7}{00017}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1call__details_1_1_call_context_ae1cee06d32ef845dfba6b95e74295fb7}{end\_time}}:\ Optional[str]\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{call__details_8py_source_l00018}\mbox{\hyperlink{classservices_1_1call__details_1_1_call_context_a6b6087a97f633a6034c0d30a3f7c5e0d}{00018}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classservices_1_1call__details_1_1_call_context_a6b6087a97f633a6034c0d30a3f7c5e0d}{final\_status}}:\ Optional[str]\ =\ \textcolor{keywordtype}{None}}
+
+\end{DoxyCode}

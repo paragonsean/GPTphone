@@ -1,0 +1,29 @@
+\doxysection{/\+Users/seanbaker/\+Downloads/\+GPTPhone (2)/services/tts\+\_\+service.py File Reference}
+\hypertarget{tts__service_8py}{}\label{tts__service_8py}\index{/Users/seanbaker/Downloads/GPTPhone (2)/services/tts\_service.py@{/Users/seanbaker/Downloads/GPTPhone (2)/services/tts\_service.py}}
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classservices_1_1tts__service_1_1_abstract_t_t_s_service}{Abstract\+TTSService}}
+\item 
+class \mbox{\hyperlink{classservices_1_1tts__service_1_1_eleven_labs_t_t_s}{Eleven\+Labs\+TTS}}
+\item 
+class \mbox{\hyperlink{classservices_1_1tts__service_1_1_deepgram_t_t_s}{Deepgram\+TTS}}
+\item 
+class \mbox{\hyperlink{classservices_1_1tts__service_1_1_t_t_s_factory}{TTSFactory}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceservices}{services}}
+\item 
+namespace \mbox{\hyperlink{namespaceservices_1_1tts__service}{services.\+tts\+\_\+service}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespaceservices_1_1tts__service_a0b14e488ae28d98d262453f3e9cd6e4d}{logger}} = get\+\_\+logger("{}TTS"{})
+\item 
+\mbox{\hyperlink{namespaceservices_1_1tts__service_aacb2a1163737743d7451518bfc02981c}{tts\+\_\+service\+\_\+name}} = os.\+getenv("{}TTS\+\_\+\+SERVICE"{}, "{}deepgram"{})
+\item 
+\mbox{\hyperlink{namespaceservices_1_1tts__service_ab9b6b61915c09275bb7cc3d51ad2bca9}{tts\+\_\+service}} = \mbox{\hyperlink{classservices_1_1tts__service_1_1_t_t_s_factory_a5c4156dce7912360aa5a9815893103c2}{TTSFactory.\+get\+\_\+tts\+\_\+service}}(\mbox{\hyperlink{namespaceservices_1_1tts__service_aacb2a1163737743d7451518bfc02981c}{tts\+\_\+service\+\_\+name}})
+\end{DoxyCompactItemize}

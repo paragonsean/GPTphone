@@ -1,0 +1,87 @@
+\doxysection{eventhandlertest.\+py}
+\hypertarget{eventhandlertest_8py_source}{}\label{eventhandlertest_8py_source}\index{/Users/seanbaker/Downloads/GPTPhone (2)/unittests/eventhandlertest.py@{/Users/seanbaker/Downloads/GPTPhone (2)/unittests/eventhandlertest.py}}
+\mbox{\hyperlink{eventhandlertest_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00001}\mbox{\hyperlink{namespaceunittests_1_1eventhandlertest}{00001}}\ \textcolor{keyword}{import}\ unittest}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00002}00002\ \textcolor{keyword}{from}\ unittest.mock\ \textcolor{keyword}{import}\ AsyncMock,\ patch}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00003}00003\ \textcolor{keyword}{from}\ \mbox{\hyperlink{namespaceservices_1_1event__manager}{services.event\_manager}}\ \textcolor{keyword}{import}\ AssistantEventHandler,EventHandler}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00005}\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler}{00005}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler}{TestAssistantEventHandler}}(unittest.TestCase):}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00006}\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_a0044baeee535b78ee2f5f02e88cd06ab}{00006}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_a0044baeee535b78ee2f5f02e88cd06ab}{setUp}}(self):}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00007}00007\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Set\ up\ the\ event\ handler\ with\ mocked\ callbacks}}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00008}\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_aa98248ac70a2157676f00d86aaefb3a6}{00008}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_aa98248ac70a2157676f00d86aaefb3a6}{event\_handler}}\ =\ AssistantEventHandler()}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00009}\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_ae3568cb6440cc5e0a4f5405a3d713d56}{00009}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_ae3568cb6440cc5e0a4f5405a3d713d56}{mock\_text\_created\_callback}}\ =\ AsyncMock()}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00010}\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_aa6ee3f74c44c7a1b3d3be8637c684076}{00010}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_aa6ee3f74c44c7a1b3d3be8637c684076}{mock\_text\_delta\_callback}}\ =\ AsyncMock()}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00011}\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_a194565eac51c01960e0c71b55273f677}{00011}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_a194565eac51c01960e0c71b55273f677}{mock\_tool\_call\_created\_callback}}\ =\ AsyncMock()}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00012}\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_ab557d0451e8ded7af217c41285b025bc}{00012}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_ab557d0451e8ded7af217c41285b025bc}{mock\_tool\_call\_delta\_callback}}\ =\ AsyncMock()}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00014}00014\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Register\ the\ mocked\ callbacks}}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00015}00015\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_aa98248ac70a2157676f00d86aaefb3a6}{event\_handler}}.on(\textcolor{stringliteral}{"{}text\_created"{}},\ self.\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_ae3568cb6440cc5e0a4f5405a3d713d56}{mock\_text\_created\_callback}})}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00016}00016\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_aa98248ac70a2157676f00d86aaefb3a6}{event\_handler}}.on(\textcolor{stringliteral}{"{}text\_delta"{}},\ self.\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_aa6ee3f74c44c7a1b3d3be8637c684076}{mock\_text\_delta\_callback}})}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00017}00017\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_aa98248ac70a2157676f00d86aaefb3a6}{event\_handler}}.on(\textcolor{stringliteral}{"{}tool\_call\_created"{}},\ self.\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_a194565eac51c01960e0c71b55273f677}{mock\_tool\_call\_created\_callback}})}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00018}00018\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_aa98248ac70a2157676f00d86aaefb3a6}{event\_handler}}.on(\textcolor{stringliteral}{"{}tool\_call\_delta"{}},\ self.\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_ab557d0451e8ded7af217c41285b025bc}{mock\_tool\_call\_delta\_callback}})}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00020}00020\ \ \ \ \ \textcolor{preprocessor}{@patch("{}builtins.print"{})}\ \ \textcolor{comment}{\#\ Patch\ print\ to\ avoid\ actual\ printing\ during\ tests}}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00021}\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_abbe95cff9cd4d2d20c57acb5e881dd36}{00021}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_abbe95cff9cd4d2d20c57acb5e881dd36}{test\_on\_text\_created}}(self,\ mock\_print):}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00022}00022\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Trigger\ the\ on\_text\_created\ event}}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00023}00023\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_aa98248ac70a2157676f00d86aaefb3a6}{event\_handler}}.on\_text\_created(\textcolor{stringliteral}{"{}Test\ text"{}})}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00025}00025\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Verify\ the\ callback\ was\ called\ with\ the\ correct\ arguments}}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00026}00026\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_ae3568cb6440cc5e0a4f5405a3d713d56}{mock\_text\_created\_callback}}.assert\_called\_once\_with(\textcolor{stringliteral}{"{}Test\ text"{}})}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00027}00027\ \ \ \ \ \ \ \ \ mock\_print.assert\_called\_with(\textcolor{stringliteral}{"{}\(\backslash\)nassistant\ >\ "{}},\ end=\textcolor{stringliteral}{"{}"{}},\ flush=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00029}00029\ \ \ \ \ \textcolor{preprocessor}{@patch("{}builtins.print"{})}}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00030}\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_aa513bc1c53d0ce7f249202a6d2d3032d}{00030}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_aa513bc1c53d0ce7f249202a6d2d3032d}{test\_on\_text\_delta}}(self,\ mock\_print):}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00031}00031\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Create\ a\ mock\ delta\ and\ snapshot}}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00032}00032\ \ \ \ \ \ \ \ \ mock\_delta\ =\ AsyncMock()}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00033}00033\ \ \ \ \ \ \ \ \ mock\_snapshot\ =\ AsyncMock()}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00034}00034\ \ \ \ \ \ \ \ \ mock\_delta.value\ =\ \textcolor{stringliteral}{"{}Delta\ text"{}}}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Trigger\ the\ on\_text\_delta\ event}}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00037}00037\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_aa98248ac70a2157676f00d86aaefb3a6}{event\_handler}}.on\_text\_delta(mock\_delta,\ mock\_snapshot)}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00039}00039\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Verify\ the\ callback\ was\ called\ with\ the\ correct\ arguments}}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00040}00040\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_aa6ee3f74c44c7a1b3d3be8637c684076}{mock\_text\_delta\_callback}}.assert\_called\_once\_with(mock\_delta,\ mock\_snapshot)}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00041}00041\ \ \ \ \ \ \ \ \ mock\_print.assert\_called\_with(\textcolor{stringliteral}{"{}Delta\ text"{}},\ end=\textcolor{stringliteral}{"{}"{}},\ flush=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00043}00043\ \ \ \ \ \textcolor{preprocessor}{@patch("{}builtins.print"{})}}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00044}\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_a7cdcc9ce6e06ae6b45b2133bccd70626}{00044}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_a7cdcc9ce6e06ae6b45b2133bccd70626}{test\_on\_tool\_call\_created}}(self,\ mock\_print):}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00045}00045\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Create\ a\ mock\ tool\_call}}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00046}00046\ \ \ \ \ \ \ \ \ mock\_tool\_call\ =\ AsyncMock()}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00047}00047\ \ \ \ \ \ \ \ \ mock\_tool\_call.type\ =\ \textcolor{stringliteral}{"{}Test\ tool\ call"{}}}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00049}00049\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Trigger\ the\ on\_tool\_call\_created\ event}}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00050}00050\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_aa98248ac70a2157676f00d86aaefb3a6}{event\_handler}}.on\_tool\_call\_created(mock\_tool\_call)}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00052}00052\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Verify\ the\ callback\ was\ called\ with\ the\ correct\ arguments}}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00053}00053\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_a194565eac51c01960e0c71b55273f677}{mock\_tool\_call\_created\_callback}}.assert\_called\_once\_with(mock\_tool\_call)}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00054}00054\ \ \ \ \ \ \ \ \ mock\_print.assert\_called\_with(\textcolor{stringliteral}{"{}\(\backslash\)nassistant\ >\ Test\ tool\ call\(\backslash\)n"{}},\ flush=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00056}00056\ \ \ \ \ \textcolor{preprocessor}{@patch("{}builtins.print"{})}}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00057}\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_a4578e9db9b1cca5ea76154347c847706}{00057}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_a4578e9db9b1cca5ea76154347c847706}{test\_on\_tool\_call\_delta}}(self,\ mock\_print):}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00058}00058\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Create\ a\ mock\ delta\ and\ snapshot\ with\ code\_interpreter\ data}}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00059}00059\ \ \ \ \ \ \ \ \ mock\_delta\ =\ AsyncMock()}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00060}00060\ \ \ \ \ \ \ \ \ mock\_snapshot\ =\ AsyncMock()}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00061}00061\ \ \ \ \ \ \ \ \ mock\_delta.type\ =\ \textcolor{stringliteral}{"{}code\_interpreter"{}}}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00062}00062\ \ \ \ \ \ \ \ \ mock\_delta.code\_interpreter.input\ =\ \textcolor{stringliteral}{"{}Interpreter\ input"{}}}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00063}00063\ \ \ \ \ \ \ \ \ mock\_delta.code\_interpreter.outputs\ =\ [}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{"{}type"{}}:\ \textcolor{stringliteral}{"{}logs"{}},\ \textcolor{stringliteral}{"{}logs"{}}:\ \textcolor{stringliteral}{"{}Log\ output"{}}\}}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00065}00065\ \ \ \ \ \ \ \ \ ]}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00067}00067\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Trigger\ the\ on\_tool\_call\_delta\ event}}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00068}00068\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_aa98248ac70a2157676f00d86aaefb3a6}{event\_handler}}.on\_tool\_call\_delta(mock\_delta,\ mock\_snapshot)}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00070}00070\ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ Verify\ the\ callback\ was\ called\ with\ the\ correct\ arguments}}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00071}00071\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classunittests_1_1eventhandlertest_1_1_test_assistant_event_handler_ab557d0451e8ded7af217c41285b025bc}{mock\_tool\_call\_delta\_callback}}.assert\_called\_once\_with(mock\_delta,\ mock\_snapshot)}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00072}00072\ \ \ \ \ \ \ \ \ mock\_print.assert\_any\_call(\textcolor{stringliteral}{"{}Interpreter\ input"{}},\ end=\textcolor{stringliteral}{"{}"{}},\ flush=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00073}00073\ \ \ \ \ \ \ \ \ mock\_print.assert\_any\_call(\textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)noutput\ >"{}},\ flush=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00074}00074\ \ \ \ \ \ \ \ \ mock\_print.assert\_any\_call(\textcolor{stringliteral}{"{}\(\backslash\)nLog\ output"{}},\ flush=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00079}00079\ \textcolor{keywordflow}{if}\ \_\_name\_\_\ ==\ \textcolor{stringliteral}{'\_\_main\_\_'}:}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00080}00080\ \ \ \ \ unittest.main()}
+\DoxyCodeLine{\Hypertarget{eventhandlertest_8py_source_l00081}00081\ }
+
+\end{DoxyCode}

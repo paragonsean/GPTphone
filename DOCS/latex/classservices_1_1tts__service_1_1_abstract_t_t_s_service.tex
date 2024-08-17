@@ -1,0 +1,175 @@
+\doxysection{Abstract\+TTSService Class Reference}
+\hypertarget{classservices_1_1tts__service_1_1_abstract_t_t_s_service}{}\label{classservices_1_1tts__service_1_1_abstract_t_t_s_service}\index{AbstractTTSService@{AbstractTTSService}}
+
+
+Inheritance diagram for Abstract\+TTSService\+:
+% FIG 0
+
+
+Collaboration diagram for Abstract\+TTSService\+:
+% FIG 1
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classservices_1_1tts__service_1_1_abstract_t_t_s_service_a45621db7aedcdad610b0d10294d8fe19}{generate}} (self, Dict\mbox{[}str, Any\mbox{]} llm\+\_\+reply, int interaction\+\_\+count)
+\item 
+\mbox{\hyperlink{classservices_1_1tts__service_1_1_abstract_t_t_s_service_a15c49e6242e558a6aad5aabe2eee3d73}{set\+\_\+voice}} (self, str voice\+\_\+id)
+\item 
+\mbox{\hyperlink{classservices_1_1tts__service_1_1_abstract_t_t_s_service_ad6eeefccf29df872618a07775d344ff8}{disconnect}} (self)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler}{Event\+Handler}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_abdd362d5f799ad16b5d6700efe590290}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self)
+\item 
+\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_a504c5b2b70ced47ef9e67e57738a213c}{on}} (self, str event, Callable callback)
+\item 
+\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_af0b13c52d513139510df47781cf94ab9}{create\+Event}} (self, str event, \texorpdfstring{$\ast$}{*}Any args, \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}Any kwargs)
+\item 
+\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_a4788d2e4a3c281bdf2216d1bf4ddef8d}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_ad5bc32b75da65fe60067f501a4bb6665}{client}})
+\item 
+\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_aff0cd190f2fae5b016d4faf3c1c8e073}{on\+\_\+event}} (self, event)
+\item 
+\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_ae941d8bdb10c17fe7bca834a1f24038a}{on\+\_\+text\+\_\+created}} (self, text)
+\item 
+\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_a8cb3855bd5daa733879e2626db9ad227}{on\+\_\+text\+\_\+delta}} (self, delta, snapshot)
+\item 
+\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_ad4402d96c3f2f5a5c2a53aebbf7b343d}{on\+\_\+text\+\_\+done}} (self, text)
+\item 
+\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_a388bc733a67fc1ac664c79116b82a2c4}{on\+\_\+tool\+\_\+call\+\_\+created}} (self, tool\+\_\+call)
+\item 
+\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_a12334a2e56f9b3c7be63a4128e71aeaa}{on\+\_\+tool\+\_\+call\+\_\+delta}} (self, delta, snapshot)
+\item 
+\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_aae25b48c0a1a615b819caf177dd00a94}{on\+\_\+tool\+\_\+call\+\_\+done}} (self, tool\+\_\+call)
+\item 
+\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_abeee6d6dac7e998703cc4c5e9d623075}{submit\+\_\+tool\+\_\+outputs}} (self, tool\+\_\+outputs)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Data Fields inherited from \mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler}{Event\+Handler}}}
+\begin{DoxyCompactItemize}
+\item 
+list \mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_acb6617135b0fd32aae7e8bcd4491cf44}{\+\_\+events}} = \mbox{[}$\,$\mbox{]}
+\item 
+\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_ad5bc32b75da65fe60067f501a4bb6665}{client}} = client
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler}{Event\+Handler}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_a142819f6f7c8639f2a664c46b80f337a}{\+\_\+run\+\_\+callback}} (self, Callable callback, \texorpdfstring{$\ast$}{*}Any args, \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}Any kwargs)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler}{Event\+Handler}}}
+\begin{DoxyCompactItemize}
+\item 
+dict \mbox{\hyperlink{classservices_1_1event__manager_1_1_event_handler_af82f490d6136d2e39721b932d274778f}{\+\_\+events}} = \{\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Abstract base class for Text-to-Speech (TTS) services.\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classservices_1_1tts__service_1_1_abstract_t_t_s_service_ad6eeefccf29df872618a07775d344ff8}\index{AbstractTTSService@{AbstractTTSService}!disconnect@{disconnect}}
+\index{disconnect@{disconnect}!AbstractTTSService@{AbstractTTSService}}
+\doxysubsubsection{\texorpdfstring{disconnect()}{disconnect()}}
+{\footnotesize\ttfamily \label{classservices_1_1tts__service_1_1_abstract_t_t_s_service_ad6eeefccf29df872618a07775d344ff8} 
+disconnect (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Disconnect from the TTS service.
+
+Returns:
+    None
+\end{DoxyVerb}
+ 
+
+Reimplemented in \mbox{\hyperlink{classservices_1_1tts__service_1_1_deepgram_t_t_s_ad6eeefccf29df872618a07775d344ff8}{Deepgram\+TTS}}, and \mbox{\hyperlink{classservices_1_1tts__service_1_1_eleven_labs_t_t_s_ad6eeefccf29df872618a07775d344ff8}{Eleven\+Labs\+TTS}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keyword}{async\ def\ }disconnect(self):}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}Disconnect\ from\ the\ TTS\ service.}}
+\DoxyCodeLine{00055\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{00056\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Returns:}}
+\DoxyCodeLine{00057\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ None}}
+\DoxyCodeLine{00058\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ }
+
+\end{DoxyCode}
+\Hypertarget{classservices_1_1tts__service_1_1_abstract_t_t_s_service_a45621db7aedcdad610b0d10294d8fe19}\index{AbstractTTSService@{AbstractTTSService}!generate@{generate}}
+\index{generate@{generate}!AbstractTTSService@{AbstractTTSService}}
+\doxysubsubsection{\texorpdfstring{generate()}{generate()}}
+{\footnotesize\ttfamily \label{classservices_1_1tts__service_1_1_abstract_t_t_s_service_a45621db7aedcdad610b0d10294d8fe19} 
+generate (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{Dict\mbox{[}str, Any\mbox{]}}]{llm\+\_\+reply}{, }\item[{int}]{interaction\+\_\+count}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Generate speech from the given LLM reply and interaction count.
+
+Args:
+    llm_reply (Dict[str, Any]): The LLM reply containing the text to be converted to speech.
+    interaction_count (int): The count of interactions.
+
+Returns:
+    None
+\end{DoxyVerb}
+ 
+
+Reimplemented in \mbox{\hyperlink{classservices_1_1tts__service_1_1_deepgram_t_t_s_a766e368ad8b2dae2fa64929ae72d4061}{Deepgram\+TTS}}, and \mbox{\hyperlink{classservices_1_1tts__service_1_1_eleven_labs_t_t_s_a45621db7aedcdad610b0d10294d8fe19}{Eleven\+Labs\+TTS}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{async\ def\ }generate(self,\ llm\_reply:\ Dict[str,\ Any],\ interaction\_count:\ int):}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}Generate\ speech\ from\ the\ given\ LLM\ reply\ and\ interaction\ count.}}
+\DoxyCodeLine{00028\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{00029\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Args:}}
+\DoxyCodeLine{00030\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ llm\_reply\ (Dict[str,\ Any]):\ The\ LLM\ reply\ containing\ the\ text\ to\ be\ converted\ to\ speech.}}
+\DoxyCodeLine{00031\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ interaction\_count\ (int):\ The\ count\ of\ interactions.}}
+\DoxyCodeLine{00032\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{00033\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Returns:}}
+\DoxyCodeLine{00034\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ None}}
+\DoxyCodeLine{00035\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00038\ }
+
+\end{DoxyCode}
+\Hypertarget{classservices_1_1tts__service_1_1_abstract_t_t_s_service_a15c49e6242e558a6aad5aabe2eee3d73}\index{AbstractTTSService@{AbstractTTSService}!set\_voice@{set\_voice}}
+\index{set\_voice@{set\_voice}!AbstractTTSService@{AbstractTTSService}}
+\doxysubsubsection{\texorpdfstring{set\_voice()}{set\_voice()}}
+{\footnotesize\ttfamily \label{classservices_1_1tts__service_1_1_abstract_t_t_s_service_a15c49e6242e558a6aad5aabe2eee3d73} 
+set\+\_\+voice (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{str}]{voice\+\_\+id}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Set the voice for speech generation.
+
+Args:
+    voice_id (str): The ID of the voice to be set.
+
+Returns:
+    None
+\end{DoxyVerb}
+ 
+
+Reimplemented in \mbox{\hyperlink{classservices_1_1tts__service_1_1_deepgram_t_t_s_a0434f49fd23f9be0bfb11580ee3f0c19}{Deepgram\+TTS}}, and \mbox{\hyperlink{classservices_1_1tts__service_1_1_eleven_labs_t_t_s_a0434f49fd23f9be0bfb11580ee3f0c19}{Eleven\+Labs\+TTS}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{async\ def\ }set\_voice(self,\ voice\_id:\ str):}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}Set\ the\ voice\ for\ speech\ generation.}}
+\DoxyCodeLine{00042\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{00043\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Args:}}
+\DoxyCodeLine{00044\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ voice\_id\ (str):\ The\ ID\ of\ the\ voice\ to\ be\ set.}}
+\DoxyCodeLine{00045\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{00046\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ Returns:}}
+\DoxyCodeLine{00047\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ None}}
+\DoxyCodeLine{00048\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00051\ }
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/seanbaker/\+Downloads/\+GPTPhone (2)/services/\mbox{\hyperlink{tts__service_8py}{tts\+\_\+service.\+py}}\end{DoxyCompactItemize}

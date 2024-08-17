@@ -1,0 +1,273 @@
+\doxysection{Assistants.\+py}
+\hypertarget{_assistants_8py_source}{}\label{_assistants_8py_source}\index{/Users/seanbaker/Downloads/GPTPhone (2)/Assistants.py@{/Users/seanbaker/Downloads/GPTPhone (2)/Assistants.py}}
+\mbox{\hyperlink{_assistants_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00001}\mbox{\hyperlink{namespace_assistants}{00001}}\ \textcolor{keyword}{import}\ os}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00002}00002\ \textcolor{keyword}{import}\ base64}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00003}00003\ \textcolor{keyword}{import}\ re}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00004}00004\ \textcolor{keyword}{import}\ json}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00005}00005\ \textcolor{keyword}{import}\ openai}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00006}00006\ \textcolor{keyword}{from}\ tools\ \textcolor{keyword}{import}\ TOOL\_MAP}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00007}00007\ \textcolor{keyword}{from}\ typing\_extensions\ \textcolor{keyword}{import}\ override}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00008}00008\ \textcolor{keyword}{from}\ dotenv\ \textcolor{keyword}{import}\ load\_dotenv}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00009}00009\ \textcolor{keyword}{from}\ Utils.logger\_config\ \textcolor{keyword}{import}\ get\_logger,log\_function\_call}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00010}00010\ load\_dotenv()}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00011}\mbox{\hyperlink{namespace_assistants_af8d4f84f784fdbae10c34ca90ae65081}{00011}}\ logger\ =\ get\_logger(\_\_name\_\_)}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00012}\mbox{\hyperlink{namespace_assistants_a3df180ad7a5b59c360c5e04c460169c1}{00012}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_assistants_a3df180ad7a5b59c360c5e04c460169c1}{str\_to\_bool}}(str\_input):}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00013}00013\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00014}00014\ \textcolor{stringliteral}{\ \ \ \ Convert\ a\ string\ to\ a\ boolean\ value.}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00015}00015\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00016}00016\ \textcolor{stringliteral}{\ \ \ \ :param\ str\_input:\ The\ string\ to\ convert.}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00017}00017\ \textcolor{stringliteral}{\ \ \ \ :return:\ The\ boolean\ value\ converted\ from\ the\ string.}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00018}00018\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00019}00019\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ isinstance(str\_input,\ str):}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00020}00020\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00021}00021\ \ \ \ \ \textcolor{keywordflow}{return}\ str\_input.lower()\ ==\ \textcolor{stringliteral}{"{}true"{}}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00024}00024\ \textcolor{comment}{\#\ Load\ environment\ variables}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00025}\mbox{\hyperlink{namespace_assistants_a07bb36926594da6badcae9596f3f471b}{00025}}\ openai\_api\_key\ =\ os.environ.get(\textcolor{stringliteral}{"{}OPENAI\_API\_KEY"{}})}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00026}\mbox{\hyperlink{namespace_assistants_a8278c6d7ed4dfcadd23823b5c092beb8}{00026}}\ azure\_openai\_endpoint\ =\ os.environ.get(\textcolor{stringliteral}{"{}AZURE\_OPENAI\_ENDPOINT"{}})}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00027}\mbox{\hyperlink{namespace_assistants_a013993841daebf0fb546bfe7faa318b9}{00027}}\ azure\_openai\_key\ =\ os.environ.get(\textcolor{stringliteral}{"{}AZURE\_OPENAI\_KEY"{}})}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00029}\mbox{\hyperlink{namespace_assistants_a88596fcaa85b3133e2399f5a80c7d9a3}{00029}}\ client\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00030}00030\ \textcolor{keywordflow}{if}\ azure\_openai\_endpoint\ \textcolor{keywordflow}{and}\ azure\_openai\_key:}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00031}00031\ \ \ \ \ client\ =\ openai.AzureOpenAI(}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00032}00032\ \ \ \ \ \ \ \ \ api\_key=azure\_openai\_key,}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00033}00033\ \ \ \ \ \ \ \ \ api\_version=\textcolor{stringliteral}{"{}2024-\/05-\/01-\/preview"{}},}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00034}00034\ \ \ \ \ \ \ \ \ azure\_endpoint=azure\_openai\_endpoint,}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00035}00035\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00036}00036\ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00037}00037\ \ \ \ \ client\ =\ openai.OpenAI(api\_key=openai\_api\_key)}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00040}\mbox{\hyperlink{class_assistants_1_1_event_handler}{00040}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_assistants_1_1_event_handler}{EventHandler}}(openai.AssistantEventHandler):}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00041}00041\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00042}00042\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00043}00043\ \textcolor{stringliteral}{\ \ \ \ Class\ EventHandler}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00044}00044\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00045}00045\ \textcolor{stringliteral}{\ \ \ \ This\ class\ is\ a\ subclass\ of\ the\ openai.AssistantEventHandler\ class\ and\ contains\ various\ methods\ that\ handle\ different\ events\ related\ to\ the\ OpenAI\ Assistant.}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00046}00046\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00047}00047\ \textcolor{stringliteral}{\ \ \ \ Attributes:}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00048}00048\ \textcolor{stringliteral}{\ \ \ \ -\/\ session\_state\ (dict):\ A\ dictionary\ that\ stores\ the\ current\ state\ of\ the\ session,\ including\ chat\ log,\ tool\ calls,\ current\ message,\ current\ markdown,\ current\ tool\ input,\ and\ current\ tool\ input\ markdown.}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00049}00049\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00050}00050\ \textcolor{stringliteral}{\ \ \ \ Methods:}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00051}00051\ \textcolor{stringliteral}{\ \ \ \ -\/\ on\_event(event):\ Handles\ the\ general\ event.\ This\ method\ is\ not\ implemented\ in\ the\ EventHandler\ class\ and\ needs\ to\ be\ overridden\ in\ a\ subclass.}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00052}00052\ \textcolor{stringliteral}{\ \ \ \ -\/\ on\_text\_created(text):\ Handles\ the\ event\ when\ a\ new\ text\ is\ created.\ It\ sets\ the\ current\ message\ to\ empty\ and\ prints\ "{}Assistant:"{}.}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00053}00053\ \textcolor{stringliteral}{\ \ \ \ -\/\ on\_text\_delta(delta,\ snapshot):\ Handles\ the\ event\ when\ a\ delta\ change\ is\ made\ to\ the\ text.\ It\ updates\ the\ current\ message\ in\ the\ session\ state\ and\ prints\ the\ updated\ text.}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00054}00054\ \textcolor{stringliteral}{\ \ \ \ -\/\ on\_text\_done(text):\ Handles\ the\ event\ when\ the\ text\ is\ complete.\ It\ formats\ the\ annotation\ in\ the\ text,\ prints\ the\ formatted\ text,\ and\ appends\ it\ to\ the\ chat\ log\ in\ the\ session\ state.}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00055}00055\ \textcolor{stringliteral}{\ \ \ \ -\/\ on\_tool\_call\_created(tool\_call):\ Handles\ the\ event\ when\ a\ tool\ call\ is\ created.\ If\ the\ tool\ call\ is\ of\ type\ "{}code\_interpreter"{},\ it\ sets\ the\ current\ tool\ input\ to\ empty\ and\ prints\ "{}Assistant:"{}.}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00056}00056\ \textcolor{stringliteral}{\ \ \ \ -\/\ on\_tool\_call\_delta(delta,\ snapshot):\ Handles\ the\ event\ when\ a\ delta\ change\ is\ made\ to\ the\ tool\ call.\ If\ the\ delta\ is\ of\ type\ "{}code\_interpreter"{},\ it\ updates\ the\ current\ tool\ input\ in\ the\ session\ state\ and\ prints\ the\ input\ code.}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00057}00057\ \textcolor{stringliteral}{\ \ \ \ -\/\ on\_tool\_call\_done(tool\_call):\ Handles\ the\ event\ when\ the\ tool\ call\ is\ complete.\ It\ appends\ the\ tool\ call\ to\ the\ tool\ calls\ list\ in\ the\ session\ state.\ If\ the\ tool\ call\ is\ of\ type\ "{}code\_interpreter"{},\ it\ prints\ the\ input\ code\ and\ outputs.}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00058}00058\ \textcolor{stringliteral}{\ \ \ \ -\/\ format\_annotation(text):\ Formats\ the\ annotation\ in\ the\ given\ text\ by\ replacing\ annotation\ texts\ with\ numbered\ references\ and\ creating\ download\ links\ for\ file\ citations.\ Returns\ the\ formatted\ text.}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00059}00059\ \textcolor{stringliteral}{\ \ \ \ -\/\ create\_file\_link(file\_name,\ file\_id):\ Creates\ a\ download\ link\ for\ the\ given\ file\ name\ and\ file\ ID.\ Returns\ the\ link\ tag.}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00060}00060\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00061}00061\ \textcolor{stringliteral}{\ \ \ \ Note:\ This\ class\ needs\ to\ be\ subclassed\ and\ the\ on\_event()\ method\ needs\ to\ be\ implemented\ in\ the\ subclass.}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00062}00062\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00063}00063\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00064}\mbox{\hyperlink{class_assistants_1_1_event_handler_a18fd46d4b4e4c9aabbf6f266d8e55828}{00064}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_assistants_1_1_event_handler_a18fd46d4b4e4c9aabbf6f266d8e55828}{\_\_init\_\_}}(self):}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00066}00066\ \ \ \ \ \ \ \ \ super().\mbox{\hyperlink{class_assistants_1_1_event_handler_a18fd46d4b4e4c9aabbf6f266d8e55828}{\_\_init\_\_}}()}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00067}\mbox{\hyperlink{class_assistants_1_1_event_handler_a84732a1a8c66e0895dddb44eeea9ad62}{00067}}\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_assistants_1_1_event_handler_a84732a1a8c66e0895dddb44eeea9ad62}{session\_state}}\ =\ \{}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}chat\_log"{}}:\ [],}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}tool\_calls"{}}:\ [],}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}current\_message"{}}:\ \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}current\_markdown"{}}:\ \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}current\_tool\_input"{}}:\ \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}current\_tool\_input\_markdown"{}}:\ \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00074}00074\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00076}00076\ \ \ \ \ \textcolor{preprocessor}{@override}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00077}\mbox{\hyperlink{class_assistants_1_1_event_handler_ae91962de43c8526db76f5da35baaf237}{00077}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_assistants_1_1_event_handler_ae91962de43c8526db76f5da35baaf237}{on\_event}}(self,\ event):}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00078}00078\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00080}00080\ \ \ \ \ \textcolor{preprocessor}{@override}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00081}00081\ \ \ \ \ \textcolor{preprocessor}{@log\_function\_call}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00082}\mbox{\hyperlink{class_assistants_1_1_event_handler_a92727d3ca510eb9ede79aa08db448681}{00082}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_assistants_1_1_event_handler_a92727d3ca510eb9ede79aa08db448681}{on\_text\_created}}(self,\ text):}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00083}00083\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_assistants_1_1_event_handler_a84732a1a8c66e0895dddb44eeea9ad62}{session\_state}}[\textcolor{stringliteral}{"{}current\_message"{}}]\ =\ \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00084}00084\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Assistant:"{}})}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00086}00086\ \ \ \ \ \textcolor{preprocessor}{@override}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00087}00087\ \ \ \ \ \textcolor{preprocessor}{@log\_function\_call}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00088}\mbox{\hyperlink{class_assistants_1_1_event_handler_a1295eb20f4253f8d7b1feb0fbed20a57}{00088}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_assistants_1_1_event_handler_a1295eb20f4253f8d7b1feb0fbed20a57}{on\_text\_delta}}(self,\ delta,\ snapshot):}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00089}00089\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ snapshot.value:}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ text\_value\ =\ re.sub(}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{r"{}\(\backslash\)[(.*?)\(\backslash\)]\(\backslash\)s*\(\backslash\)(\(\backslash\)s*(.*?)\(\backslash\)s*\(\backslash\))"{}},\ \textcolor{stringliteral}{"{}Download\ Link"{}},\ snapshot.value}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_assistants_1_1_event_handler_a84732a1a8c66e0895dddb44eeea9ad62}{session\_state}}[\textcolor{stringliteral}{"{}current\_message"{}}]\ =\ text\_value}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ print(text\_value,\ end=\textcolor{stringliteral}{"{}"{}},\ flush=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00095}00095\ \ \ \ \ \textcolor{preprocessor}{@log\_function\_call}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00096}00096\ \ \ \ \ \textcolor{preprocessor}{@override}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00097}\mbox{\hyperlink{class_assistants_1_1_event_handler_acf640b9993efe169d237d0e2d180bbb0}{00097}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_assistants_1_1_event_handler_acf640b9993efe169d237d0e2d180bbb0}{on\_text\_done}}(self,\ text):}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00098}00098\ \ \ \ \ \ \ \ \ format\_text\ =\ self.\mbox{\hyperlink{class_assistants_1_1_event_handler_ab5d0ae325a0eab3a63e84447a384aa03}{format\_annotation}}(text)}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00099}00099\ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}\(\backslash\)n"{}}\ +\ format\_text)}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00100}00100\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_assistants_1_1_event_handler_a84732a1a8c66e0895dddb44eeea9ad62}{session\_state}}[\textcolor{stringliteral}{"{}chat\_log"{}}].append(\{\textcolor{stringliteral}{"{}name"{}}:\ \textcolor{stringliteral}{"{}assistant"{}},\ \textcolor{stringliteral}{"{}msg"{}}:\ format\_text\})}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00102}00102\ \ \ \ \ \textcolor{preprocessor}{@override}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00103}\mbox{\hyperlink{class_assistants_1_1_event_handler_ab0571091424e1dc3cc9b87e7516bb7de}{00103}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_assistants_1_1_event_handler_ab0571091424e1dc3cc9b87e7516bb7de}{on\_tool\_call\_created}}(self,\ tool\_call):}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00104}00104\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ tool\_call.type\ ==\ \textcolor{stringliteral}{"{}code\_interpreter"{}}:}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_assistants_1_1_event_handler_a84732a1a8c66e0895dddb44eeea9ad62}{session\_state}}[\textcolor{stringliteral}{"{}current\_tool\_input"{}}]\ =\ \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ print(\textcolor{stringliteral}{"{}Assistant:"{}})}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00108}00108\ \ \ \ \ \textcolor{preprocessor}{@override}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00109}\mbox{\hyperlink{class_assistants_1_1_event_handler_a4185efc1c68145cefeacf2da98ecb200}{00109}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_assistants_1_1_event_handler_a4185efc1c68145cefeacf2da98ecb200}{on\_tool\_call\_delta}}(self,\ delta,\ snapshot):}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00110}00110\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ delta.type\ ==\ \textcolor{stringliteral}{"{}code\_interpreter"{}}:}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ delta.code\_interpreter.input:}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_assistants_1_1_event_handler_a84732a1a8c66e0895dddb44eeea9ad62}{session\_state}}[\textcolor{stringliteral}{"{}current\_tool\_input"{}}]\ +=\ delta.code\_interpreter.input}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ input\_code\ =\ f\textcolor{stringliteral}{"{}\#\#\#\ code\ interpreter\(\backslash\)ninput:\(\backslash\)n\`{}\`{}\`{}python\(\backslash\)n\{self.session\_state['current\_tool\_input']\}\(\backslash\)n\`{}\`{}\`{}"{}}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(input\_code,\ end=\textcolor{stringliteral}{"{}"{}},\ flush=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ delta.code\_interpreter.outputs:}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ output\ \textcolor{keywordflow}{in}\ delta.code\_interpreter.outputs:}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ output.type\ ==\ \textcolor{stringliteral}{"{}logs"{}}:}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00121}00121\ \ \ \ \ \textcolor{preprocessor}{@override}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00122}\mbox{\hyperlink{class_assistants_1_1_event_handler_adbc2ebd7e16dbd2e6948507d5f09485e}{00122}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_assistants_1_1_event_handler_adbc2ebd7e16dbd2e6948507d5f09485e}{on\_tool\_call\_done}}(self,\ tool\_call):}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00123}00123\ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_assistants_1_1_event_handler_a84732a1a8c66e0895dddb44eeea9ad62}{session\_state}}[\textcolor{stringliteral}{"{}tool\_calls"{}}].append(tool\_call)}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00124}00124\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ tool\_call.type\ ==\ \textcolor{stringliteral}{"{}code\_interpreter"{}}:}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ input\_code\ =\ f\textcolor{stringliteral}{"{}\#\#\#\ code\ interpreter\(\backslash\)ninput:\(\backslash\)n\`{}\`{}\`{}python\(\backslash\)n\{tool\_call.code\_interpreter.input\}\(\backslash\)n\`{}\`{}\`{}"{}}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ print(input\_code)}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ output\ \textcolor{keywordflow}{in}\ tool\_call.code\_interpreter.outputs:}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ output.type\ ==\ \textcolor{stringliteral}{"{}logs"{}}:}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ output\ =\ f\textcolor{stringliteral}{"{}\#\#\#\ code\ interpreter\(\backslash\)noutput:\(\backslash\)n\`{}\`{}\`{}\(\backslash\)n\{output.logs\}\(\backslash\)n\`{}\`{}\`{}"{}}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print(output)}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00131}00131\ }
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00132}00132\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ (}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tool\_call.type\ ==\ \textcolor{stringliteral}{"{}function"{}}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{and}\ self.current\_run.status\ ==\ \textcolor{stringliteral}{"{}requires\_action"{}}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00135}00135\ \ \ \ \ \ \ \ \ ):}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ msg\ =\ f\textcolor{stringliteral}{"{}\#\#\#\ Function\ Calling:\ \{tool\_call.function.name\}"{}}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ print(msg)}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{class_assistants_1_1_event_handler_a84732a1a8c66e0895dddb44eeea9ad62}{session\_state}}[\textcolor{stringliteral}{"{}chat\_log"{}}].append(\{\textcolor{stringliteral}{"{}name"{}}:\ \textcolor{stringliteral}{"{}assistant"{}},\ \textcolor{stringliteral}{"{}msg"{}}:\ msg\})}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ tool\_calls\ =\ self.current\_run.required\_action.submit\_tool\_outputs.tool\_calls}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ tool\_outputs\ =\ []}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ submit\_tool\_call\ \textcolor{keywordflow}{in}\ tool\_calls:}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tool\_function\_name\ =\ submit\_tool\_call.function.name}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tool\_function\_arguments\ =\ json.loads(}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ submit\_tool\_call.function.arguments}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tool\_function\_output\ =\ TOOL\_MAP[tool\_function\_name](}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ **tool\_function\_arguments}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tool\_outputs.append(}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}tool\_call\_id"{}}:\ submit\_tool\_call.id,}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}output"{}}:\ tool\_function\_output,}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00155}00155\ }
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{with}\ client.beta.threads.runs.submit\_tool\_outputs\_stream(}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ thread\_id=thread.id,}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ run\_id=self.current\_run.id,}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tool\_outputs=tool\_outputs,}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ event\_handler=\mbox{\hyperlink{class_assistants_1_1_event_handler}{EventHandler}}(),}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ )\ \textcolor{keyword}{as}\ stream:}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ stream.until\_done()}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00163}00163\ \ \ \ \ \textcolor{preprocessor}{@log\_function\_call}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00164}\mbox{\hyperlink{class_assistants_1_1_event_handler_ab5d0ae325a0eab3a63e84447a384aa03}{00164}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_assistants_1_1_event_handler_ab5d0ae325a0eab3a63e84447a384aa03}{format\_annotation}}(self,\ text):}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00165}00165\ \ \ \ \ \ \ \ \ citations\ =\ []}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00166}00166\ \ \ \ \ \ \ \ \ text\_value\ =\ text.value}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00167}00167\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ index,\ annotation\ \textcolor{keywordflow}{in}\ enumerate(text.annotations):}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ text\_value\ =\ text\_value.replace(annotation.text,\ f\textcolor{stringliteral}{"{}\ [\{index\}]"{}})}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00169}00169\ }
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ file\_citation\ :=\ getattr(annotation,\ \textcolor{stringliteral}{"{}file\_citation"{}},\ \textcolor{keywordtype}{None}):}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cited\_file\ =\ client.files.retrieve(file\_citation.file\_id)}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ citations.append(}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ f\textcolor{stringliteral}{"{}[\{index\}]\ \{file\_citation.quote\}\ from\ \{cited\_file.filename\}"{}}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ file\_path\ :=\ getattr(annotation,\ \textcolor{stringliteral}{"{}file\_path"{}},\ \textcolor{keywordtype}{None}):}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ link\_tag\ =\ self.\mbox{\hyperlink{class_assistants_1_1_event_handler_af45ca7cb36b12473ed39b4fb4e5c4b4f}{create\_file\_link}}(}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ annotation.text.split(\textcolor{stringliteral}{"{}/"{}})[-\/1],}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ file\_path.file\_id,}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ text\_value\ =\ re.sub(\textcolor{stringliteral}{r"{}\(\backslash\)[(.*?)\(\backslash\)]\(\backslash\)s*\(\backslash\)(\(\backslash\)s*(.*?)\(\backslash\)s*\(\backslash\))"{}},\ link\_tag,\ text\_value)}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00181}00181\ \ \ \ \ \ \ \ \ text\_value\ +=\ \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)n"{}}\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}}.join(citations)}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00182}00182\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ text\_value}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00183}00183\ }
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00184}\mbox{\hyperlink{class_assistants_1_1_event_handler_af45ca7cb36b12473ed39b4fb4e5c4b4f}{00184}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{class_assistants_1_1_event_handler_af45ca7cb36b12473ed39b4fb4e5c4b4f}{create\_file\_link}}(self,\ file\_name,\ file\_id):}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00185}00185\ \ \ \ \ \ \ \ \ content\ =\ client.files.content(file\_id)}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00186}00186\ \ \ \ \ \ \ \ \ content\_type\ =\ content.response.headers[\textcolor{stringliteral}{"{}content-\/type"{}}]}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00187}00187\ \ \ \ \ \ \ \ \ b64\ =\ base64.b64encode(content.text.encode(content.encoding)).decode()}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00188}00188\ \ \ \ \ \ \ \ \ link\_tag\ =\ f\textcolor{stringliteral}{'<a\ href="{}data:\{content\_type\};base64,\{b64\}"{}\ download="{}\{file\_name\}"{}>Download\ Link</a>'}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00189}00189\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ link\_tag}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00190}00190\ }
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00191}00191\ \textcolor{preprocessor}{@log\_function\_call}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00192}\mbox{\hyperlink{namespace_assistants_aff202743350df09a7bde370deb710c29}{00192}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_assistants_aff202743350df09a7bde370deb710c29}{create\_thread}}(content,\ file):}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00193}00193\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00194}00194\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00195}00195\ \textcolor{stringliteral}{\ \ \ \ :param\ content:\ The\ content\ of\ the\ thread.}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00196}00196\ \textcolor{stringliteral}{\ \ \ \ :param\ file:\ The\ file\ associated\ with\ the\ thread.}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00197}00197\ \textcolor{stringliteral}{\ \ \ \ :return:\ The\ created\ thread.}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00198}00198\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00199}00199\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00200}00200\ \ \ \ \ \textcolor{keywordflow}{return}\ client.beta.threads.create()}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00201}00201\ }
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00202}00202\ \textcolor{preprocessor}{@log\_function\_call}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00203}\mbox{\hyperlink{namespace_assistants_a0a5d3f62216b341f7d7cc8895f486cbe}{00203}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_assistants_a0a5d3f62216b341f7d7cc8895f486cbe}{create\_message}}(thread,\ content,\ file):}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00204}00204\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00205}00205\ \textcolor{stringliteral}{\ \ \ \ :param\ thread:\ A\ Thread\ object\ representing\ the\ thread\ where\ the\ message\ will\ be\ created.}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00206}00206\ \textcolor{stringliteral}{\ \ \ \ :param\ content:\ A\ string\ representing\ the\ content\ of\ the\ message.}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00207}00207\ \textcolor{stringliteral}{\ \ \ \ :param\ file:\ An\ optional\ File\ object\ representing\ a\ file\ attachment\ for\ the\ message.}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00208}00208\ \textcolor{stringliteral}{\ \ \ \ :return:\ None}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00209}00209\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00210}00210\ \textcolor{stringliteral}{\ \ \ \ This\ method\ creates\ a\ message\ in\ a\ given\ thread\ using\ the\ provided\ content\ and\ file\ attachment,\ if\ any.\ If\ a\ file\ attachment\ is\ provided,\ it\ is\ added\ to\ the\ message\ as\ an\ attachment\ with\ specific\ tools\ associated\ with\ it.\ The\ message\ is\ created\ using\ the\ client.beta.threads.messages.create()\ method,\ specifying\ the\ thread\ id,\ role,\ content,\ and\ attachments\ parameters.}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00211}00211\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00212}00212\ \ \ \ \ attachments\ =\ []}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00213}00213\ \ \ \ \ \textcolor{keywordflow}{if}\ file\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00214}00214\ \ \ \ \ \ \ \ \ attachments.append(}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{"{}file\_id"{}}:\ file.id,\ \textcolor{stringliteral}{"{}tools"{}}:\ [\{\textcolor{stringliteral}{"{}type"{}}:\ \textcolor{stringliteral}{"{}code\_interpreter"{}}\},\ \{\textcolor{stringliteral}{"{}type"{}}:\ \textcolor{stringliteral}{"{}file\_search"{}}\}]\}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00216}00216\ \ \ \ \ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00217}00217\ \ \ \ \ client.beta.threads.messages.create(}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00218}00218\ \ \ \ \ \ \ \ \ thread\_id=thread.id,\ role=\textcolor{stringliteral}{"{}user"{}},\ content=content,\ attachments=attachments}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00219}00219\ \ \ \ \ )}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00220}00220\ }
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00221}00221\ \textcolor{preprocessor}{@log\_function\_call}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00222}\mbox{\hyperlink{namespace_assistants_a7e06d04d97c10c38236400d7bb3f7c15}{00222}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_assistants_a7e06d04d97c10c38236400d7bb3f7c15}{run\_stream}}(user\_input,\ file,\ selected\_assistant\_id):}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00223}00223\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00224}00224\ \textcolor{stringliteral}{\ \ \ \ :param\ user\_input:\ The\ input\ from\ the\ user.}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00225}00225\ \textcolor{stringliteral}{\ \ \ \ :param\ file:\ The\ file\ to\ be\ processed.}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00226}00226\ \textcolor{stringliteral}{\ \ \ \ :param\ selected\_assistant\_id:\ The\ ID\ of\ the\ selected\ assistant.}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00227}00227\ \textcolor{stringliteral}{\ \ \ \ :return:\ None}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00228}00228\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00229}00229\ \textcolor{stringliteral}{\ \ \ \ This\ method\ runs\ a\ stream\ for\ a\ chat\ session\ using\ the\ given\ user\ input,\ file,\ and\ selected\ assistant\ ID.\ It\ creates\ a\ thread,\ sends\ messages\ to\ the\ thread,\ and\ handles\ events\ using\ the\ event\ handler.\ The\ chat\ log\ is\ printed\ at\ the\ end\ of\ the\ session.}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00230}00230\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00231}00231\ \ \ \ \ thread\ =\ \mbox{\hyperlink{namespace_assistants_aff202743350df09a7bde370deb710c29}{create\_thread}}(user\_input,\ file)}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00232}00232\ \ \ \ \ \mbox{\hyperlink{namespace_assistants_a0a5d3f62216b341f7d7cc8895f486cbe}{create\_message}}(thread,\ user\_input,\ file)}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00233}00233\ \ \ \ \ event\_handler\ =\ \mbox{\hyperlink{class_assistants_1_1_event_handler}{EventHandler}}()\ \ \textcolor{comment}{\#\ Create\ an\ instance\ of\ the\ event\ handler\ with\ session\ state}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00234}00234\ \ \ \ \ \textcolor{keyword}{with}\ client.beta.threads.runs.stream(}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ thread\_id=thread.id,}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ assistant\_id=selected\_assistant\_id,}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ event\_handler=event\_handler,}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00238}00238\ \ \ \ \ )\ \textcolor{keyword}{as}\ stream:}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00239}00239\ \ \ \ \ \ \ \ \ stream.until\_done()}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00240}00240\ }
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00241}00241\ \ \ \ \ \textcolor{comment}{\#\ Access\ the\ session\ state\ from\ the\ event\ handler\ if\ needed}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00242}00242\ \ \ \ \ session\_state\ =\ event\_handler.session\_state}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00243}00243\ \ \ \ \ print(\textcolor{stringliteral}{"{}\(\backslash\)nFinal\ Chat\ Log:"{}})}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00244}00244\ \ \ \ \ \textcolor{keywordflow}{for}\ log\ \textcolor{keywordflow}{in}\ session\_state[\textcolor{stringliteral}{"{}chat\_log"{}}]:}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00245}00245\ \ \ \ \ \ \ \ \ print(f\textcolor{stringliteral}{"{}\{log['name']\}:\ \{log['msg']\}"{}})}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00246}00246\ }
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00247}00247\ }
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00248}\mbox{\hyperlink{namespace_assistants_abb2e1b5dbeb417a174f49b522a1b1e99}{00248}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespace_assistants_abb2e1b5dbeb417a174f49b522a1b1e99}{main}}():}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00249}00249\ \ \ \ \ \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00250}00250\ \textcolor{stringliteral}{\ \ \ \ Entry\ point\ for\ the\ program.}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00251}00251\ \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00252}00252\ \textcolor{stringliteral}{\ \ \ \ :return:\ None}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00253}00253\ \textcolor{stringliteral}{\ \ \ \ "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00254}00254\ \ \ \ \ \textcolor{comment}{\#\ Simulate\ user\ input\ and\ assistant\ interaction}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00255}00255\ \ \ \ \ user\_input\ =\ input(\textcolor{stringliteral}{"{}You:\ "{}})}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00256}00256\ \ \ \ \ assistant\_id\ =\ os.environ.get(\textcolor{stringliteral}{"{}ASSISTANT\_ID"{}},\ \textcolor{stringliteral}{"{}default\_assistant"{}})}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00257}00257\ }
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00258}00258\ \ \ \ \ \textcolor{comment}{\#\ Simulate\ a\ file\ upload\ (disabled\ in\ this\ example)}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00259}00259\ \ \ \ \ uploaded\_file\ =\ \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00260}00260\ }
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00261}00261\ \ \ \ \ \textcolor{comment}{\#\ Run\ the\ stream}}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00262}00262\ \ \ \ \ \textcolor{keywordflow}{while}\ user\_input\ !=\ \textcolor{stringliteral}{"{}q"{}}:}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00263}00263\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespace_assistants_a7e06d04d97c10c38236400d7bb3f7c15}{run\_stream}}(user\_input,\ uploaded\_file,\ assistant\_id)}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00264}00264\ \ \ \ \ \ \ \ \ user\_input\ =\ input(\textcolor{stringliteral}{"{}You:\ "{}})}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00265}00265\ }
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00266}00266\ \textcolor{keywordflow}{if}\ \_\_name\_\_\ ==\ \textcolor{stringliteral}{"{}\_\_main\_\_"{}}:}
+\DoxyCodeLine{\Hypertarget{_assistants_8py_source_l00267}00267\ \ \ \ \ \mbox{\hyperlink{namespace_assistants_abb2e1b5dbeb417a174f49b522a1b1e99}{main}}()}
+
+\end{DoxyCode}
