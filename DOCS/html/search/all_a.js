@@ -1,9 +1,0 @@
-var searchData=
-[
-  ['level_0',['level',['../namespacelogger__config.html#afde8e18a788ccc92fc61cab298bca7e3',1,'logger_config']]],
-  ['llmfactory_1',['LLMFactory',['../classservices_1_1gpt__service_1_1_l_l_m_factory.html',1,'services::gpt_service']]],
-  ['log_5ffunction_5fcall_2',['log_function_call',['../debug_8cpp.html#acffe834f8d8bbab28274819073c885a6',1,'log_function_call():&#160;debug.cpp'],['../namespacelogger__config.html#a772eb866e69447c1ed1d692cf1753a67',1,'logger_config.log_function_call()']]],
-  ['logger_3',['logger',['../namespaceapp.html#a0b14e488ae28d98d262453f3e9cd6e4d',1,'app.logger'],['../namespace_assistants.html#a0b14e488ae28d98d262453f3e9cd6e4d',1,'Assistants.logger'],['../namespace_assistants_async.html#a0b14e488ae28d98d262453f3e9cd6e4d',1,'AssistantsAsync.logger'],['../namespaceget__current__weather.html#a0b14e488ae28d98d262453f3e9cd6e4d',1,'get_current_weather.logger'],['../namespaceservices_1_1event__manager.html#a0b14e488ae28d98d262453f3e9cd6e4d',1,'services.event_manager.logger'],['../namespaceservices_1_1gpt__service.html#a0b14e488ae28d98d262453f3e9cd6e4d',1,'services.gpt_service.logger'],['../namespaceservices_1_1streaming__service.html#a0b14e488ae28d98d262453f3e9cd6e4d',1,'services.streaming_service.logger'],['../namespaceservices_1_1stt__service.html#a0b14e488ae28d98d262453f3e9cd6e4d',1,'services.stt_service.logger'],['../namespaceservices_1_1tts__service.html#a0b14e488ae28d98d262453f3e9cd6e4d',1,'services.tts_service.logger'],['../namespaceunittests_1_1basiceventhandlertest.html#a0b14e488ae28d98d262453f3e9cd6e4d',1,'unittests.basiceventhandlertest.logger'],['../namespaceunittests_1_1testgpt__service.html#a0b14e488ae28d98d262453f3e9cd6e4d',1,'unittests.testgpt_service.logger']]],
-  ['logger_5fconfig_4',['logger_config',['../namespacelogger__config.html',1,'']]],
-  ['logger_5fconfig_2epy_5',['logger_config.py',['../logger__config_8py.html',1,'']]]
-];
