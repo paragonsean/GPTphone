@@ -69,7 +69,7 @@ def log_function_call(func, debug=DEBUG_SERVICES):
                     result = await func(*args, **kwargs)
                     end_time = time.time()
                     duration = end_time - start_time
-                    logger.info(f"Function {func.__name__} completed with result: {result} in {duration:.4f} seconds")
+                    logger.info(f"Function {func.__name__} completed with result: {result} in {duration:.7f} seconds")
                     return result
 
                 return async_wrapper(*args, **kwargs)
@@ -78,7 +78,7 @@ def log_function_call(func, debug=DEBUG_SERVICES):
                 result = func(*args, **kwargs)
                 end_time = time.time()
                 duration = end_time - start_time
-                logger.info(f"Function {func.__name__} completed with result: {result} in {duration:.4f} seconds")
+                logger.info(f"Function {func.__name__} completed with result: {result} in {duration:.7f} seconds")
                 return result
 
         return wrapper
