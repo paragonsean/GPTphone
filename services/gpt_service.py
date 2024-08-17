@@ -22,6 +22,11 @@ Description: GPT-LIBRARY WITH INTERRUPTS HANDLERS AND EVENT HANDLING
 
 
 class AbstractLLMService(EventHandler, ABC):
+    """
+    This class represents an abstract Long-Lived Memory (LLM) service.
+
+    :param context: CallContext object containing system and initial messages
+    """
     def __init__(self, context: CallContext):
         super().__init__()
         self.system_message = context.system_message
@@ -91,6 +96,62 @@ class AbstractLLMService(EventHandler, ABC):
 
 
 class AssistantService(AbstractLLMService, AssistantEventHandler):
+    """
+    .. class:: AssistantService(AbstractLLMService, AssistantEventHandler)
+
+        AssistantService class that inherits from AbstractLLMService and AssistantEventHandler.
+
+    :param context: CallContext object.
+    :ivar openai: AsyncOpenAI object initialized with the OPENAI_API_KEY environment variable.
+    :ivar client: OpenAI object initialized with the OPENAI_API_KEY environment variable.
+    :ivar assistant_id: Assistant ID from the environment variable.
+    :ivar event_handler: AssistantEventHandler object initialized with the OpenAI client.
+
+    .. method:: create_thread(client, content, file=None)
+
+        Creates a new thread.
+
+    :param client: OpenAI client object.
+    :param content: Content of the thread.
+    :param file: Optional file object.
+    :return: The created thread.
+
+    .. method:: create_message(client, thread, content, file=None)
+
+        Creates a new message within a thread.
+
+    :param client: OpenAI client object.
+    :param thread: Thread object.
+    :param content: Content of the message.
+    :param file: Optional file object.
+    :return: None
+
+    .. method:: completion(text, interaction_count, role='user', name='user')
+
+        Handles completion of user input.
+
+    :param text: Text input.
+    :param interaction_count: Number of interactions.
+    :param role: Role of the participant. Default is 'user'.
+    :param name: Name of the participant. Default is 'user'.
+    :return: None
+
+    .. method:: handle_streaming_response(thread, text, interaction_count)
+
+        Handles streaming response.
+
+    :param thread: Thread object.
+    :param text: Text input.
+    :param interaction_count: Number of interactions.
+    :return: None
+
+    .. method:: _extract_content(message)
+
+        Extracts content from a message.
+
+    :param message: Message object.
+    :return: Extracted content or None.
+    """
     def __init__(self, context: CallContext):
         super().__init__(context)  # This initializes both AbstractLLMService and AssistantEventHandler
         self.openai = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
@@ -168,6 +229,28 @@ class AssistantService(AbstractLLMService, AssistantEventHandler):
 
 
 class OpenAIService(AbstractLLMService):
+    """
+
+    :class: OpenAIService
+
+    OpenAIService class is a subclass of AbstractLLMService. It provides methods for interacting with the OpenAI Chat API for generating responses based on user input.
+
+    Methods:
+        __init__(self, context: CallContext)
+            Initializes an instance of the OpenAIService class.
+
+            Parameters:
+                context (CallContext): The context for the service.
+
+        async completion(self, text: str, interaction_count: int, role: str = 'user', name: str = 'user')
+            Generates a completion response based on the given text using the OpenAI Chat API.
+
+            Parameters:
+                text (str): The user input text.
+                interaction_count (int): The number of interactions with the API.
+                role (str, optional): The role of the input. Default is 'user'.
+                name (str, optional): The name of the role. Default is 'user'.
+    """
     def __init__(self, context: CallContext):
         super().__init__(context)
         self.openai = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
@@ -240,6 +323,32 @@ class OpenAIService(AbstractLLMService):
 
 
 class GeminiService(AbstractLLMService):
+    """
+    GeminiService
+
+    This class provides a service for interacting with the Gemini generative AI model.
+
+    __init__(self, context: CallContext)
+        Initialize the GeminiService with the provided CallContext.
+
+        Parameters:
+            - context (CallContext): The CallContext object.
+
+    completion(self, text: str, interaction_count: int, role: str = 'user', name: str = 'user')
+        Generate a completion using the Gemini generative AI model based on the provided text.
+
+        Parameters:
+            - text (str): The input text to generate a completion for.
+            - interaction_count (int): The number of interactions that have occurred.
+            - role (str): The role of the user in the interaction. Defaults to 'user'.
+            - name (str): The name of the user. Defaults to 'user'.
+
+        Raises:
+            - Exception: If an error occurs during the completion process.
+
+        Returns:
+            None
+    """
     def __init__(self, context: CallContext):
         super().__init__(context)
         genai.configure(api_key=os.getenv("GOOGLE_GENERATIVE_AI_API_KEY"))
@@ -268,6 +377,9 @@ class GeminiService(AbstractLLMService):
 
 
 class LLMFactory:
+    """
+    Factory class for creating instances of AbstractLLMService based on the provided service name.
+    """
     @staticmethod
     def get_llm_service(service_name: str, context: CallContext) -> AbstractLLMService:
         if service_name.lower() == "openai" or service_name.lower() == "assistant":

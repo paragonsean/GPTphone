@@ -11,9 +11,18 @@ from functions.function_manifest import tools as TOOL_MAP
 
 class EventHandler:
     """
-    A class that represents an event emitter.
-    An event emitter allows registering callbacks for specific events and emitting those events
-    with optional arguments and keyword arguments.
+    .. module:: event_handler
+       :synopsis: This module contains the EventHandler class.
+
+    .. moduleauthor:: Your Name
+
+    .. autoclass:: EventHandler
+       :members:
+       :undoc-members:
+       :show-inheritance:
+       :private-members:
+       :special-members:
+
     """
 
     def __init__(self):
@@ -44,6 +53,74 @@ class EventHandler:
 
 
 class EventHandler(AssistantEventHandler):
+    """
+
+    This class is an implementation of the AssistantEventHandler abstract class. It handles various events that occur during the execution of an Assistant.
+
+    :ivar client: The Assistant client used to interact with the Assistant API.
+    :type client: AssistantClient
+
+    Methods:
+    ---------
+
+    __init__(self, client)
+        Initializes a new instance of the EventHandler class.
+
+        :param client: The Assistant client used to interact with the Assistant API.
+        :type client: AssistantClient
+
+    on_event(self, event)
+        This method is called when an event occurs. Subclasses should override this method to handle specific events.
+
+        :param event: The event that occurred.
+        :type event: Event
+
+    on_text_created(self, text)
+        This method is called when a new text is created by the Assistant.
+
+        :param text: The newly created text.
+        :type text: str
+
+    on_text_delta(self, delta, snapshot)
+        This method is called when a delta update is received for a text.
+
+        :param delta: The delta update.
+        :type delta: TextDelta
+        :param snapshot: The current snapshot of the text.
+        :type snapshot: TextSnapshot
+
+    on_text_done(self, text)
+        This method is called when the Assistant has finished generating the final text.
+
+        :param text: The final generated text.
+        :type text: str
+
+    on_tool_call_created(self, tool_call)
+        This method is called when a tool call is created by the Assistant.
+
+        :param tool_call: The tool call that was created.
+        :type tool_call: ToolCall
+
+    on_tool_call_delta(self, delta, snapshot)
+        This method is called when a delta update is received for a tool call.
+
+        :param delta: The delta update.
+        :type delta: ToolCallDelta
+        :param snapshot: The current snapshot of the tool call.
+        :type snapshot: ToolCallSnapshot
+
+    on_tool_call_done(self, tool_call)
+        This method is called when a tool call has completed.
+
+        :param tool_call: The tool call that has completed.
+        :type tool_call: ToolCall
+
+    submit_tool_outputs(self, tool_outputs)
+        Submits the outputs of tool calls to the Assistant API.
+
+        :param tool_outputs: The outputs of the tool calls.
+        :type tool_outputs: List[dict]
+    """
     def __init__(self, client):
         self.client = client
 

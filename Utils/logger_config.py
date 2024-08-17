@@ -26,10 +26,35 @@ SERVICES = os.getenv('SERVICES', '').split(',')
 
 
 def get_logger(name):
+    """
+    A method to get a logger object.
+
+    :param name: The name of the logger.
+    :return: The logger object.
+    """
     return logger.bind(name=name)
 
 
 def log_function_call(func, debug=DEBUG_SERVICES):
+    """
+    Log Function Call
+
+    This function is used to log the call and duration of a given function. It wraps the function with a logging mechanism.
+
+    :param func: The function to be wrapped and logged.
+    :param debug: Boolean indicating whether logging is enabled or not. Default is `DEBUG_SERVICES`.
+    :return: Wrapped function with logging mechanism.
+
+    Example Usage:
+    ```
+    @log_function_call
+    def my_function():
+        return "Hello World"
+
+    logged_func = log_function_call(my_function, debug=True)
+    logged_func()
+    ```
+    """
     if debug:
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
@@ -62,6 +87,27 @@ def log_function_call(func, debug=DEBUG_SERVICES):
 
 
 def timer(func):
+    """
+    :param func: The function to be timed.
+    :return: The result of the function.
+
+    This method is a decorator that times the execution of a given function. It wraps the function with a timer and logs the elapsed time using the logger module. The timer uses the `perf_counter()` method from the `time` module to measure the elapsed time.
+
+    Usage:
+        @timer
+        def my_function():
+            # code to be timed
+
+    Example:
+        @timer
+        def fibonacci(n):
+            if n <= 1:
+                return n
+            else:
+                return fibonacci(n-1) + fibonacci(n-2)
+
+    Note: The logger module must be properly configured before using the `timer` decorator. It's recommended to initialize the logger in the calling module before using this decorator.
+    """
     @functools.wraps(func)
     def wrapper_timer(*args, **kwargs):
         start_time = time.perf_counter()  # Start the timer
@@ -76,10 +122,15 @@ def timer(func):
 
 def wrap_functions_in_module(module_name, debug):
     """
-    Imports a module and wraps its functions with the given decorators.
+    Wrap Functions in Module
 
-    :param module_name: The name of the module to import.
-    :param debug: A boolean flag to control whether to apply the debug-related decorators.
+    :param module_name: The name of the module to be wrapped.
+    :type module_name: str
+    :param debug: Whether to enable debug mode.
+    :type debug: bool
+    :return: The wrapped module.
+    :rtype: module
+
     """
     module = importlib.import_module(module_name)
     for attr_name in dir(module):
@@ -94,6 +145,15 @@ def wrap_functions_in_module(module_name, debug):
 
 # Create a function to wrap all specified service modules
 def wrap_services():
+    """
+    Wrap Services Function
+    =====================
+
+    This function is used to wrap services.
+
+    Returns:
+        None
+    """
     for service in SERVICES:
         if DEBUG_SERVICES:
             wrap_functions_in_module(service, DEBUG_SERVICES)

@@ -10,6 +10,12 @@ from Utils.logger_config import get_logger,log_function_call
 load_dotenv()
 logger = get_logger(__name__)
 def str_to_bool(str_input):
+    """
+    Convert a string to a boolean value.
+
+    :param str_input: The string to convert.
+    :return: The boolean value converted from the string.
+    """
     if not isinstance(str_input, str):
         return False
     return str_input.lower() == "true"
@@ -32,6 +38,29 @@ else:
 
 
 class EventHandler(openai.AssistantEventHandler):
+    """
+
+    Class EventHandler
+
+    This class is a subclass of the openai.AssistantEventHandler class and contains various methods that handle different events related to the OpenAI Assistant.
+
+    Attributes:
+    - session_state (dict): A dictionary that stores the current state of the session, including chat log, tool calls, current message, current markdown, current tool input, and current tool input markdown.
+
+    Methods:
+    - on_event(event): Handles the general event. This method is not implemented in the EventHandler class and needs to be overridden in a subclass.
+    - on_text_created(text): Handles the event when a new text is created. It sets the current message to empty and prints "Assistant:".
+    - on_text_delta(delta, snapshot): Handles the event when a delta change is made to the text. It updates the current message in the session state and prints the updated text.
+    - on_text_done(text): Handles the event when the text is complete. It formats the annotation in the text, prints the formatted text, and appends it to the chat log in the session state.
+    - on_tool_call_created(tool_call): Handles the event when a tool call is created. If the tool call is of type "code_interpreter", it sets the current tool input to empty and prints "Assistant:".
+    - on_tool_call_delta(delta, snapshot): Handles the event when a delta change is made to the tool call. If the delta is of type "code_interpreter", it updates the current tool input in the session state and prints the input code.
+    - on_tool_call_done(tool_call): Handles the event when the tool call is complete. It appends the tool call to the tool calls list in the session state. If the tool call is of type "code_interpreter", it prints the input code and outputs.
+    - format_annotation(text): Formats the annotation in the given text by replacing annotation texts with numbered references and creating download links for file citations. Returns the formatted text.
+    - create_file_link(file_name, file_id): Creates a download link for the given file name and file ID. Returns the link tag.
+
+    Note: This class needs to be subclassed and the on_event() method needs to be implemented in the subclass.
+
+    """
     def __init__(self):
 
         super().__init__()
@@ -161,10 +190,25 @@ class EventHandler(openai.AssistantEventHandler):
 
 @log_function_call
 def create_thread(content, file):
+    """
+
+    :param content: The content of the thread.
+    :param file: The file associated with the thread.
+    :return: The created thread.
+
+    """
     return client.beta.threads.create()
 
 @log_function_call
 def create_message(thread, content, file):
+    """
+    :param thread: A Thread object representing the thread where the message will be created.
+    :param content: A string representing the content of the message.
+    :param file: An optional File object representing a file attachment for the message.
+    :return: None
+
+    This method creates a message in a given thread using the provided content and file attachment, if any. If a file attachment is provided, it is added to the message as an attachment with specific tools associated with it. The message is created using the client.beta.threads.messages.create() method, specifying the thread id, role, content, and attachments parameters.
+    """
     attachments = []
     if file is not None:
         attachments.append(
@@ -176,6 +220,14 @@ def create_message(thread, content, file):
 
 @log_function_call
 def run_stream(user_input, file, selected_assistant_id):
+    """
+    :param user_input: The input from the user.
+    :param file: The file to be processed.
+    :param selected_assistant_id: The ID of the selected assistant.
+    :return: None
+
+    This method runs a stream for a chat session using the given user input, file, and selected assistant ID. It creates a thread, sends messages to the thread, and handles events using the event handler. The chat log is printed at the end of the session.
+    """
     thread = create_thread(user_input, file)
     create_message(thread, user_input, file)
     event_handler = EventHandler()  # Create an instance of the event handler with session state
@@ -194,6 +246,11 @@ def run_stream(user_input, file, selected_assistant_id):
 
 
 def main():
+    """
+    Entry point for the program.
+
+    :return: None
+    """
     # Simulate user input and assistant interaction
     user_input = input("You: ")
     assistant_id = os.environ.get("ASSISTANT_ID", "default_assistant")

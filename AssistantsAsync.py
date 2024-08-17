@@ -20,11 +20,98 @@ azure_openai_key = os.environ.get("AZURE_OPENAI_KEY")
 client = AsyncOpenAI(api_key=openai_api_key)
 
 def str_to_bool(str_input):
+    """
+    Converts a string input to a boolean value.
+
+    :param str_input: The string input to be converted.
+    :return: The boolean value.
+    """
     if not isinstance(str_input, str):
         return False
     return str_input.lower() == "true"
 
 class EventHandler(AsyncAssistantEventHandler):
+    """
+    EventHandler
+    ===================
+
+    .. class:: EventHandler(AsyncAssistantEventHandler)
+
+        This class handles various events that occur during the execution of an assistant.
+
+        :param session_state: The state of the assistant's session.
+        :type session_state: dict
+
+        .. method:: on_event(event)
+
+            Handles an event that occurs during the execution of the assistant.
+
+            :param event: The event object.
+            :type event: Any
+
+        .. method:: on_text_created(text)
+
+            Handles the creation of a new text message.
+
+            :param text: The text message.
+            :type text: str
+
+        .. method:: on_text_delta(delta, snapshot)
+
+            Handles a change in a text message.
+
+            :param delta: The delta object representing the change.
+            :type delta: Any
+            :param snapshot: The snapshot of the text message after the change.
+            :type snapshot: Any
+
+        .. method:: on_text_done(text)
+
+            Handles the completion of a text message.
+
+            :param text: The completed text message.
+            :type text: str
+
+        .. method:: on_tool_call_created(tool_call)
+
+            Handles the creation of a new tool call.
+
+            :param tool_call: The tool call object.
+            :type tool_call: Any
+
+        .. method:: on_tool_call_delta(delta, snapshot)
+
+            Handles a change in a tool call.
+
+            :param delta: The delta object representing the change.
+            :type delta: Any
+            :param snapshot: The snapshot of the tool call after the change.
+            :type snapshot: Any
+
+        .. method:: on_tool_call_done(tool_call)
+
+            Handles the completion of a tool call.
+
+            :param tool_call: The completed tool call object.
+            :type tool_call: Any
+
+        .. method:: format_annotation(text)
+
+            Formats the annotations in a text message.
+
+            :param text: The text message.
+            :type text: str
+
+        .. method:: create_file_link(file_name, file_id)
+
+            Creates a download link for a file.
+
+            :param file_name: The name of the file.
+            :type file_name: str
+            :param file_id: The ID of the file.
+            :type file_id: str
+
+    """
     def __init__(self):
         super().__init__()
         self.session_state = {
@@ -154,10 +241,33 @@ class EventHandler(AsyncAssistantEventHandler):
 
 @log_function_call
 async def create_thread(content, file):
+    """
+    :param content: The content of the thread to be created.
+    :param file: The file associated with the thread (optional).
+
+    :return: A coroutine that creates a new thread using the specified content and file (if provided). The thread is created asynchronously.
+
+    """
     return await client.beta.threads.create()
 
 @log_function_call
 async def create_message(thread, content, file):
+    """
+    Create a message and send it to the specified thread.
+
+    :param thread: The thread object representing the thread where the message will be sent.
+    :type thread: Thread
+
+    :param content: The content of the message.
+    :type content: str
+
+    :param file: The file object representing the file to be attached to the message. (optional)
+    :type file: File
+
+    :return: None
+    :rtype: None
+
+    """
     attachments = []
     if file is not None:
         attachments.append(
@@ -169,6 +279,17 @@ async def create_message(thread, content, file):
 
 
 async def run_stream(user_input, file, selected_assistant_id):
+    """
+    Runs a stream of events for a chat assistant.
+
+    :param user_input: The user input for the chat assistant.
+    :type user_input: str
+    :param file: The file associated with the user input.
+    :type file: str
+    :param selected_assistant_id: The ID of the selected chat assistant.
+    :type selected_assistant_id: str
+    :return: None
+    """
     thread = await create_thread(user_input, file)
     await create_message(thread, user_input, file)
     event_handler = EventHandler()  # Create an instance of the event handler with session state
@@ -190,6 +311,11 @@ async def run_stream(user_input, file, selected_assistant_id):
         print(f"{log['name']}: {log['msg']}")
 
 async def main():
+    """
+    Main method for running the assistant interaction.
+
+    :return: None
+    """
     # Simulate user input and assistant interaction
     user_input = input("You: ")
     assistant_id = os.environ.get("ASSISTANT_ID", "default_assistant")

@@ -9,6 +9,34 @@ import json
 
 
 class DatabaseManager:
+    """
+    DatabaseManager is a class that manages the database operations for call contexts and transcriptions.
+
+    Args:
+        db_url (str): The URL of the database. Default is "sqlite+aiosqlite:///./DataLibrary/call_contexts.db".
+
+    Attributes:
+        engine (alchemy.AsyncEngine): The SQLAlchemy async engine for the database connection.
+        SessionLocal (alchemy.orm.session.Session): The SQLAlchemy async session for the database.
+        Base (alchemy.ext.declarative.api.DeclarativeMeta): The SQLAlchemy declarative base for table definitions.
+        ContactModel (alchemy.ext.declarative.api.DeclarativeMeta): The SQLAlchemy model class for contacts table.
+        CallContextModel (alchemy.ext.declarative.api.DeclarativeMeta): The SQLAlchemy model class for call_contexts table.
+        TranscriptionModel (alchemy.ext.declarative.api.DeclarativeMeta): The SQLAlchemy model class for transcriptions table.
+
+    Methods:
+        _initialize_tables(): Initializes the tables in the database.
+        get_db(): Creates a database session and yields it for use.
+        create_call_context(db: AsyncSession, call_context): Creates a new call context in the database.
+        get_call_context(db: AsyncSession, call_sid: str): Retrieves a call context based on the call SID.
+        update_call_context(db: AsyncSession, call_sid: str, call_context): Updates a call context in the database.
+        delete_call_context(db: AsyncSession, call_sid: str): Deletes a call context from the database.
+        get_all_call_contexts(db: AsyncSession): Retrieves all call contexts from the database.
+        create_transcription(db: AsyncSession, call_sid: str, transcription_text: str): Creates a new transcription in the database.
+        get_transcription(db: AsyncSession, call_sid: str): Retrieves a transcription based on the call SID.
+        delete_transcription(db: AsyncSession, call_sid: str): Deletes a transcription from the database.
+        get_all_contacts(db: AsyncSession): Retrieves all contacts from the database.
+        get_contact_by_phone(db: AsyncSession, phone_number: str): Retrieves a contact based on the phone number.
+    """
     def __init__(self, db_url: str = "sqlite+aiosqlite:///./DataLibrary/call_contexts.db"):
         # Ensure the DataLibrary folder exists
         if not os.path.exists('DataLibrary'):
@@ -174,6 +202,13 @@ if __name__ == "__main__":
 
     # Example of using the DatabaseManager class in an async context
     async def main():
+        """
+        Main Method
+
+        This method is used to create a new contact and a new call context in the database.
+
+        :return: None
+        """
         async with db_manager.SessionLocal() as db:
             # Create a new contact
             new_contact = db_manager.ContactModel(phone_number="1234567890")
