@@ -1,3 +1,4 @@
+import asyncio
 import importlib
 import json
 import os
@@ -5,7 +6,7 @@ import re
 from abc import ABC, abstractmethod
 from openai import AsyncOpenAI, OpenAI
 from services.call_details import CallContext
-from services.event_manager import EventHandler,AsyncAssistantEventHandler
+from services.event_manager import EventHandler, AssistantEventHandler
 import time
 import google.generativeai as genai
 from functions.function_manifest import tools
@@ -89,42 +90,25 @@ class AbstractLLMService(EventHandler, ABC):
         self.sentence_buffer = sentences[-1] if sentences else ""
 
 
-class AssistantEventHandler(AsyncAssistantEventHandler):
-    async def on_user_input(self, text, role, name):
-        return {"role": role, "content": text, "name": name}
-
-    async def on_create_thread(self, client):
-        return client.beta.threads.create()
-
-    async def on_submit_message(self, thread, user_message, client, assistant_id):
-        client.beta.threads.messages.create(
-            thread_id=thread.id, role="user", content=user_message
-        )
-        return client.beta.threads.runs.create(
-            thread_id=thread.id,
-            assistant_id=assistant_id,
-        )
-
-    async def on_wait_run(self, run, thread, client):
-        while run.status in ["queued", "in_progress"]:
-            run = client.beta.threads.runs.retrieve(
-                thread_id=thread.id,
-                run_id=run.id,
-            )
-            time.sleep(0.5)
-        return run
-
-    async def on_response(self, thread, client):
-        return client.beta.threads.messages.list(thread_id=thread.id, order="asc")
-
-
-class AssistantService(AbstractLLMService):
+class AssistantService(AbstractLLMService, AssistantEventHandler):
     def __init__(self, context: CallContext):
-        super().__init__(context)
+        super().__init__(context)  # This initializes both AbstractLLMService and AssistantEventHandler
         self.openai = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         self.assistant_id = os.getenv("ASSISTANT_ID")
-        self.event_handler = AssistantEventHandler()  # Initialize the event handler
+        self.event_handler = AssistantEventHandler(client=self.client)
+    def create_thread(client, content, file=None):
+        return client.beta.threads.create()
+
+    def create_message(client, thread, content, file=None):
+        attachments = []
+        if file is not None:
+            attachments.append(
+                {"file_id": file.id, "tools": [{"type": "code_interpreter"}, {"type": "file_search"}]}
+            )
+        client.beta.threads.messages.create(
+            thread_id=thread.id, role="user", content=content, attachments=attachments
+        )
 
     @log_function_call
     async def completion(self, text: str, interaction_count: int, role: str = 'user', name: str = 'user'):
@@ -133,27 +117,16 @@ class AssistantService(AbstractLLMService):
 
         for attempt in range(max_retries):
             try:
-                # Handle user input
-                user_input = await self.event_handler.on_user_input(text, role, name)
+                # Handle user input using inherited method from AssistantEventHandler
+                print(f'getting user input for')
+                user_input = await self.on_user_input(text, role, name)
                 self.user_context.append(user_input)
 
                 # Create a new thread
-                thread = await self.event_handler.on_create_thread(self.client)
+                thread = await self.on_create_thread(self.client)
 
-                # Submit message and create a run
-                run = await self.event_handler.on_submit_message(thread, text, self.client, self.assistant_id)
-
-                # Wait for the run to complete
-                run = await self.event_handler.on_wait_run(run, thread, self.client)
-
-                # Get the response
-                messages = await self.event_handler.on_response(thread, self.client)
-
-                # Emit the final response
-                for message in messages.data:
-                    content_block = self._extract_content(message)
-                    if content_block:
-                        await self.emit_complete_sentences(content_block, interaction_count)
+                # Submit message and handle streaming response
+                self.handle_streaming_response(thread, text, interaction_count)
 
                 break  # Exit loop if successful
 
@@ -161,9 +134,29 @@ class AssistantService(AbstractLLMService):
                 logger.error(f"Error in AssistantService completion: {str(e)}")
                 if attempt < max_retries - 1:
                     logger.info(f"Retrying in {retry_delay} seconds...")
-                    time.sleep(retry_delay)
+                    await asyncio.sleep(retry_delay)
                 else:
                     raise  # Re-raise the exception if all retries fail
+
+    @log_function_call
+    def handle_streaming_response(self, thread, text, interaction_count):
+        try:
+            event_handler = AssistantEventHandler()
+
+            with self.client.beta.threads.runs.stream(
+                    thread_id=thread.id,
+                    assistant_id=self.assistant_id,
+                    instructions="Please address the user as Jane Doe. The user has a premium account.",
+                    event_handler=event_handler
+            ) as stream:
+
+                final_response = event_handler.get_responses()
+                self.emit_complete_sentences(final_response, interaction_count)
+            # After streaming, process the collected responses
+
+        except Exception as e:
+            logger.error(f"Error in handle_streaming_response: {str(e)}")
+            raise e
 
     @log_function_call
     def _extract_content(self, message):
