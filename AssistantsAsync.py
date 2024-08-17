@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from Utils.logger_config import get_logger, log_function_call
 import asyncio
 from openai import AsyncOpenAI, AsyncAssistantEventHandler
-
+print("test")
 load_dotenv()
 logger = get_logger(__name__)
 
