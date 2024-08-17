@@ -1,0 +1,558 @@
+2024-07-23 20:15:52 | INFO     | __main__ - Starting server...
+2024-07-23 20:15:52 | INFO     | __main__ - Backend server address set to: great-lasting-flea.ngrok-free.app
+2024-07-23 20:16:09 | INFO     | __main__ - Initiating call to +14343289684
+2024-07-23 20:16:09 | INFO     | __main__ - Initiating call to +14343289684 via https://great-lasting-flea.ngrok-free.app/incoming
+2024-07-23 20:16:15 | INFO     | __main__ - Using LLM service: openai
+2024-07-23 20:16:15 | INFO     | __main__ - Using TTS service: elevenlabs
+2024-07-23 20:16:15 | INFO     | __main__ - Twilio -> Starting Media Stream for MZ8e555f48586b71afd75effeaadb6364d
+2024-07-23 20:16:17 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: Hello, my name is Sarah, and I'm calling from Sports Media Inc. I am here to discuss your current advertising needs can you please direct me to the appropriate representative?
+2024-07-23 20:16:26 | INFO     | __main__ - Using LLM service: openai
+2024-07-23 20:16:26 | INFO     | __main__ - Using TTS service: elevenlabs
+2024-07-23 20:16:27 | INFO     | __main__ - Twilio -> Starting Media Stream for MZ202e377c384bd15f57f91be23a54fab7
+2024-07-23 20:16:28 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: Hello, my name is Sarah, and I'm calling from Sports Media Inc. I am here to discuss your current advertising needs can you please direct me to the appropriate representative?
+2024-07-23 20:16:31 | INFO     | __main__ - Interaction 0 – STT -> LLM:  What it is?
+2024-07-23 20:16:31 | INFO     | __main__ - Interaction 0: LLM -> TTS: We're a premier advertising agency with vast experience in sports media.
+2024-07-23 20:16:32 | INFO     | __main__ - Interaction 0: TTS -> TWILIO: We're a premier advertising agency with vast experience in sports media.
+2024-07-23 20:16:32 | INFO     | __main__ - Interaction 0: LLM -> TTS: We help businesses like yours gain maximum exposure through strategic ad placements and creative campaigns in the sports world.
+2024-07-23 20:16:34 | INFO     | __main__ - Interaction 0: TTS -> TWILIO: We help businesses like yours gain maximum exposure through strategic ad placements and creative campaigns in the sports world.
+2024-07-23 20:16:34 | INFO     | __main__ - Intruption detected, clearing system.
+2024-07-23 20:16:34 | INFO     | __main__ - Interaction 1 – STT -> LLM:  I'm calling from Sports Media Inc.
+2024-07-23 20:16:34 | INFO     | __main__ - Interaction 1: LLM -> TTS: Ah, you're part of the home team!
+2024-07-23 20:16:35 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: Ah, you're part of the home team!
+2024-07-23 20:16:35 | INFO     | __main__ - Interaction 1: LLM -> TTS: How can I assist you today?
+2024-07-23 20:16:37 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: How can I assist you today?
+2024-07-23 20:16:37 | INFO     | __main__ - Intruption detected, clearing system.
+2024-07-23 20:16:42 | INFO     | __main__ - Interaction 0 – STT -> LLM:  Yeah. I'm right here.
+2024-07-23 20:16:43 | INFO     | __main__ - Interaction 0: LLM -> TTS: Fantastic!
+2024-07-23 20:16:43 | INFO     | __main__ - Interaction 0: TTS -> TWILIO: Fantastic!
+2024-07-23 20:16:43 | INFO     | __main__ - Interaction 0: LLM -> TTS: What’s the most important goal for your advertising campaign right now?
+2024-07-23 20:16:44 | INFO     | __main__ - Interaction 0: TTS -> TWILIO: What’s the most important goal for your advertising campaign right now?
+2024-07-23 20:16:44 | INFO     | __main__ - Interaction 0: LLM -> TTS: 🚀
+2024-07-23 20:16:45 | INFO     | __main__ - Interaction 0: TTS -> TWILIO: 🚀
+2024-07-23 20:16:49 | INFO     | __main__ - Interaction 2 – STT -> LLM:  What's the most important goal for your advertising campaign right now?
+2024-07-23 20:16:50 | INFO     | __main__ - Interaction 2: LLM -> TTS: To catapult your brand into the spotlight and generate buzz like a last-minute touchdown!
+2024-07-23 20:16:50 | INFO     | __main__ - Intruption detected, clearing system.
+2024-07-23 20:16:51 | INFO     | __main__ - Interaction 2: TTS -> TWILIO: To catapult your brand into the spotlight and generate buzz like a last-minute touchdown!
+2024-07-23 20:16:51 | INFO     | __main__ - Interaction 2: LLM -> TTS: What's your main objective?
+2024-07-23 20:16:52 | INFO     | __main__ - Interaction 2: TTS -> TWILIO: What's your main objective?
+2024-07-23 20:16:52 | INFO     | __main__ - Interaction 3 – STT -> LLM:  To get as much
+2024-07-23 20:16:53 | INFO     | __main__ - Interaction 3: LLM -> TTS: As much exposure as possible, right?
+2024-07-23 20:16:54 | INFO     | __main__ - Interaction 3: TTS -> TWILIO: As much exposure as possible, right?
+2024-07-23 20:16:54 | INFO     | __main__ - Interaction 3: LLM -> TTS: Excellent!
+2024-07-23 20:16:54 | INFO     | services.transcription_service - UtteranceEnd received before speech was final, emit the text collected so far:  To get as much conversions as we can.
+2024-07-23 20:16:54 | INFO     | __main__ - Interaction 1 – STT -> LLM:  To get as much conversions as we can.
+2024-07-23 20:16:55 | INFO     | __main__ - Interaction 3: TTS -> TWILIO: Excellent!
+2024-07-23 20:16:55 | INFO     | __main__ - Interaction 3: LLM -> TTS: We can tailor a game-winning strategy to amplify your reach.
+2024-07-23 20:16:55 | INFO     | __main__ - Interaction 1: LLM -> TTS: Conversions are our specialty!
+2024-07-23 20:16:56 | INFO     | __main__ - Interaction 3: TTS -> TWILIO: We can tailor a game-winning strategy to amplify your reach.
+2024-07-23 20:16:56 | INFO     | __main__ - Interaction 3: LLM -> TTS: Ready to dive in?
+2024-07-23 20:16:56 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: Conversions are our specialty!
+2024-07-23 20:16:56 | INFO     | __main__ - Interaction 1: LLM -> TTS: 🏅 What's the one thing you'd love to see in your advertising that you feel is missing currently?
+2024-07-23 20:16:57 | INFO     | __main__ - Interaction 3: TTS -> TWILIO: Ready to dive in?
+2024-07-23 20:16:57 | INFO     | __main__ - Intruption detected, clearing system.
+2024-07-23 20:16:57 | INFO     | __main__ - Intruption detected, clearing system.
+2024-07-23 20:16:57 | INFO     | __main__ - Interaction 4 – STT -> LLM:  conversion as we can.
+2024-07-23 20:16:57 | INFO     | __main__ - Interaction 4: LLM -> TTS: Got it!
+2024-07-23 20:16:57 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: 🏅 What's the one thing you'd love to see in your advertising that you feel is missing currently?
+2024-07-23 20:16:58 | INFO     | __main__ - Interaction 4: TTS -> TWILIO: Got it!
+2024-07-23 20:16:58 | INFO     | __main__ - Interaction 4: LLM -> TTS: High conversion rates are our specialty.
+2024-07-23 20:16:59 | INFO     | __main__ - Interaction 4: TTS -> TWILIO: High conversion rates are our specialty.
+2024-07-23 20:16:59 | INFO     | __main__ - Interaction 4: LLM -> TTS: Let's craft a campaign that not only attracts but also converts like a champ.
+2024-07-23 20:17:00 | INFO     | __main__ - Interaction 4: TTS -> TWILIO: Let's craft a campaign that not only attracts but also converts like a champ.
+2024-07-23 20:17:00 | INFO     | __main__ - Interaction 4: LLM -> TTS: Ready to chat specifics?
+2024-07-23 20:17:01 | INFO     | __main__ - Interaction 4: TTS -> TWILIO: Ready to chat specifics?
+2024-07-23 20:17:01 | INFO     | __main__ - Interaction 5 – STT -> LLM:  Convergence are our specialty.
+2024-07-23 20:17:02 | INFO     | __main__ - Interaction 5: LLM -> TTS: Absolutely, it's all about turning fans into customers.
+2024-07-23 20:17:03 | INFO     | __main__ - Interaction 5: TTS -> TWILIO: Absolutely, it's all about turning fans into customers.
+2024-07-23 20:17:03 | INFO     | __main__ - Interaction 5: LLM -> TTS: Want to discuss some tactics that have worked wonders for others?
+2024-07-23 20:17:06 | INFO     | __main__ - Interaction 5: TTS -> TWILIO: Want to discuss some tactics that have worked wonders for others?
+2024-07-23 20:17:06 | INFO     | __main__ - Intruption detected, clearing system.
+2024-07-23 20:17:06 | INFO     | __main__ - Intruption detected, clearing system.
+2024-07-23 20:17:06 | INFO     | __main__ - Intruption detected, clearing system.
+2024-07-23 20:17:06 | INFO     | __main__ - Intruption detected, clearing system.
+2024-07-23 20:17:06 | INFO     | __main__ - Intruption detected, clearing system.
+2024-07-23 20:17:06 | INFO     | services.transcription_service - UtteranceEnd received before speech was final, emit the text collected so far:  What was one thing you'd love to see in your advertising that you feel is missing currently?
+2024-07-23 20:17:06 | INFO     | __main__ - Interaction 6 – STT -> LLM:  What was one thing you'd love to see in your advertising that you feel is missing currently?
+2024-07-23 20:17:06 | INFO     | __main__ - Interaction 2 – STT -> LLM:  Good Graphics.
+2024-07-23 20:17:06 | INFO     | __main__ - Interaction 6: LLM -> TTS: A killer call to action that makes people hit that "buy now" button without hesitation!
+2024-07-23 20:17:07 | INFO     | __main__ - Interaction 2: LLM -> TTS: You’ve hit the jackpot!
+2024-07-23 20:17:08 | INFO     | __main__ - Interaction 6: TTS -> TWILIO: A killer call to action that makes people hit that "buy now" button without hesitation!
+2024-07-23 20:17:08 | INFO     | __main__ - Interaction 6: LLM -> TTS: What about you, what's missing in your current ads?
+2024-07-23 20:17:08 | INFO     | __main__ - Interaction 2: TTS -> TWILIO: You’ve hit the jackpot!
+2024-07-23 20:17:08 | INFO     | __main__ - Interaction 2: LLM -> TTS: Our in-house design wizards will make your ads pop like fireworks.
+2024-07-23 20:17:09 | INFO     | __main__ - Interaction 6: TTS -> TWILIO: What about you, what's missing in your current ads?
+2024-07-23 20:17:09 | INFO     | __main__ - Intruption detected, clearing system.
+2024-07-23 20:17:09 | INFO     | __main__ - Interaction 7 – STT -> LLM:  Good graphics.
+2024-07-23 20:17:09 | INFO     | __main__ - Interaction 2: TTS -> TWILIO: Our in-house design wizards will make your ads pop like fireworks.
+2024-07-23 20:17:09 | INFO     | __main__ - Interaction 2: LLM -> TTS: 🎆 How about we set up a quick call to dive into the details?
+2024-07-23 20:17:09 | INFO     | __main__ - Interaction 7: LLM -> TTS: Good graphics are crucial—they’re the MVP of any campaign!
+2024-07-23 20:17:10 | INFO     | __main__ - Interaction 2: TTS -> TWILIO: 🎆 How about we set up a quick call to dive into the details?
+2024-07-23 20:17:11 | INFO     | __main__ - Interaction 7: TTS -> TWILIO: Good graphics are crucial—they’re the MVP of any campaign!
+2024-07-23 20:17:11 | INFO     | __main__ - Interaction 7: LLM -> TTS: Shall we brainstorm some jaw-dropping visuals for your ads?
+2024-07-23 20:17:12 | INFO     | __main__ - Interaction 7: TTS -> TWILIO: Shall we brainstorm some jaw-dropping visuals for your ads?
+2024-07-23 20:17:12 | INFO     | __main__ - Intruption detected, clearing system.
+2024-07-23 20:17:12 | INFO     | __main__ - Intruption detected, clearing system.
+2024-07-23 20:17:12 | INFO     | __main__ - Intruption detected, clearing system.
+2024-07-23 20:17:12 | INFO     | __main__ - Interaction 8 – STT -> LLM:  You hit the jackpot. Our income denied orders will make
+2024-07-23 20:17:13 | INFO     | __main__ - Interaction 8: LLM -> TTS: Awesome!
+2024-07-23 20:17:14 | INFO     | __main__ - Interaction 8: TTS -> TWILIO: Awesome!
+2024-07-23 20:17:14 | INFO     | __main__ - Interaction 8: LLM -> TTS: With stellar graphics, we can turn those denied orders into solid gold conversions.
+2024-07-23 20:17:15 | INFO     | __main__ - Interaction 8: TTS -> TWILIO: With stellar graphics, we can turn those denied orders into solid gold conversions.
+2024-07-23 20:17:15 | INFO     | __main__ - Interaction 8: LLM -> TTS: Ready to level up your ad game?
+2024-07-23 20:17:16 | INFO     | __main__ - Interaction 8: TTS -> TWILIO: Ready to level up your ad game?
+2024-07-23 20:17:24 | INFO     | services.transcription_service - UtteranceEnd received before speech was final, emit the text collected so far:  What else can you offer?
+2024-07-23 20:17:24 | INFO     | __main__ - Interaction 3 – STT -> LLM:  What else can you offer?
+2024-07-23 20:17:24 | INFO     | __main__ - Interaction 3: LLM -> TTS: Alongside killer graphics, we provide data-driven targeting, comprehensive analytics, and strategic ad placements across top sports platforms.
+2024-07-23 20:17:26 | INFO     | __main__ - Interaction 3: TTS -> TWILIO: Alongside killer graphics, we provide data-driven targeting, comprehensive analytics, and strategic ad placements across top sports platforms.
+2024-07-23 20:17:26 | INFO     | __main__ - Interaction 3: LLM -> TTS: All designed to maximize your ROI.
+2024-07-23 20:17:26 | INFO     | __main__ - Interaction 9 – STT -> LLM:  Yeah.
+2024-07-23 20:17:26 | INFO     | __main__ - Interaction 3: TTS -> TWILIO: All designed to maximize your ROI.
+2024-07-23 20:17:26 | INFO     | __main__ - Interaction 3: LLM -> TTS: 🤑 Interested?
+2024-07-23 20:17:27 | INFO     | __main__ - Interaction 9: LLM -> TTS: Fantastic!
+2024-07-23 20:17:27 | INFO     | __main__ - Interaction 3: TTS -> TWILIO: 🤑 Interested?
+2024-07-23 20:17:27 | INFO     | __main__ - Intruption detected, clearing system.
+2024-07-23 20:17:27 | INFO     | __main__ - Intruption detected, clearing system.
+2024-07-23 20:17:27 | INFO     | __main__ - Interaction 4 – STT -> LLM:  Yeah.
+2024-07-23 20:17:28 | INFO     | __main__ - Interaction 9: TTS -> TWILIO: Fantastic!
+2024-07-23 20:17:28 | INFO     | __main__ - Interaction 9: LLM -> TTS: Let's dive into the details.
+2024-07-23 20:17:28 | INFO     | __main__ - Interaction 4: LLM -> TTS: Awesome!
+2024-07-23 20:17:29 | INFO     | __main__ - Interaction 9: TTS -> TWILIO: Let's dive into the details.
+2024-07-23 20:17:29 | INFO     | __main__ - Interaction 9: LLM -> TTS: What products or services are you focusing on for this campaign?
+2024-07-23 20:17:29 | INFO     | __main__ - Interaction 4: TTS -> TWILIO: Awesome!
+2024-07-23 20:17:29 | INFO     | __main__ - Interaction 4: LLM -> TTS: Let’s set up a call to get you started.
+2024-07-23 20:17:30 | INFO     | __main__ - Interaction 9: TTS -> TWILIO: What products or services are you focusing on for this campaign?
+2024-07-23 20:17:31 | INFO     | __main__ - Interaction 4: TTS -> TWILIO: Let’s set up a call to get you started.
+2024-07-23 20:17:31 | INFO     | __main__ - Interaction 4: LLM -> TTS: Would you prefer I connect you now or schedule a time that works best for you?
+2024-07-23 20:17:32 | INFO     | __main__ - Interaction 4: TTS -> TWILIO: Would you prefer I connect you now or schedule a time that works best for you?
+2024-07-23 20:17:41 | INFO     | __main__ - Interaction 5 – STT -> LLM:  Schedule a time.
+2024-07-23 20:17:41 | INFO     | __main__ - Interaction 10 – STT -> LLM:  Schedule a time.
+2024-07-23 20:17:42 | INFO     | __main__ - Interaction 10: LLM -> TTS: Absolutely, let's get that on the calendar!
+2024-07-23 20:17:42 | INFO     | __main__ - Interaction 5: LLM -> TTS: Perfect!
+2024-07-23 20:17:43 | INFO     | __main__ - Interaction 5: TTS -> TWILIO: Perfect!
+2024-07-23 20:17:43 | INFO     | __main__ - Interaction 5: LLM -> TTS: What date and time works best for you?
+2024-07-23 20:17:43 | INFO     | __main__ - Interaction 10: TTS -> TWILIO: Absolutely, let's get that on the calendar!
+2024-07-23 20:17:43 | INFO     | __main__ - Interaction 10: LLM -> TTS: What day and time work best for you?
+2024-07-23 20:17:44 | INFO     | __main__ - Interaction 5: TTS -> TWILIO: What date and time works best for you?
+2024-07-23 20:17:44 | INFO     | __main__ - Interaction 5: LLM -> TTS: ⏰
+2024-07-23 20:17:44 | INFO     | __main__ - Interaction 10: TTS -> TWILIO: What day and time work best for you?
+2024-07-23 20:17:45 | INFO     | __main__ - Interaction 5: TTS -> TWILIO: ⏰
+2024-07-23 20:17:55 | INFO     | __main__ - Interaction 6 – STT -> LLM:  What?
+2024-07-23 20:17:56 | INFO     | __main__ - Interaction 6: LLM -> TTS: My bad!
+2024-07-23 20:17:57 | INFO     | __main__ - Interaction 6: TTS -> TWILIO: My bad!
+2024-07-23 20:17:57 | INFO     | __main__ - Interaction 6: LLM -> TTS: What date and time would you like to schedule the call for?
+2024-07-23 20:17:57 | INFO     | __main__ - Twilio -> Media stream MZ202e377c384bd15f57f91be23a54fab7 ended.
+2024-07-23 20:17:58 | INFO     | __main__ - WebSocket disconnected
+2024-07-23 20:17:58 | INFO     | services.transcription_service - Deepgram connection closed
+2024-07-23 20:17:58 | INFO     | __main__ - Interaction 6: TTS -> TWILIO: What date and time would you like to schedule the call for?
+2024-07-23 20:17:58 | ERROR    | services.tts_service - Error occurred in ElevenLabs TTS service
+2024-07-23 20:17:58 | ERROR    | services.tts_service - Unexpected ASGI message 'websocket.send', after sending 'websocket.close' or response already completed.
+2024-07-23 20:17:58 | INFO     | services.transcription_service - Deepgram metadata:
+2024-07-23 20:17:58 | INFO     | services.transcription_service - Disconnected from Deepgram
+2024-07-23 20:17:58 | INFO     | __main__ - Twilio -> Media stream MZ8e555f48586b71afd75effeaadb6364d ended.
+2024-07-23 20:17:59 | INFO     | __main__ - WebSocket disconnected
+2024-07-23 20:17:59 | INFO     | services.transcription_service - Deepgram connection closed
+2024-07-23 20:18:00 | INFO     | services.transcription_service - Deepgram metadata:
+2024-07-23 20:18:00 | INFO     | services.transcription_service - Disconnected from Deepgram
+2024-07-23 20:46:39 | INFO     | __main__ - Starting server...
+2024-07-23 20:46:39 | INFO     | __main__ - Backend server address set to: great-lasting-flea.ngrok-free.app
+2024-07-23 20:47:05 | INFO     | __main__ - Using LLM service: openai
+2024-07-23 20:47:05 | INFO     | __main__ - Using TTS service: elevenlabs
+2024-07-23 20:47:06 | INFO     | __main__ - Twilio -> Starting Media Stream for MZ2b280206ca098450420112857064bafb
+2024-07-23 20:47:07 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: Hello, my name is Sarah, and I'm calling from Sports Media Inc. I am here to discuss your current advertising needs can you please direct me to the appropriate representative?
+2024-07-23 20:47:08 | INFO     | __main__ - Initiating call to +14343289684
+2024-07-23 20:47:08 | INFO     | __main__ - Initiating call to +14343289684 via https://great-lasting-flea.ngrok-free.app/incoming
+2024-07-23 20:47:22 | INFO     | __main__ - Interaction 0 – STT -> LLM:  Yeah.
+2024-07-23 20:47:23 | INFO     | __main__ - Interaction 0: LLM -> TTS: Fantastic!
+2024-07-23 20:47:23 | INFO     | __main__ - Interaction 0: TTS -> TWILIO: Fantastic!
+2024-07-23 20:47:23 | INFO     | __main__ - Interaction 0: LLM -> TTS: Could you please provide me with their name or any additional details to help me reach them?
+2024-07-23 20:47:34 | INFO     | __main__ - Using LLM service: openai
+2024-07-23 20:47:34 | INFO     | __main__ - Using TTS service: elevenlabs
+2024-07-23 20:47:34 | INFO     | __main__ - Twilio -> Starting Media Stream for MZ1d6b66e2312d1beec4a797a556a1f6b7
+2024-07-23 20:47:42 | INFO     | __main__ - Interaction 0 – STT -> LLM:  Hello?
+2024-07-23 20:47:42 | INFO     | __main__ - Interaction 0: LLM -> TTS: Hey there!
+2024-07-23 20:47:43 | INFO     | __main__ - Interaction 0: TTS -> TWILIO: Hey there!
+2024-07-23 20:47:43 | INFO     | __main__ - Interaction 0: LLM -> TTS: How can I assist you with your advertising needs today?
+2024-07-23 20:47:45 | INFO     | __main__ - Interaction 0: TTS -> TWILIO: How can I assist you with your advertising needs today?
+2024-07-23 20:47:54 | INFO     | __main__ - Interaction 1 – STT -> LLM:  I've got a few needs that
+2024-07-23 20:47:55 | INFO     | __main__ - Interaction 1: LLM -> TTS: Perfect!
+2024-07-23 20:47:55 | INFO     | __main__ - Interaction 1: LLM -> TTS: Tell me a bit about what you're looking for, and we'll find the perfect advertising solution for you.
+2024-07-23 20:47:56 | INFO     | __main__ - Interaction 2 – STT -> LLM:  like address
+2024-07-23 20:47:56 | INFO     | __main__ - Interaction 2: LLM -> TTS: Of course!
+2024-07-23 20:47:57 | INFO     | __main__ - Interaction 2: LLM -> TTS: Are you looking for local, regional, or national address targeting?
+2024-07-23 20:48:09 | INFO     | __main__ - Twilio -> Media stream MZ1d6b66e2312d1beec4a797a556a1f6b7 ended.
+2024-07-23 20:48:10 | INFO     | __main__ - WebSocket disconnected
+2024-07-23 20:48:10 | INFO     | services.transcription_service - Deepgram connection closed
+2024-07-23 20:48:11 | INFO     | services.transcription_service - Deepgram metadata:
+2024-07-23 20:48:11 | INFO     | services.transcription_service - Disconnected from Deepgram
+2024-07-23 20:48:12 | INFO     | __main__ - Twilio -> Media stream MZ2b280206ca098450420112857064bafb ended.
+2024-07-23 20:48:13 | INFO     | __main__ - WebSocket disconnected
+2024-07-23 20:48:13 | INFO     | services.transcription_service - Deepgram connection closed
+2024-07-23 20:48:13 | INFO     | services.transcription_service - Deepgram metadata:
+2024-07-23 20:48:14 | INFO     | services.transcription_service - Disconnected from Deepgram
+2024-07-23 20:50:29 | INFO     | __main__ - Starting server...
+2024-07-23 20:50:29 | INFO     | __main__ - Backend server address set to: great-lasting-flea.ngrok-free.app
+2024-07-23 20:56:29 | INFO     | __main__ - Starting server...
+2024-07-23 20:56:29 | INFO     | __main__ - Backend server address set to: great-lasting-flea.ngrok-free.app
+2024-07-23 20:56:57 | INFO     | __main__ - Initiating call to +14343289684
+2024-07-23 20:56:57 | INFO     | __main__ - Initiating call to +14343289684 via https://great-lasting-flea.ngrok-free.app/incoming
+2024-07-23 20:57:09 | INFO     | __main__ - Using LLM service: openai
+2024-07-23 20:57:09 | INFO     | __main__ - Using TTS service: elevenlabs
+2024-07-23 20:57:09 | INFO     | __main__ - Twilio -> Starting Media Stream for MZc42be1ef07508d063fed673adfc909ac
+2024-07-23 20:57:29 | INFO     | __main__ - Interaction 0 – STT -> LLM:  Hello?
+2024-07-23 20:57:30 | INFO     | __main__ - Interaction 0: LLM -> TTS: Hey there!
+2024-07-23 20:57:30 | INFO     | __main__ - Interaction 0: LLM -> TTS: Let's talk about how Sports Media can skyrocket your advertising game.
+2024-07-23 20:57:31 | INFO     | __main__ - Interaction 0: LLM -> TTS: Have a minute to chat?
+2024-07-23 20:57:34 | INFO     | __main__ - Initiating call to +14343289684
+2024-07-23 20:57:34 | INFO     | __main__ - Initiating call to +14343289684 via https://great-lasting-flea.ngrok-free.app/incoming
+2024-07-23 20:57:42 | INFO     | __main__ - Using LLM service: openai
+2024-07-23 20:57:42 | INFO     | __main__ - Using TTS service: elevenlabs
+2024-07-23 20:57:42 | INFO     | __main__ - Twilio -> Starting Media Stream for MZa34d1fc8506176d8fd30c918b64f23f1
+2024-07-23 20:57:46 | INFO     | __main__ - Interaction 0 – STT -> LLM:  Hello?
+2024-07-23 20:57:46 | INFO     | __main__ - Interaction 0: LLM -> TTS: Hey there!
+2024-07-23 20:57:47 | INFO     | __main__ - Interaction 0: LLM -> TTS: What's cooking?
+2024-07-23 20:57:47 | INFO     | __main__ - Interaction 0: LLM -> TTS: How can I assist you with your advertising needs today?
+2024-07-23 20:57:51 | INFO     | __main__ - Interaction 1 – STT -> LLM:  Hello?
+2024-07-23 20:57:51 | INFO     | __main__ - Interaction 1: LLM -> TTS: Seems like we're having a bit of a chat delay.
+2024-07-23 20:57:52 | INFO     | __main__ - Interaction 1: LLM -> TTS: How can I help you with your advertising needs?
+2024-07-23 20:57:55 | INFO     | __main__ - Interaction 2 – STT -> LLM:  Might check.
+2024-07-23 20:57:56 | INFO     | __main__ - Interaction 2: LLM -> TTS: I'm here and ready to assist!
+2024-07-23 20:57:56 | INFO     | __main__ - Interaction 2: LLM -> TTS: What can I do for you today?
+2024-07-23 20:57:59 | INFO     | __main__ - Twilio -> Media stream MZa34d1fc8506176d8fd30c918b64f23f1 ended.
+2024-07-23 20:58:00 | INFO     | __main__ - WebSocket disconnected
+2024-07-23 20:58:00 | INFO     | services.transcription_service - Deepgram connection closed
+2024-07-23 20:58:00 | INFO     | services.transcription_service - Deepgram metadata:
+2024-07-23 20:58:01 | INFO     | services.transcription_service - Disconnected from Deepgram
+2024-07-23 20:58:06 | INFO     | __main__ - Twilio -> Media stream MZc42be1ef07508d063fed673adfc909ac ended.
+2024-07-23 20:58:07 | INFO     | __main__ - WebSocket disconnected
+2024-07-23 20:58:07 | INFO     | services.transcription_service - Deepgram connection closed
+2024-07-23 20:58:07 | INFO     | services.transcription_service - Deepgram metadata:
+2024-07-23 20:58:08 | INFO     | services.transcription_service - Disconnected from Deepgram
+2024-07-23 20:58:13 | INFO     | __main__ - Using LLM service: openai
+2024-07-23 20:58:13 | INFO     | __main__ - Using TTS service: elevenlabs
+2024-07-23 20:58:13 | INFO     | __main__ - Twilio -> Starting Media Stream for MZ794e223c55b75b538beee8d536422749
+2024-07-23 20:58:19 | INFO     | __main__ - Twilio -> Media stream MZ794e223c55b75b538beee8d536422749 ended.
+2024-07-23 20:58:20 | INFO     | __main__ - WebSocket disconnected
+2024-07-23 20:58:20 | INFO     | services.transcription_service - Deepgram connection closed
+2024-07-23 20:58:21 | INFO     | services.transcription_service - Deepgram metadata:
+2024-07-23 20:58:21 | INFO     | services.transcription_service - Disconnected from Deepgram
+2024-07-23 21:08:29 | INFO     | __main__ - Starting server...
+2024-07-23 21:08:29 | INFO     | __main__ - Backend server address set to: great-lasting-flea.ngrok-free.app
+2024-07-23 21:09:17 | INFO     | __main__ - Initiating call to +14343289684
+2024-07-23 21:09:17 | INFO     | __main__ - Initiating call to +14343289684 via https://great-lasting-flea.ngrok-free.app/incoming
+2024-07-23 21:09:28 | INFO     | __main__ - Using LLM service: openai
+2024-07-23 21:09:28 | INFO     | __main__ - Using TTS service: elevenlabs
+2024-07-23 21:09:29 | INFO     | __main__ - Twilio -> Starting Media Stream for MZaed6a5a453087a6812c8409eeb48eefb
+2024-07-23 21:09:48 | INFO     | __main__ - Twilio -> Media stream MZaed6a5a453087a6812c8409eeb48eefb ended.
+2024-07-23 21:09:49 | INFO     | __main__ - WebSocket disconnected
+2024-07-23 21:09:49 | INFO     | services.transcription_service - Deepgram connection closed
+2024-07-23 21:09:49 | INFO     | services.transcription_service - Deepgram metadata:
+2024-07-23 21:09:49 | INFO     | services.transcription_service - Disconnected from Deepgram
+2024-07-23 21:10:14 | INFO     | __main__ - Starting server...
+2024-07-23 21:10:14 | INFO     | __main__ - Backend server address set to: great-lasting-flea.ngrok-free.app
+2024-07-23 21:10:34 | INFO     | __main__ - Initiating call to +14343289684
+2024-07-23 21:10:34 | INFO     | __main__ - Initiating call to +14343289684 via https://great-lasting-flea.ngrok-free.app/incoming
+2024-07-23 21:10:42 | INFO     | __main__ - Using LLM service: openai
+2024-07-23 21:10:42 | INFO     | __main__ - Using TTS service: deepgram
+2024-07-23 21:10:43 | INFO     | __main__ - Twilio -> Starting Media Stream for MZc357ea27f46dea6b12a0189d33dd94ac
+2024-07-23 21:10:43 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: Hello, my name is Sarah, and I'm calling from Sports Media Inc. I am here to discuss your current advertising needs can you please direct me to the appropriate representative?
+2024-07-23 21:10:55 | INFO     | __main__ - Interaction 0 – STT -> LLM:  Yeah. That'd be Joe here.
+2024-07-23 21:10:55 | INFO     | __main__ - Interaction 0: LLM -> TTS: Excellent, Joe!
+2024-07-23 21:10:55 | INFO     | __main__ - Interaction 0: TTS -> TWILIO: Excellent, Joe!
+2024-07-23 21:10:55 | INFO     | __main__ - Interaction 0: LLM -> TTS: Nice to meet you.
+2024-07-23 21:10:56 | INFO     | __main__ - Interaction 0: TTS -> TWILIO: Nice to meet you.
+2024-07-23 21:10:56 | INFO     | __main__ - Interaction 0: LLM -> TTS: How is your business currently going?
+2024-07-23 21:10:56 | INFO     | __main__ - Interaction 0: TTS -> TWILIO: How is your business currently going?
+2024-07-23 21:10:56 | INFO     | __main__ - Interaction 0: LLM -> TTS: Are you seeing the kind of engagement you want?
+2024-07-23 21:10:56 | INFO     | __main__ - Interaction 0: TTS -> TWILIO: Are you seeing the kind of engagement you want?
+2024-07-23 21:11:03 | INFO     | __main__ - Interaction 1 – STT -> LLM:  Yeah.
+2024-07-23 21:11:04 | INFO     | __main__ - Interaction 1: LLM -> TTS: Great to hear!
+2024-07-23 21:11:04 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: Great to hear!
+2024-07-23 21:11:04 | INFO     | __main__ - Interaction 1: LLM -> TTS: Are you looking to amplify that success with some strategic sports media advertising?
+2024-07-23 21:11:04 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: Are you looking to amplify that success with some strategic sports media advertising?
+2024-07-23 21:11:04 | INFO     | __main__ - Interruption detected, clearing system.
+2024-07-23 21:11:05 | INFO     | __main__ - Interaction 2 – STT -> LLM:  I can do that.
+2024-07-23 21:11:05 | INFO     | __main__ - Interaction 2: LLM -> TTS: Fantastic!
+2024-07-23 21:11:06 | INFO     | __main__ - Interaction 2: TTS -> TWILIO: Fantastic!
+2024-07-23 21:11:06 | INFO     | __main__ - Interaction 2: LLM -> TTS: Our services can get your brand in front of a massive audience.
+2024-07-23 21:11:06 | INFO     | __main__ - Interaction 2: TTS -> TWILIO: Our services can get your brand in front of a massive audience.
+2024-07-23 21:11:06 | INFO     | __main__ - Interaction 2: LLM -> TTS: What's your primary goal with advertising right now—awareness, sales, or something else?
+2024-07-23 21:11:07 | INFO     | __main__ - Interaction 2: TTS -> TWILIO: What's your primary goal with advertising right now—awareness, sales, or something else?
+2024-07-23 21:11:13 | INFO     | __main__ - Interruption detected, clearing system.
+2024-07-23 21:11:15 | INFO     | services.transcription_service - UtteranceEnd received before speech was final, emit the text collected so far:  Okay.
+2024-07-23 21:11:15 | INFO     | __main__ - Interaction 3 – STT -> LLM:  Okay.
+2024-07-23 21:11:15 | INFO     | __main__ - Interaction 3: LLM -> TTS: Awesome to hear!
+2024-07-23 21:11:15 | INFO     | __main__ - Interaction 3: TTS -> TWILIO: Awesome to hear!
+2024-07-23 21:11:16 | INFO     | __main__ - Interaction 3: LLM -> TTS: Let's take your advertising to the next level.
+2024-07-23 21:11:16 | INFO     | __main__ - Interaction 3: TTS -> TWILIO: Let's take your advertising to the next level.
+2024-07-23 21:11:16 | INFO     | __main__ - Interaction 3: LLM -> TTS: Do you have a specific sport or event in mind where you'd like to advertise?
+2024-07-23 21:11:16 | INFO     | __main__ - Interaction 3: TTS -> TWILIO: Do you have a specific sport or event in mind where you'd like to advertise?
+2024-07-23 21:11:26 | INFO     | __main__ - Interaction 4 – STT -> LLM:  NFL.
+2024-07-23 21:11:26 | INFO     | __main__ - Interaction 4: LLM -> TTS: Excellent choice, Joe!
+2024-07-23 21:11:27 | INFO     | __main__ - Interaction 4: TTS -> TWILIO: Excellent choice, Joe!
+2024-07-23 21:11:27 | INFO     | __main__ - Interaction 4: LLM -> TTS: NFL advertising can really boost your brand visibility.
+2024-07-23 21:11:27 | INFO     | __main__ - Interaction 4: TTS -> TWILIO: NFL advertising can really boost your brand visibility.
+2024-07-23 21:11:27 | INFO     | __main__ - Interaction 4: LLM -> TTS: Are you ready to intercept some top-tier traffic?
+2024-07-23 21:11:28 | INFO     | __main__ - Interaction 4: TTS -> TWILIO: Are you ready to intercept some top-tier traffic?
+2024-07-23 21:11:36 | INFO     | __main__ - Interaction 5 – STT -> LLM:  What is brand visibility?
+2024-07-23 21:11:36 | INFO     | __main__ - Interaction 5: LLM -> TTS: Great question, Joe!
+2024-07-23 21:11:37 | INFO     | __main__ - Interaction 5: TTS -> TWILIO: Great question, Joe!
+2024-07-23 21:11:37 | INFO     | __main__ - Interaction 5: LLM -> TTS: Brand visibility is how easily your brand can be noticed by your target audience.
+2024-07-23 21:11:37 | INFO     | __main__ - Interaction 5: TTS -> TWILIO: Brand visibility is how easily your brand can be noticed by your target audience.
+2024-07-23 21:11:37 | INFO     | __main__ - Interaction 5: LLM -> TTS: More visibility means more potential customers.
+2024-07-23 21:11:38 | INFO     | __main__ - Interaction 5: TTS -> TWILIO: More visibility means more potential customers.
+2024-07-23 21:11:53 | INFO     | __main__ - Interaction 6 – STT -> LLM:  Alright. Transfer this call.
+2024-07-23 21:11:54 | INFO     | services.llm_service - Function call detected: transfer_call
+2024-07-23 21:11:54 | INFO     | services.llm_service - Warning: Invalid function arguments returned by LLM:
+2024-07-23 21:11:54 | INFO     | __main__ - Interaction 6: LLM -> TTS: Transferring your call, please wait.
+2024-07-23 21:11:54 | INFO     | __main__ - Interaction 6: TTS -> TWILIO: Transferring your call, please wait.
+2024-07-23 21:12:02 | INFO     | services.llm_service - Function transfer_call called with args: {}
+2024-07-23 21:12:02 | INFO     | __main__ - Twilio -> Media stream MZc357ea27f46dea6b12a0189d33dd94ac ended.
+2024-07-23 21:12:03 | INFO     | services.transcription_service - UtteranceEnd received before speech was final, emit the text collected so far:  End call.
+2024-07-23 21:12:03 | INFO     | __main__ - Interaction 7 – STT -> LLM:  End call.
+2024-07-23 21:12:04 | INFO     | __main__ - WebSocket disconnected
+2024-07-23 21:12:04 | INFO     | services.transcription_service - Deepgram connection closed
+2024-07-23 21:12:04 | INFO     | __main__ - Interaction 7: LLM -> TTS: Are you sure you want to end the call, Joe?
+2024-07-23 21:12:04 | INFO     | services.transcription_service - Disconnected from Deepgram
+2024-07-23 21:12:16 | INFO     | __main__ - Initiating call to +14343289684
+2024-07-23 21:12:16 | INFO     | __main__ - Initiating call to +14343289684 via https://great-lasting-flea.ngrok-free.app/incoming
+2024-07-23 21:12:28 | INFO     | __main__ - Using LLM service: openai
+2024-07-23 21:12:28 | INFO     | __main__ - Using TTS service: deepgram
+2024-07-23 21:12:28 | INFO     | __main__ - Twilio -> Starting Media Stream for MZfcce0f0b8655fb963dc64e56a01e03e6
+2024-07-23 21:12:29 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: Hello, my name is Sarah, and I'm calling from Sports Media Inc. I am here to discuss your current advertising needs can you please direct me to the appropriate representative?
+2024-07-23 21:12:39 | INFO     | __main__ - Interaction 0 – STT -> LLM:  Yeah. One second.
+2024-07-23 21:12:40 | INFO     | __main__ - Interaction 0: LLM -> TTS: Sure, take your time!
+2024-07-23 21:12:40 | INFO     | __main__ - Interaction 0: TTS -> TWILIO: Sure, take your time!
+2024-07-23 21:12:40 | INFO     | __main__ - Interruption detected, clearing system.
+2024-07-23 21:12:41 | INFO     | __main__ - Interaction 1 – STT -> LLM:  You there?
+2024-07-23 21:12:41 | INFO     | __main__ - Interaction 1: LLM -> TTS: Absolutely!
+2024-07-23 21:12:41 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: Absolutely!
+2024-07-23 21:12:41 | INFO     | __main__ - Interaction 1: LLM -> TTS: Let's get this show on the road.
+2024-07-23 21:12:42 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: Let's get this show on the road.
+2024-07-23 21:12:42 | INFO     | __main__ - Interaction 1: LLM -> TTS: Who am I speaking with today?
+2024-07-23 21:12:42 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: Who am I speaking with today?
+2024-07-23 21:12:47 | INFO     | __main__ - Interaction 2 – STT -> LLM:  Joe.
+2024-07-23 21:12:48 | INFO     | __main__ - Interaction 2: LLM -> TTS: Nice to meet you, Joe!
+2024-07-23 21:12:48 | INFO     | __main__ - Interaction 2: TTS -> TWILIO: Nice to meet you, Joe!
+2024-07-23 21:12:48 | INFO     | __main__ - Interaction 2: LLM -> TTS: So, what's the advertising goal we're aiming to score today?
+2024-07-23 21:12:48 | INFO     | __main__ - Interaction 2: TTS -> TWILIO: So, what's the advertising goal we're aiming to score today?
+2024-07-23 21:12:58 | INFO     | __main__ - Interaction 3 – STT -> LLM:  Some SEO needs.
+2024-07-23 21:12:59 | INFO     | __main__ - Interaction 3: LLM -> TTS: Fantastic!
+2024-07-23 21:12:59 | INFO     | __main__ - Interaction 3: TTS -> TWILIO: Fantastic!
+2024-07-23 21:12:59 | INFO     | __main__ - Interaction 3: LLM -> TTS: Our SEO strategies are like the star quarterback of marketing—always delivering results.
+2024-07-23 21:12:59 | INFO     | __main__ - Interaction 3: TTS -> TWILIO: Our SEO strategies are like the star quarterback of marketing—always delivering results.
+2024-07-23 21:12:59 | INFO     | __main__ - Interaction 3: LLM -> TTS: What specific areas are you looking to improve?
+2024-07-23 21:12:59 | INFO     | __main__ - Interaction 3: TTS -> TWILIO: What specific areas are you looking to improve?
+2024-07-23 21:13:12 | INFO     | __main__ - Interaction 4 – STT -> LLM:  Conversion rate.
+2024-07-23 21:13:13 | INFO     | __main__ - Interaction 4: LLM -> TTS: Touchdown!
+2024-07-23 21:13:13 | INFO     | __main__ - Interaction 4: TTS -> TWILIO: Touchdown!
+2024-07-23 21:13:13 | INFO     | __main__ - Interaction 4: LLM -> TTS: We've got just the plays to boost those conversions.
+2024-07-23 21:13:13 | INFO     | __main__ - Interaction 4: TTS -> TWILIO: We've got just the plays to boost those conversions.
+2024-07-23 21:13:13 | INFO     | __main__ - Interaction 4: LLM -> TTS: Are you currently tracking any specific metrics or KPIs that we can target?
+2024-07-23 21:13:14 | INFO     | __main__ - Interaction 4: TTS -> TWILIO: Are you currently tracking any specific metrics or KPIs that we can target?
+2024-07-23 21:13:24 | INFO     | __main__ - Interaction 5 – STT -> LLM:  Transfer this call.
+2024-07-23 21:13:26 | INFO     | services.llm_service - Function call detected: transfer_call
+2024-07-23 21:13:26 | INFO     | services.llm_service - Warning: Invalid function arguments returned by LLM:
+2024-07-23 21:13:26 | INFO     | __main__ - Interaction 5: LLM -> TTS: Transferring your call, please wait.
+2024-07-23 21:13:26 | INFO     | __main__ - Interaction 5: TTS -> TWILIO: Transferring your call, please wait.
+2024-07-23 21:13:34 | INFO     | services.llm_service - Function transfer_call called with args: {}
+2024-07-23 21:13:34 | INFO     | __main__ - Twilio -> Media stream MZfcce0f0b8655fb963dc64e56a01e03e6 ended.
+2024-07-23 21:13:35 | INFO     | __main__ - Interaction 5: LLM -> TTS: The call has been successfully transferred.
+2024-07-23 21:13:35 | INFO     | __main__ - WebSocket disconnected
+2024-07-23 21:13:35 | INFO     | services.transcription_service - Deepgram connection closed
+2024-07-23 21:13:35 | INFO     | __main__ - Interaction 5: TTS -> TWILIO: The call has been successfully transferred.
+2024-07-23 21:13:35 | ERROR    | services.tts_service - Error in TTS generation: Unexpected ASGI message 'websocket.send', after sending 'websocket.close' or response already completed.
+2024-07-23 21:13:35 | INFO     | __main__ - Interaction 5: LLM -> TTS: If you need any more help, feel free to reach out!
+2024-07-23 21:13:36 | INFO     | services.transcription_service - Disconnected from Deepgram
+2024-07-23 21:22:16 | INFO     | __main__ - Starting server...
+2024-07-23 21:22:16 | INFO     | __main__ - Backend server address set to: great-lasting-flea.ngrok-free.app
+2024-07-23 21:23:42 | INFO     | __main__ - Initiating call to +14343289684
+2024-07-23 21:23:42 | INFO     | __main__ - Initiating call to +14343289684 via https://great-lasting-flea.ngrok-free.app/incoming
+2024-07-23 21:23:52 | INFO     | __main__ - Using LLM service: openai
+2024-07-23 21:23:52 | INFO     | __main__ - Using TTS service: deepgram
+2024-07-23 21:23:52 | INFO     | __main__ - Twilio -> Starting Media Stream for MZ3145c0b19e4a31032e3642c7637e1e4b
+2024-07-23 21:23:52 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: Hello I am here to sell you tickets in regards to the nfl
+2024-07-23 21:24:01 | INFO     | __main__ - Interaction 0 – STT -> LLM:  There it is.
+2024-07-23 21:24:02 | INFO     | __main__ - Interaction 0: LLM -> TTS: Could you please provide more details on the game or event you're interested in?
+2024-07-23 21:24:03 | INFO     | __main__ - Interaction 0: TTS -> TWILIO: Could you please provide more details on the game or event you're interested in?
+2024-07-23 21:24:03 | INFO     | __main__ - Interaction 0: LLM -> TTS: This will help me assist you better with ticket options.
+2024-07-23 21:24:03 | INFO     | __main__ - Interaction 0: TTS -> TWILIO: This will help me assist you better with ticket options.
+2024-07-23 21:24:13 | INFO     | __main__ - Interaction 1 – STT -> LLM:  The charger is seasonal there.
+2024-07-23 21:24:14 | INFO     | __main__ - Interaction 1: LLM -> TTS: Are you interested in purchasing season tickets for the Los Angeles Chargers?
+2024-07-23 21:24:15 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: Are you interested in purchasing season tickets for the Los Angeles Chargers?
+2024-07-23 21:24:23 | INFO     | services.transcription_service - UtteranceEnd received before speech was final, emit the text collected so far:  Yes.
+2024-07-23 21:24:23 | INFO     | __main__ - Interaction 2 – STT -> LLM:  Yes.
+2024-07-23 21:24:25 | INFO     | __main__ - Interaction 2: LLM -> TTS: Great!
+2024-07-23 21:24:25 | INFO     | __main__ - Interaction 2: TTS -> TWILIO: Great!
+2024-07-23 21:24:25 | INFO     | __main__ - Interaction 2: LLM -> TTS: How many season tickets are you looking to purchase?
+2024-07-23 21:24:25 | INFO     | __main__ - Interaction 2: TTS -> TWILIO: How many season tickets are you looking to purchase?
+2024-07-23 21:24:25 | INFO     | __main__ - Interaction 2: LLM -> TTS: Additionally, do you have any preferences for seating locations or packages?
+2024-07-23 21:24:26 | INFO     | __main__ - Interaction 2: TTS -> TWILIO: Additionally, do you have any preferences for seating locations or packages?
+2024-07-23 21:24:36 | INFO     | __main__ - Twilio -> Media stream MZ3145c0b19e4a31032e3642c7637e1e4b ended.
+2024-07-23 21:24:37 | INFO     | __main__ - WebSocket disconnected
+2024-07-23 21:24:37 | INFO     | services.transcription_service - Deepgram connection closed
+2024-07-23 21:24:37 | INFO     | services.transcription_service - Deepgram metadata:
+2024-07-23 21:24:37 | INFO     | services.transcription_service - Disconnected from Deepgram
+2024-07-23 21:28:15 | INFO     | __main__ - Initiating call to +14343289684
+2024-07-23 21:28:15 | INFO     | __main__ - Initiating call to +14343289684 via https://great-lasting-flea.ngrok-free.app/incoming
+2024-07-23 21:28:28 | INFO     | __main__ - Using LLM service: openai
+2024-07-23 21:28:28 | INFO     | __main__ - Using TTS service: deepgram
+2024-07-23 21:28:29 | INFO     | __main__ - Twilio -> Starting Media Stream for MZc8224f22805ba0917a4fd67d02d976bc
+2024-07-23 21:28:29 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: Hello, my name is Sarah, and I'm calling from Sports Media Inc. I am here to discuss your current advertising needs can you please direct me to the appropriate representative?
+2024-07-23 21:28:39 | INFO     | __main__ - Twilio -> Media stream MZc8224f22805ba0917a4fd67d02d976bc ended.
+2024-07-23 21:28:40 | INFO     | __main__ - WebSocket disconnected
+2024-07-23 21:28:40 | INFO     | services.transcription_service - Deepgram connection closed
+2024-07-23 21:28:40 | INFO     | services.transcription_service - Deepgram metadata:
+2024-07-23 21:28:40 | INFO     | services.transcription_service - Disconnected from Deepgram
+2024-07-23 21:36:09 | INFO     | __main__ - Initiating call to +14343289684
+2024-07-23 21:36:09 | INFO     | __main__ - Initiating call to +14343289684 via https://great-lasting-flea.ngrok-free.app/incoming
+2024-07-23 21:36:19 | INFO     | __main__ - Using LLM service: openai
+2024-07-23 21:36:19 | INFO     | __main__ - Using TTS service: deepgram
+2024-07-23 21:36:20 | INFO     | __main__ - Twilio -> Starting Media Stream for MZa8f38aaeb9d6d6b50b2db08b6b0f8eb0
+2024-07-23 21:36:20 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: Hello, my name is Sarah, and I'm calling from Sports Media Inc. I am here to discuss your current advertising needs can you please direct me to the appropriate representative?
+2024-07-23 21:36:32 | INFO     | __main__ - Interaction 0 – STT -> LLM:  Yeah. Right here.
+2024-07-23 21:36:33 | INFO     | __main__ - Interaction 0: LLM -> TTS: Fantastic!
+2024-07-23 21:36:33 | INFO     | __main__ - Interaction 0: TTS -> TWILIO: Fantastic!
+2024-07-23 21:36:33 | INFO     | __main__ - Interaction 0: LLM -> TTS: How about we dive into how Sports Media can power up your brand visibility?
+2024-07-23 21:36:34 | INFO     | __main__ - Interaction 0: TTS -> TWILIO: How about we dive into how Sports Media can power up your brand visibility?
+2024-07-23 21:36:41 | INFO     | __main__ - Interaction 1 – STT -> LLM:  Sure.
+2024-07-23 21:36:42 | INFO     | __main__ - Interaction 1: LLM -> TTS: Brilliant.
+2024-07-23 21:36:42 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: Brilliant.
+2024-07-23 21:36:42 | INFO     | __main__ - Interaction 1: LLM -> TTS: So, what are your main advertising goals right now?
+2024-07-23 21:36:43 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: So, what are your main advertising goals right now?
+2024-07-23 21:36:43 | INFO     | __main__ - Interaction 1: LLM -> TTS: Increased brand awareness, driving sales, or something else?
+2024-07-23 21:36:43 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: Increased brand awareness, driving sales, or something else?
+2024-07-23 21:36:52 | INFO     | __main__ - Interaction 2 – STT -> LLM:  More
+2024-07-23 21:36:52 | INFO     | __main__ - Interaction 2: LLM -> TTS: Got it.
+2024-07-23 21:36:53 | INFO     | __main__ - Interaction 2: TTS -> TWILIO: Got it.
+2024-07-23 21:36:53 | INFO     | __main__ - Interaction 2: LLM -> TTS: "More" can cover quite a bit of ground.
+2024-07-23 21:36:53 | INFO     | __main__ - Interaction 2: TTS -> TWILIO: "More" can cover quite a bit of ground.
+2024-07-23 21:36:53 | INFO     | __main__ - Interaction 2: LLM -> TTS: Are you looking for more online engagement, wider reach, more sales leads, or maybe all of the above?
+2024-07-23 21:36:54 | INFO     | __main__ - Interaction 2: TTS -> TWILIO: Are you looking for more online engagement, wider reach, more sales leads, or maybe all of the above?
+2024-07-23 21:36:54 | INFO     | __main__ - Interruption detected, clearing system.
+2024-07-23 21:36:54 | INFO     | __main__ - Interruption detected, clearing system.
+2024-07-23 21:36:54 | INFO     | __main__ - Interruption detected, clearing system.
+2024-07-23 21:36:54 | INFO     | __main__ - Interaction 3 – STT -> LLM:  awareness.
+2024-07-23 21:36:55 | INFO     | __main__ - Interaction 3: LLM -> TTS: Perfect!
+2024-07-23 21:36:55 | INFO     | __main__ - Interaction 3: TTS -> TWILIO: Perfect!
+2024-07-23 21:36:55 | INFO     | __main__ - Interaction 3: LLM -> TTS: Our sports-centric campaigns are designed to put your brand in the spotlight.
+2024-07-23 21:36:56 | INFO     | __main__ - Interaction 3: TTS -> TWILIO: Our sports-centric campaigns are designed to put your brand in the spotlight.
+2024-07-23 21:36:56 | INFO     | __main__ - Interaction 3: LLM -> TTS: Any specific target audience or demographics you're aiming for?
+2024-07-23 21:36:56 | INFO     | __main__ - Interaction 3: TTS -> TWILIO: Any specific target audience or demographics you're aiming for?
+2024-07-23 21:37:02 | INFO     | __main__ - Interruption detected, clearing system.
+2024-07-23 21:37:05 | INFO     | __main__ - Interaction 4 – STT -> LLM:  Do you do click through rates?
+2024-07-23 21:37:05 | INFO     | __main__ - Interaction 4: LLM -> TTS: Absolutely!
+2024-07-23 21:37:05 | INFO     | __main__ - Interaction 4: TTS -> TWILIO: Absolutely!
+2024-07-23 21:37:05 | INFO     | __main__ - Interaction 4: LLM -> TTS: We track, analyze, and optimize click-through rates to ensure your campaigns are hitting the mark.
+2024-07-23 21:37:06 | INFO     | __main__ - Interaction 4: TTS -> TWILIO: We track, analyze, and optimize click-through rates to ensure your campaigns are hitting the mark.
+2024-07-23 21:37:06 | INFO     | __main__ - Interaction 4: LLM -> TTS: What CTR benchmarks are you aiming for?
+2024-07-23 21:37:07 | INFO     | __main__ - Interaction 4: TTS -> TWILIO: What CTR benchmarks are you aiming for?
+2024-07-23 21:37:15 | INFO     | __main__ - Twilio -> Media stream MZa8f38aaeb9d6d6b50b2db08b6b0f8eb0 ended.
+2024-07-23 21:37:16 | INFO     | __main__ - WebSocket disconnected
+2024-07-23 21:37:16 | INFO     | services.transcription_service - Deepgram connection closed
+2024-07-23 21:37:16 | INFO     | services.transcription_service - Deepgram metadata:
+2024-07-23 21:37:16 | INFO     | services.transcription_service - Disconnected from Deepgram
+2024-07-23 21:42:00 | INFO     | __main__ - Starting server...
+2024-07-23 21:42:00 | INFO     | __main__ - Backend server address set to: great-lasting-flea.ngrok-free.app
+2024-07-23 21:42:18 | INFO     | __main__ - Initiating call to +14343289684
+2024-07-23 21:42:18 | INFO     | __main__ - Initiating call to +14343289684 via https://great-lasting-flea.ngrok-free.app/incoming
+2024-07-23 21:42:31 | INFO     | __main__ - Using LLM service: openai
+2024-07-23 21:42:31 | INFO     | __main__ - Using TTS service: deepgram
+2024-07-23 21:42:31 | INFO     | __main__ - Twilio -> Starting Media Stream for MZ968683bbcf827b6c215e69adb877b22e
+2024-07-23 21:42:32 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: Hello, my name is Sarah, and I'm calling from Sports Media Inc. I am here to discuss your current advertising needs can you please direct me to the appropriate representative?
+2024-07-23 21:42:44 | INFO     | __main__ - Interaction 0 – STT -> LLM:  Speaking.
+2024-07-23 21:42:45 | INFO     | __main__ - Interaction 0: LLM -> TTS: Fantastic!
+2024-07-23 21:42:45 | INFO     | __main__ - Interaction 0: TTS -> TWILIO: Fantastic!
+2024-07-23 21:42:45 | INFO     | __main__ - Interaction 0: LLM -> TTS: What's the main goal you're hoping to achieve with your advertising campaign?
+2024-07-23 21:42:45 | INFO     | __main__ - Interaction 0: TTS -> TWILIO: What's the main goal you're hoping to achieve with your advertising campaign?
+2024-07-23 21:42:54 | INFO     | __main__ - Interaction 1 – STT -> LLM:  And To increase conversion?
+2024-07-23 21:42:55 | INFO     | __main__ - Interaction 1: LLM -> TTS: Absolutely, increasing conversion rates is key!
+2024-07-23 21:42:55 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: Absolutely, increasing conversion rates is key!
+2024-07-23 21:42:55 | INFO     | __main__ - Interaction 1: LLM -> TTS: Are you looking to focus on digital channels, traditional media, or a mix of both?
+2024-07-23 21:42:56 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: Are you looking to focus on digital channels, traditional media, or a mix of both?
+2024-07-23 21:43:06 | INFO     | __main__ - Interaction 2 – STT -> LLM:  Traditional.
+2024-07-23 21:43:06 | INFO     | __main__ - Interaction 2: LLM -> TTS: Great choice!
+2024-07-23 21:43:07 | INFO     | __main__ - Interaction 2: TTS -> TWILIO: Great choice!
+2024-07-23 21:43:07 | INFO     | __main__ - Interaction 2: LLM -> TTS: We have extensive experience in traditional advertising.
+2024-07-23 21:43:07 | INFO     | __main__ - Interaction 2: TTS -> TWILIO: We have extensive experience in traditional advertising.
+2024-07-23 21:43:07 | INFO     | __main__ - Interaction 2: LLM -> TTS: Are you looking at TV, radio, print, or maybe billboards?
+2024-07-23 21:43:08 | INFO     | __main__ - Interaction 2: TTS -> TWILIO: Are you looking at TV, radio, print, or maybe billboards?
+2024-07-23 21:43:08 | INFO     | __main__ - Interruption detected, clearing system.
+2024-07-23 21:43:08 | INFO     | __main__ - Interaction 3 – STT -> LLM:  What is traditional?
+2024-07-23 21:43:09 | INFO     | __main__ - Interaction 3: LLM -> TTS: Traditional advertising includes TV, radio, print (newspapers and magazines), and outdoor ads like billboards and transit ads.
+2024-07-23 21:43:10 | INFO     | __main__ - Interaction 3: TTS -> TWILIO: Traditional advertising includes TV, radio, print (newspapers and magazines), and outdoor ads like billboards and transit ads.
+2024-07-23 21:43:10 | INFO     | __main__ - Interaction 3: LLM -> TTS: Which one interests you most?
+2024-07-23 21:43:10 | INFO     | __main__ - Interaction 3: TTS -> TWILIO: Which one interests you most?
+2024-07-23 21:43:23 | INFO     | __main__ - Interaction 4 – STT -> LLM:  End call.
+2024-07-23 21:43:24 | INFO     | __main__ - Interaction 4: LLM -> TTS: Just to confirm, would you like to end the call now, or do you have any other questions?
+2024-07-23 21:43:24 | INFO     | __main__ - Interaction 4: TTS -> TWILIO: Just to confirm, would you like to end the call now, or do you have any other questions?
+2024-07-23 21:43:28 | INFO     | __main__ - Interruption detected, clearing system.
+2024-07-23 21:43:29 | INFO     | __main__ - Interaction 5 – STT -> LLM:  Yes.
+2024-07-23 21:43:29 | INFO     | services.llm_service - Function call detected: end_call
+2024-07-23 21:43:29 | INFO     | services.llm_service - Warning: Invalid function arguments returned by LLM:
+2024-07-23 21:43:29 | INFO     | __main__ - Interaction 5: LLM -> TTS: Goodbye.
+2024-07-23 21:43:30 | INFO     | __main__ - Interaction 5: TTS -> TWILIO: Goodbye.
+2024-07-23 21:43:35 | INFO     | services.llm_service - Function end_call called with args: {}
+2024-07-23 21:43:35 | INFO     | __main__ - Twilio -> Media stream MZ968683bbcf827b6c215e69adb877b22e ended.
+2024-07-23 21:43:36 | INFO     | __main__ - WebSocket disconnected
+2024-07-23 21:43:36 | INFO     | services.transcription_service - Deepgram connection closed
+2024-07-23 21:43:36 | INFO     | services.transcription_service - Deepgram metadata:
+2024-07-23 21:43:36 | INFO     | services.transcription_service - Disconnected from Deepgram
+2024-07-23 23:54:30 | INFO     | __main__ - Starting server...
+2024-07-23 23:54:30 | INFO     | __main__ - Backend server address set to: great-lasting-flea.ngrok-free.app
+2024-07-23 23:55:17 | INFO     | __main__ - Initiating call to +14343289684
+2024-07-23 23:55:17 | INFO     | __main__ - Initiating call to +14343289684 via https://great-lasting-flea.ngrok-free.app/incoming
+2024-07-23 23:55:25 | INFO     | __main__ - Using LLM service: openai
+2024-07-23 23:55:25 | INFO     | __main__ - Using TTS service: deepgram
+2024-07-23 23:55:25 | INFO     | __main__ - Twilio -> Starting Media Stream for MZd73d1958b618eca5314cf24cec70fad6
+2024-07-23 23:55:26 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: Hello, my name is Sarah, and I'm calling from Sports Media Inc. I am here to discuss your current advertising needs can you please direct me to the appropriate representative?
+2024-07-23 23:55:31 | INFO     | __main__ - Interaction 0 – STT -> LLM:  Income.
+2024-07-23 23:55:32 | INFO     | __main__ - Interaction 0: LLM -> TTS: Income, you say?
+2024-07-23 23:55:32 | INFO     | __main__ - Interaction 0: TTS -> TWILIO: Income, you say?
+2024-07-23 23:55:32 | INFO     | __main__ - Interaction 0: LLM -> TTS: Let's generate some for you through top-notch advertising!
+2024-07-23 23:55:33 | INFO     | __main__ - Interaction 0: TTS -> TWILIO: Let's generate some for you through top-notch advertising!
+2024-07-23 23:55:33 | INFO     | __main__ - Interaction 0: LLM -> TTS: What's your current strategy?
+2024-07-23 23:55:33 | INFO     | __main__ - Interaction 0: TTS -> TWILIO: What's your current strategy?
+2024-07-23 23:55:43 | INFO     | __main__ - Interaction 1 – STT -> LLM:  End call.
+2024-07-23 23:55:44 | INFO     | __main__ - Interaction 1: LLM -> TTS: Are you sure you'd like to end the call, or is there anything specific you'd like to discuss about your advertising needs?
+2024-07-23 23:55:45 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: Are you sure you'd like to end the call, or is there anything specific you'd like to discuss about your advertising needs?
+2024-07-23 23:55:46 | INFO     | __main__ - Interruption detected, clearing system.
+2024-07-23 23:55:47 | INFO     | __main__ - Interaction 2 – STT -> LLM:  End call.
+2024-07-23 23:55:48 | INFO     | services.llm_service - Function call detected: end_call
+2024-07-23 23:55:48 | INFO     | services.llm_service - Warning: Invalid function arguments returned by LLM:
+2024-07-23 23:55:48 | INFO     | __main__ - Interaction 2: LLM -> TTS: Goodbye.
+2024-07-23 23:55:48 | INFO     | __main__ - Interaction 2: TTS -> TWILIO: Goodbye.
+2024-07-23 23:55:53 | INFO     | services.llm_service - Function end_call called with args: {}
+2024-07-23 23:55:53 | INFO     | __main__ - Twilio -> Media stream MZd73d1958b618eca5314cf24cec70fad6 ended.
+2024-07-23 23:55:54 | INFO     | __main__ - WebSocket disconnected
+2024-07-23 23:55:54 | INFO     | services.transcription_service - Deepgram connection closed
+2024-07-23 23:55:54 | INFO     | services.transcription_service - Deepgram metadata:
+2024-07-23 23:55:55 | INFO     | services.transcription_service - Disconnected from Deepgram
+2024-07-23 23:56:29 | INFO     | __main__ - Initiating call to +14343289684
+2024-07-23 23:56:29 | INFO     | __main__ - Initiating call to +14343289684 via https://great-lasting-flea.ngrok-free.app/incoming
+2024-07-23 23:56:29 | INFO     | __main__ - Initiating call to +14343289684
+2024-07-23 23:56:29 | INFO     | __main__ - Initiating call to +14343289684 via https://great-lasting-flea.ngrok-free.app/incoming
+2024-07-23 23:56:44 | INFO     | __main__ - Using LLM service: openai
+2024-07-23 23:56:44 | INFO     | __main__ - Using TTS service: deepgram
+2024-07-23 23:56:44 | INFO     | __main__ - Twilio -> Starting Media Stream for MZbf85934e0939c738fc28bddf71aa1f5a
+2024-07-23 23:56:45 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: Hello, my name is Sarah, and I'm calling from Sports Media Inc. I am here to discuss your current advertising needs can you please direct me to the appropriate representative?
+2024-07-23 23:56:50 | INFO     | __main__ - Interruption detected, clearing system.
+2024-07-23 23:56:51 | INFO     | __main__ - Interaction 0 – STT -> LLM:  Okay.
+2024-07-23 23:56:52 | INFO     | __main__ - Interaction 0: LLM -> TTS: Fantastic!
+2024-07-23 23:56:52 | INFO     | __main__ - Interaction 0: TTS -> TWILIO: Fantastic!
+2024-07-23 23:56:52 | INFO     | __main__ - Interaction 0: LLM -> TTS: So, who should I be speaking with about turning your advertising game into a winning streak?
+2024-07-23 23:56:52 | INFO     | __main__ - Interaction 0: TTS -> TWILIO: So, who should I be speaking with about turning your advertising game into a winning streak?
+2024-07-23 23:57:06 | INFO     | __main__ - Interaction 1 – STT -> LLM:  Me.
+2024-07-23 23:57:06 | INFO     | __main__ - Interaction 1: LLM -> TTS: Excellent!
+2024-07-23 23:57:06 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: Excellent!
+2024-07-23 23:57:06 | INFO     | __main__ - Interaction 1: LLM -> TTS: Ready to score some major advertising points with Sports Media?
+2024-07-23 23:57:07 | INFO     | __main__ - Interaction 1: TTS -> TWILIO: Ready to score some major advertising points with Sports Media?
+2024-07-23 23:57:14 | INFO     | __main__ - Interaction 2 – STT -> LLM:  Yeah.
+2024-07-23 23:57:14 | INFO     | __main__ - Interaction 2: LLM -> TTS: Great!
+2024-07-23 23:57:14 | INFO     | __main__ - Interaction 2: TTS -> TWILIO: Great!
+2024-07-23 23:57:14 | INFO     | __main__ - Interaction 2: LLM -> TTS: What specific goals are you looking to achieve with your advertising?
+2024-07-23 23:57:15 | INFO     | __main__ - Interaction 2: TTS -> TWILIO: What specific goals are you looking to achieve with your advertising?
+2024-07-23 23:57:24 | INFO     | __main__ - Twilio -> Media stream MZbf85934e0939c738fc28bddf71aa1f5a ended.
+2024-07-23 23:57:25 | INFO     | __main__ - WebSocket disconnected
+2024-07-23 23:57:25 | INFO     | services.transcription_service - Deepgram connection closed
+2024-07-23 23:57:25 | INFO     | services.transcription_service - Deepgram metadata:
+2024-07-23 23:57:26 | INFO     | services.transcription_service - Disconnected from Deepgram
