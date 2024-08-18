@@ -6,7 +6,9 @@ import asyncio
 from services.call_details import CallContext
 
 from Utils.logger_config import get_logger, log_function_call
-from services.gpt_service import AssistantService, GeminiService, AbstractLLMService, LLMFactory
+from services.gpt_service import AbstractLLMService, LLMFactory
+from services.google_bard import GeminiService
+from services.openai_assistant import AssistantService
 
 logger = get_logger(__name__)
 

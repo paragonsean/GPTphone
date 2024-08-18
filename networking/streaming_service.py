@@ -4,7 +4,7 @@ from typing import Dict
 from fastapi import WebSocket
 
 from Utils.logger_config import get_logger
-from services.event_manager import EventHandler
+from EventHandlers.event_manager import EventHandler
 
 logger = get_logger("Stream")
 '''

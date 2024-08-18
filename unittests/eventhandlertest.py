@@ -1,6 +1,7 @@
 import unittest
 from unittest.mock import AsyncMock, patch
-from services.event_manager import AssistantEventHandler,EventHandler
+from EventHandlers.event_manager import AssistantEventHandler
+
 
 class TestAssistantEventHandler(unittest.TestCase):
     def setUp(self):

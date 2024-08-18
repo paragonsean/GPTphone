@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import AsyncMock
 import asyncio
-from services.event_manager import EventHandler
+from EventHandlers.event_manager import EventHandler
 from Utils.logger_config import get_logger, log_function_call
 import random
 logger = get_logger(__name__)

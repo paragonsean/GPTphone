@@ -2,10 +2,10 @@ import os
 
 from deepgram import DeepgramClient, LiveOptions, LiveTranscriptionEvents
 
-from Utils.logger_config import get_logger
-from services.event_manager import EventHandler
+from Utils import configure_logger
+from EventHandlers import EventHandler
 
-logger = get_logger("Transcription")
+logger = configure_logger("Transcription")
 
 '''
 Author: Sean Baker

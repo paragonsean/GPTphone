@@ -14,11 +14,11 @@ from twilio.rest.insights.v1.call import CallContext
 from twilio.twiml.voice_response import Connect, VoiceResponse
 
 from Utils.logger_config import get_logger
-from services.call_details import CallContext
-from services.gpt_service import LLMFactory
-from services.streaming_service import StreamService
-from services.stt_service import TranscriptionService
-from services.tts_service import TTSFactory
+from services import CallContext
+from services import LLMFactory
+from networking import StreamService
+from speach_to_text import TranscriptionService
+from text_to_speach import TTSFactory
 from DataLibrary.database_manager import DatabaseManager
 '''
 Author: Sean Baker
