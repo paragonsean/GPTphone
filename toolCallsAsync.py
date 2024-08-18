@@ -1,38 +1,39 @@
-import base64
-import json
 import os
+import base64
 import re
-import sys
-
-from dotenv import load_dotenv
-from openai import AsyncOpenAI
-from openai.lib.streaming import AsyncAssistantEventHandler
-from typing_extensions import override
+import json
 from tools import TOOL_MAP
-
-
-# Load environment variables from a .env file
+from typing_extensions import override
+from dotenv import load_dotenv
+from Utils import log_function_call
+import asyncio
+from openai import AsyncOpenAI, AsyncAssistantEventHandler
+from loguru import logger
 load_dotenv()
+logger = logger.bind(name=__name__)
 
-class AssitantsEventHandler(AsyncAssistantEventHandler):
-    def __init__(self, client=None):
+
+# Load environment variables
+openai_api_key = os.environ.get("OPENAI_API_KEY")
+azure_openai_endpoint = os.environ.get("AZURE_OPENAI_ENDPOINT")
+azure_openai_key = os.environ.get("AZURE_OPENAI_KEY")
+
+client = AsyncOpenAI(api_key=openai_api_key)
+
+def str_to_bool(str_input):
+    if not isinstance(str_input, str):
+        return False
+    return str_input.lower() == "true"
+
+class EventHandler(AsyncAssistantEventHandler):
+    def __init__(self):
         super().__init__()
-        if client is None:
-            # Load the API key from the environment
-            api_key = os.environ.get('OPENAI_API_KEY')
-            if not api_key:
-                raise ValueError("OPENAI_API_KEY not found in environment variables.")
-
-            # Initialize the AsyncOpenAI client with the API key
-            client = AsyncOpenAI(api_key=api_key)
-
-        self.client = client  # Store the client instance
         self.session_state = {
             "chat_log": [],
             "tool_calls": [],
             "current_message": "",
             "current_markdown": "",
-            "current_tool_input": TOOL_MAP,
+            "current_tool_input": "",
             "current_tool_input_markdown": ""
         }
 
@@ -41,7 +42,7 @@ class AssitantsEventHandler(AsyncAssistantEventHandler):
         pass
 
     @override
- 
+    @log_function_call
     async def on_text_created(self, text):
         self.session_state["current_message"] = ""
         print("Assistant:")
@@ -56,7 +57,7 @@ class AssitantsEventHandler(AsyncAssistantEventHandler):
             print(text_value, end="", flush=True)
 
     @override
- 
+    @log_function_call
     async def on_text_done(self, text):
         format_text = self.format_annotation(text)
         print("\n" + format_text)
@@ -116,15 +117,15 @@ class AssitantsEventHandler(AsyncAssistantEventHandler):
                     }
                 )
 
-            async with self.client.beta.threads.runs.submit_tool_outputs_stream(
-                thread_id=self.thread.id,
+            async with client.beta.threads.runs.submit_tool_outputs_stream(
+                thread_id=thread.id,
                 run_id=self.current_run.id,
                 tool_outputs=tool_outputs,
-                event_handler=AssitantsEventHandler(),
+                event_handler=EventHandler(),
             ) as stream:
                 await stream.until_done()
 
-
+    @log_function_call
     def format_annotation(self, text):
         citations = []
         text_value = text.value
@@ -152,84 +153,55 @@ class AssitantsEventHandler(AsyncAssistantEventHandler):
         link_tag = f'<a href="data:{content_type};base64,{b64}" download="{file_name}">Download Link</a>'
         return link_tag
 
-class AssitantEventHandler(AsyncAssistantEventHandler):
+@log_function_call
+async def create_thread(content, file):
+    return await client.beta.threads.create()
 
-    def __init__(self, client):
-        self.client = client
+@log_function_call
+async def create_message(thread, content, file):
+    attachments = []
+    if file is not None:
+        attachments.append(
+            {"file_id": file.id, "tools": [{"type": "code_interpreter"}, {"type": "file_search"}]}
+        )
+    await client.beta.threads.messages.create(
+        thread_id=thread.id, role="user", content=content, attachments=attachments
+    )
 
-    @override
-    def on_event(self, event):
-        pass
 
-    @override
-    def on_text_created(self, text):
-        print("Assistant started generating text.")
-        # Logic to handle when the text is first created
+async def run_stream(user_input, file, selected_assistant_id):
+    thread = await create_thread(user_input, file)
+    await create_message(thread, user_input, file)
+    event_handler = EventHandler()  # Create an instance of the event handler with session state
 
-    @override
-    def on_text_delta(self, delta, snapshot):
-        if snapshot.value:
-            text_value = re.sub(
-                r"\[(.*?)\]\s*\(\s*(.*?)\s*\)", "Download Link", snapshot.value
-            )
-            print(f"Current message: {text_value}")
+    # Use the AsyncAssistantStreamManager to manage the stream asynchronously
+    async with client.beta.threads.runs.stream(
+        thread_id=thread.id,
+        assistant_id=selected_assistant_id,
+        event_handler=event_handler,
+    ) as stream:
+        async for event in stream:
+            # Process each event as it arrives
+            pass
 
-    @override
-    def on_text_done(self, text):
-        print(f"Final message: {text}")
-        # Here you could store the final text, log it, etc.
+    # Access the session state from the event handler if needed
+    session_state = event_handler.session_state
+    print("\nFinal Chat Log:")
+    for log in session_state["chat_log"]:
+        print(f"{log['name']}: {log['msg']}")
 
-    @override
-    def on_tool_call_created(self, tool_call):
-        if tool_call.type == "code_interpreter":
-            print("Code Interpreter tool is being called.")
-            # Logic to handle when a tool call is created
+async def main():
+    # Simulate user input and assistant interaction
+    user_input = input("You: ")
+    assistant_id = os.environ.get("ASSISTANT_ID", "default_assistant")
 
-    @override
-    def on_tool_call_delta(self, delta, snapshot):
-        if delta.type == "code_interpreter":
-            if delta.code_interpreter.input:
-                input_code = delta.code_interpreter.input
-                print(f"Code Interpreter input:\n{input_code}")
+    # Simulate a file upload (disabled in this example)
+    uploaded_file = None
 
-            if delta.code_interpreter.outputs:
-                for output in delta.code_interpreter.outputs:
-                    if output.type == "logs":
-                        print(f"Code Interpreter output logs:\n{output.logs}")
+    # Run the stream
+    while user_input != "q":
+        await run_stream(user_input, uploaded_file, assistant_id)  # Await the async run_stream
+        user_input = input("You: ")
 
-    @override
-    def on_tool_call_done(self, tool_call):
-        print(f"Tool call {tool_call.type} completed.")
-        if tool_call.type == "code_interpreter":
-            input_code = f"Input code:\n{tool_call.code_interpreter.input}"
-            print(input_code)
-            for output in tool_call.code_interpreter.outputs:
-                if output.type == "logs":
-                    print(f"Code Interpreter output:\n{output.logs}")
-        elif tool_call.type == "function":
-            print(f"Function {tool_call.function.name} called.")
-            tool_calls = self.current_run.required_action.submit_tool_outputs.tool_calls
-            tool_outputs = []
-            for submit_tool_call in tool_calls:
-                tool_function_name = submit_tool_call.function.name
-                tool_function_arguments = json.loads(submit_tool_call.function.arguments)
-                tool_function_output = TOOL_MAP[tool_function_name](
-                    **tool_function_arguments
-                )
-                tool_outputs.append(
-                    {
-                        "tool_call_id": submit_tool_call.id,
-                        "output": tool_function_output,
-                    }
-                )
-
-            self.submit_tool_outputs(tool_outputs)
-
-    def submit_tool_outputs(self, tool_outputs):
-        with self.client.beta.threads.runs.submit_tool_outputs_stream(
-            thread_id=self.thread_id,
-            run_id=self.current_run.id,
-            tool_outputs=tool_outputs,
-            event_handler=self,
-        ) as stream:
-            stream.until_done()
+if __name__ == "__main__":
+    asyncio.run(main())  # Run the main function in the event loop

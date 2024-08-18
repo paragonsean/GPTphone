@@ -3,12 +3,12 @@
 # import os
 # from dotenv import load_dotenv
 # import asyncio
-# from services.call_details import CallContext
+# from llms.call_details import CallContext
 #
 # from Utils.logger_config import configure_logger, log_function_call
-# from services.gpt_service import AbstractLLMService, LLMFactory
-# from services.google_bard import GeminiService
-# from services.openai_assistant import AssistantService
+# from llms.gpt_service import AbstractLLMService, LLMFactory
+# from llms.google_bard import GeminiService
+# from llms.openai_assistant import AssistantService
 #
 # logger = configure_logger(__name__)
 #
@@ -61,7 +61,7 @@
 #             thread_id=mock_thread.id, order="asc"
 #         )
 #
-#     @patch('services.event_manager.EventHandler.createEvent')
+#     @patch('llms.event_manager.EventHandler.createEvent')
 #     async def test_emit_complete_sentences(self, mock_create_event):
 #         # Test emit_complete_sentences
 #         class DummyService(AbstractLLMService):

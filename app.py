@@ -12,10 +12,9 @@ from twilio.rest import Client
 from twilio.rest.insights.v1.call import CallContext
 from twilio.twiml.voice_response import Connect, VoiceResponse
 import uvicorn
-from Utils.singleton_logger import configure_logger
+from Utils.my_logger import configure_logger
 from networking import StreamService
-from services import CallContext
-from services import LLMFactory
+from llms import CallContext, LLMFactory
 from speach_to_text import TranscriptionService
 from text_to_speach.tts_factory import TTSFactory
 

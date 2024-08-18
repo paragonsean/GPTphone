@@ -47,3 +47,9 @@ tools = [
         }
     },
 ]
+
+
+def get_tools():
+    return tools
+
+

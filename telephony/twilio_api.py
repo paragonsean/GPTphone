@@ -3,8 +3,8 @@ import os
 from dotenv import load_dotenv
 from twilio.rest import Client
 
-from Utils.singleton_logger import configure_logger
-from services import CallContext
+from Utils.my_logger import configure_logger
+from llms import CallContext
 from .telephony_input_ouput_handler import TelephonyInputHandler
 
 TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
@@ -15,7 +15,7 @@ INITIAL_MESSAGE = os.getenv("Config.INITIAL_MESSAGE") or "Default Initial Messag
 RECORDING_URL_PREFIX = "https://api.twilio.com/"
 load_dotenv()
 
-logger = configure_logger(__name__)
+basic_logger = configure_logger(__name__)
 
 class TwilioTelephonyHandler(TelephonyInputHandler):
     def __init__(self, logger_class):

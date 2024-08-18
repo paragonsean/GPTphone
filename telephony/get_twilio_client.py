@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 
-from Utils.singleton_logger import configure_logger
+from Utils.my_logger import configure_logger
 from .telephony_input_ouput_handler import TelephonyInputHandler
 
 logger = configure_logger(__name__)

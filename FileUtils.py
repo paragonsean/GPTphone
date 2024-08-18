@@ -30,8 +30,12 @@ def find_functions_in_all_packages(directory):
     all_functions = {}
 
     packages = find_packages_in_directory(directory)
+
+
     for package_name in packages:
+        print(package_name)
         package_functions = find_functions_in_package(package_name)
+        print(package_functions)
         all_functions.update(package_functions)
 
     return all_functions
@@ -52,9 +56,11 @@ def find_packages_in_directory(directory):
 
 
 # Example usage:
-directory_path = "."  # assuming you want to find packages in the current directory
-functions = find_functions_in_all_packages(directory_path)
-for module_name, funcs in functions.items():
-    print(f"Module: {module_name}")
-    for func_name, fn_obj in funcs.items():
-        print(f"  Function: {func_name}")
+directory_path = "llms"  # assuming you want to find packages in the current directory
+functions = find_packages_in_directory(directory_path)
+for module in functions:
+    print(module)
+    for module_name, funcs in functions.items():
+        print(f"Module: {module_name}")
+        for func_name, fn_obj in funcs.items():
+            print(f"  Function: {func_name}")

@@ -5,7 +5,7 @@ from collections import deque
 from dotenv import load_dotenv
 from openai import AsyncOpenAI
 
-from Utils.singleton_logger import configure_logger
+from Utils.my_logger import configure_logger
 from Utils.utils import convert_audio_to_wav, create_ws_data_packet, resample
 from .abstract_base import AbstractTTSService
 

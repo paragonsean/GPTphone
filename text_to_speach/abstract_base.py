@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from typing import Any, Dict
 
 from EventHandlers.event_manager import EventHandler
-from Utils.singleton_logger import configure_logger
+from Utils.my_logger import configure_logger
 
 logger = configure_logger(__name__)
 '''
@@ -13,7 +13,7 @@ Description: TTS text to speach currently implemented elevenlabs still need to f
 
 
 class AbstractTTSService(EventHandler, ABC):
-    """Abstract base class for Text-to-Speech (TTS) services."""
+    """Abstract base class for Text-to-Speech (TTS) llms."""
 
     @abstractmethod
     async def generate(self, llm_reply: Dict[str, Any], interaction_count: int):

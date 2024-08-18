@@ -5,7 +5,7 @@ import numpy as np
 from deepgram import DeepgramClient
 from dotenv import load_dotenv
 
-from Utils.singleton_logger import configure_logger
+from Utils.my_logger import configure_logger
 from .abstract_base import AbstractTTSService
 
 logger = configure_logger(__name__)

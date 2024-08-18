@@ -8,7 +8,7 @@ from litellm import token_counter
 
 from .llm_data_fillers import CHECK_FOR_COMPLETION_PROMPT
 from .llm_data_fillers import HIGH_LEVEL_ASSISTANT_ANALYTICS_DATA
-from .logger_config import basic_logger
+from .debugging_helper import basic_logger
 from .utils import format_messages
 
 load_dotenv()

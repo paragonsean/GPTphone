@@ -3,8 +3,8 @@ from typing import Dict
 
 from fastapi import WebSocket
 
-from EventHandlers.event_manager import EventHandler
-from Utils.singleton_logger import configure_logger
+from EventHandlers import EventHandler
+from Utils import configure_logger
 
 logger = configure_logger(__name__)
 '''

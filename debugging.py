@@ -113,6 +113,4 @@ def fix_circular_imports(directory):
         print("No circular imports detected.")
 
 
-# Example usage:
-directory_path = "."  # Replace with the path to your project root
-fix_circular_imports(directory_path)
+

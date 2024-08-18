@@ -1,39 +1,20 @@
-import logging
+import json
 
-import requests
+import aiohttp
+import openmeteo_requests
+import requests_cache
+from Utils import log_function_call
 
-logger = logging.getLogger(__name__)
+@log_function_call
+async def get_current_weather(latitude: float, longitude: float) -> str:
+    cache_session = requests_cache.CachedSession('.cache', expire_after=3600)
+    openmeteo = openmeteo_requests.Client(session=cache_session)
+    url = "https://api.open-meteo.com/v1/forecast"
+    params = {"latitude": latitude, "longitude": longitude, "current": "temperature_2m"}
 
-async def get_current_weather(context, args):
-    """
-    Retrieves current weather data for a location.
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url=url, params=params) as response:
+            data = await response.json()
+            temperature = data['current']['temperature_2m']
 
-    Args:
-        context: The context object (not used in this function).
-        args: A dictionary containing the location to retrieve the weather for.
-
-    Returns:
-        A string with the weather data or an error message.
-    """
-    location = args.get("location")
-    if location is None:
-        return "Please provide the location to retrieve the weather for."
-
-    api_url = "https://weather.example.com/location"
-    params = {"location": location}
-
-    try:
-        response = requests.get(api_url, params=params)
-        response.raise_for_status()
-        weather_data = response.json()
-
-        # Extract relevant weather information from the response
-        temperature = weather_data.get("temperature")
-        if temperature:
-            return f"The current temperature in {location} is {temperature}°."
-        else:
-            return "Could not retrieve temperature information."
-
-    except requests.RequestException as e:
-        logger.error(f"Error retrieving weather data: {e}")
-        return "Error retrieving weather data."
+            return json.dumps({"temperature": str(temperature)})

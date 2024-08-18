@@ -4,7 +4,7 @@ import io
 import json
 import os
 from datetime import datetime
-from .singleton_logger import configure_logger
+from .my_logger import configure_logger
 import aiofiles
 import torch
 import torchaudio

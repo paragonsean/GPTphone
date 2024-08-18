@@ -4,7 +4,7 @@ import time
 
 
 
-from Utils.singleton_logger import configure_logger
+from Utils.my_logger import configure_logger
 from Utils.utils import create_ws_data_packet
 
 logger = configure_logger(__name__)
