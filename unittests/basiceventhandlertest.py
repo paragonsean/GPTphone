@@ -2,9 +2,11 @@ import unittest
 from unittest.mock import AsyncMock
 import asyncio
 from EventHandlers.event_manager import EventHandler
-from Utils.logger_config import get_logger, log_function_call
+from Utils.logger_config import configure_logger, log_function_call
 import random
-logger = get_logger(__name__)
+
+logger = configure_logger(__name__)
+
 
 class TestEventHandler(unittest.TestCase):
     def setUp(self):
@@ -12,10 +14,12 @@ class TestEventHandler(unittest.TestCase):
         self.event_handler = EventHandler()
         self.mock_callback_1 = AsyncMock()
         self.mock_callback_2 = AsyncMock()
-    @log_function_call
+
+ 
     async def trigger_event(self, event_name, *args, **kwargs):
         await self.event_handler.createEvent(event_name, *args, **kwargs)
-    @log_function_call
+
+ 
     def test_on_event_registration(self):
         # Register a callback
         self.event_handler.on("test_event", self.mock_callback_1)
@@ -23,7 +27,8 @@ class TestEventHandler(unittest.TestCase):
         # Check if the event is registered correctly
         self.assertIn("test_event", self.event_handler._events)
         self.assertIn(self.mock_callback_1, self.event_handler._events["test_event"])
-    @log_function_call
+
+ 
     def test_on_event_multiple_callbacks(self):
         # Register multiple callbacks for the same event
         self.event_handler.on("test_event", self.mock_callback_1)
@@ -32,7 +37,8 @@ class TestEventHandler(unittest.TestCase):
         # Check if both callbacks are registered correctly
         self.assertIn(self.mock_callback_1, self.event_handler._events["test_event"])
         self.assertIn(self.mock_callback_2, self.event_handler._events["test_event"])
-    @log_function_call
+
+ 
     def test_trigger_event(self):
         # Register the callback
         self.event_handler.on("test_event", self.mock_callback_1)
@@ -40,7 +46,8 @@ class TestEventHandler(unittest.TestCase):
         # Trigger the event and verify if the callback was called
         asyncio.run(self.trigger_event("test_event", "arg1", key="value"))
         self.mock_callback_1.assert_called_once_with("arg1", key="value")
-    @log_function_call
+
+ 
     def test_trigger_event_with_multiple_callbacks(self):
         # Register multiple callbacks
         self.event_handler.on("test_event", self.mock_callback_1)
@@ -50,7 +57,6 @@ class TestEventHandler(unittest.TestCase):
         asyncio.run(self.trigger_event("test_event", "arg1", key="value"))
         self.mock_callback_1.assert_called_once_with("arg1", key="value")
         self.mock_callback_2.assert_called_once_with("arg1", key="value")
-
 
 
 # Assume the EventHandler class is already defined as provided
@@ -89,6 +95,7 @@ async def main():
     for _ in range(5):
         await example.randomly_trigger_event()
 
+
 # Running the example
 async def main():
     example = ExampleUsage()
@@ -99,9 +106,6 @@ async def main():
         if run != '':
             break
 
-# Run the main function
-asyncio.run(main())
 
-if __name__ == '__main__':
-    unittest.main()
+
 

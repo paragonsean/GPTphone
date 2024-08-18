@@ -1,8 +1,8 @@
-from .telephone_base import TelephonyInputHandler
+from .telephony_input_ouput_handler import TelephonyInputHandler
 from dotenv import load_dotenv
-from Utils.logger_config import configure_logger
+from Utils.logger_config import basic_logger
 
-logger = configure_logger(__name__)
+logger = basic_logger(__name__)
 load_dotenv()
 
 

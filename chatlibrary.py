@@ -2,12 +2,11 @@ import asyncio
 from services.call_details import CallContext
 from services.gpt_service import LLMFactory  # Replace `your_module` with the correct module where the classes are defined
 from services.call_details import  CallContext
-from Utils.logger_config import wrap_services
+from Utils.logger_config import
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
-wrap_services()
 
 async def main():
     print("Welcome to the LLM Chat Interface!")
@@ -35,5 +34,4 @@ async def main():
     print("Goodbye!")
 
 
-if __name__ == "__main__":
-    asyncio.run(main())
+

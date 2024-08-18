@@ -3,10 +3,10 @@ from typing import Dict
 
 from fastapi import WebSocket
 
-from Utils.logger_config import get_logger
+from Utils.logger_config import configure_logger
 from EventHandlers.event_manager import EventHandler
 
-logger = get_logger("Stream")
+logger = configure_logger("Stream")
 '''
 Author: Sean Baker
 Date: 2024-07-22 

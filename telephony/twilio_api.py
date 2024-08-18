@@ -1,47 +1,56 @@
 import os
-
 from twilio.rest import Client
-from fastapi import HTTPException
 
 from services import CallContext
-from .telephone_base import TelephonyInputHandler
+from .telephony_input_ouput_handler import TelephonyInputHandler
+from dotenv import load_dotenv
+from Utils.logger_config import basic_logger
 
-class Twilio(TelephonyInputHandler):
-    def __init__(self, logger):
-        super().__init__(logger)
-        self.client = self.get_twilio_client()
+TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
+TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
+APP_NUMBER = os.getenv("APP_NUMBER")
+SYSTEM_MESSAGE = os.getenv("SYSTEM_MESSAGE") or "Default System Message"
+INITIAL_MESSAGE = os.getenv("Config.INITIAL_MESSAGE") or "Default Initial Message"
+RECORDING_URL_PREFIX = "https://api.twilio.com/"
+load_dotenv()
 
-    def get_twilio_client(self):
-        return Client(os.getenv("TWILIO_ACCOUNT_SID"), os.getenv("TWILIO_AUTH_TOKEN"))
 
-    def initiate_call(self, to_number, service_url, system_message=None, initial_message=None):
+class TwilioTelephonyHandler(TelephonyInputHandler):
+    def __init__(self, logger_class):
+        super().__init__(logger_class)
+        self.client = self._create_twilio_client()
+        self.logger = basic_logger(__name__)
+
+    def _create_twilio_client(self):
+        return Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+
+    def initiate_call(self, to_number, service_url, system_message=SYSTEM_MESSAGE, initial_message=INITIAL_MESSAGE):
         try:
             self.logger.info(f"Initiating call to {to_number} via {service_url}")
             call = self.client.calls.create(
                 to=to_number,
-                from_=os.getenv("APP_NUMBER"),
+                from_=APP_NUMBER,
                 url=service_url
             )
             call_sid = call.sid
-
-            # Create CallContext instance
-            call_context = CallContext(
-                call_sid=call_sid,
-                system_message=system_message or os.getenv("SYSTEM_MESSAGE"),
-                initial_message=initial_message or os.getenv("Config.INITIAL_MESSAGE"),
-                to_number=to_number,
-                from_number=os.getenv("APP_NUMBER")
-            )
-
-
+            call_context = self.create_call_context(call_sid, system_message, initial_message, to_number, APP_NUMBER)
             return {"call_sid": call_sid}
-        except Exception as e:
-            self.log_error("Error initiating call", e)
+        except Exception as error:
+            self.log_error("Error initiating call", error)
+
+    def create_call_context(self, call_sid, system_message, initial_message, to_number, from_number):
+        return CallContext(
+            call_sid=call_sid,
+            system_message=system_message,
+            initial_message=initial_message,
+            to_number=to_number,
+            from_number=from_number
+        )
 
     def get_call_status(self, call_sid):
         try:
-            call = self.client.calls(call_sid).fetch()
-            return {"status": call.status}
+            call_status = self.client.calls(call_sid).fetch()
+            return {"status": call_status}
         except Exception as e:
             self.log_error("Error fetching call status", e)
 
@@ -55,25 +64,7 @@ class Twilio(TelephonyInputHandler):
     def get_recording(self, call_sid):
         try:
             recording = self.client.calls(call_sid).recordings.list()
-            if recording:
-                return {"recording_url": f"https://api.twilio.com/{recording[0].uri}"}
-            return {"error": "Recording not found"}
+            return {"recording_url": RECORDING_URL_PREFIX + recording[0].uri} if recording else {
+                "error": "Recording not found"}
         except Exception as e:
             self.log_error("Error fetching recording", e)
-from .telephone_base import TelephonyInputHandler
-from dotenv import load_dotenv
-from Utils.logger_config import configure_logger
-
-logger = configure_logger(__name__)
-load_dotenv()
-
-
-class TwilioInputHandler(TelephonyInputHandler):
-    def __init__(self, queues, websocket=None, input_types=None, mark_set=None, turn_based_conversation=False):
-        super().__init__(queues, websocket, input_types, mark_set, turn_based_conversation)
-        self.io_provider = 'twilio'
-
-    async def call_start(self, packet):
-        start = packet['start']
-        self.call_sid = start['callSid']
-        self.stream_sid = start['streamSid']

@@ -2,12 +2,12 @@ import os
 
 from EventHandlers.assitant_event_manager import AssitantsEventHandler
 from dotenv import load_dotenv
-from Utils.logger_config import get_logger, log_function_call
+from Utils.logger_config import configure_logger, log_function_call
 import asyncio
 from openai import AsyncOpenAI
 
 load_dotenv()
-logger = get_logger(__name__)
+logger = configure_logger(__name__)
 
 # Load environment variables
 openai_api_key = os.environ.get("OPENAI_API_KEY")
@@ -59,18 +59,3 @@ async def run_stream(user_input, file, selected_assistant_id):
     for log in session_state["chat_log"]:
         print(f"{log['name']}: {log['msg']}")
 
-async def main():
-    # Simulate user input and assistant interaction
-    user_input = input("You: ")
-    assistant_id = os.environ.get("ASSISTANT_ID", "default_assistant")
-
-    # Simulate a file upload (disabled in this example)
-    uploaded_file = None
-
-    # Run the stream
-    while user_input != "q":
-        await run_stream(user_input, uploaded_file, assistant_id)  # Await the async run_stream
-        user_input = input("You: ")
-
-if __name__ == "__main__":
-    asyncio.run(main())  # Run the main function in the event loop

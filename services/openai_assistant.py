@@ -8,7 +8,7 @@ from .call_details import CallContext
 from .gpt_service import AbstractLLMService
 from EventHandlers import AssitantsEventHandler
 from openai import AsyncOpenAI
-
+from Utils import logger
 class AssistantService(AbstractLLMService, AssitantsEventHandler):
     """
     .. class:: AssistantService(AbstractLLMService, AssistantEventHandler)
@@ -68,10 +68,10 @@ class AssistantService(AbstractLLMService, AssitantsEventHandler):
     """
     def __init__(self, context: CallContext):
         super().__init__(context)  # This initializes both AbstractLLMService and AssistantEventHandler
-        self.openai = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+        self.client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         self.assistant_id = os.getenv("ASSISTANT_ID")
-        self.event_handler = AssistantEventHandler(client=self.client)
+        self.event_handler = AssistantEventHandler()
     def create_thread(client, content, file=None):
         return client.beta.threads.create()
 
@@ -85,7 +85,7 @@ class AssistantService(AbstractLLMService, AssitantsEventHandler):
             thread_id=thread.id, role="user", content=content, attachments=attachments
         )
 
-    @log_function_call
+    
     async def completion(self, text: str, interaction_count: int, role: str = 'user', name: str = 'user'):
         max_retries = 3
         retry_delay = 5  # seconds
@@ -113,7 +113,7 @@ class AssistantService(AbstractLLMService, AssitantsEventHandler):
                 else:
                     raise  # Re-raise the exception if all retries fail
 
-    @log_function_call
+    
     def handle_streaming_response(self, thread, text, interaction_count):
         try:
             event_handler = AssistantEventHandler()
@@ -133,7 +133,7 @@ class AssistantService(AbstractLLMService, AssitantsEventHandler):
             logger.error(f"Error in handle_streaming_response: {str(e)}")
             raise e
 
-    @log_function_call
+    
     def _extract_content(self, message):
         if isinstance(message.content, list) and len(message.content) > 0:
             content_block = message.content[0]

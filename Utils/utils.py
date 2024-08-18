@@ -7,7 +7,20 @@ import loguru as logger
 import aiofiles
 
 
+def format_messages(messages, use_system_prompt=False):
+    formatted_string = ""
+    for message in messages:
+        role = message['role']
+        content = message['content']
 
+        if use_system_prompt and role == 'system':
+            formatted_string += "system: " + content + "\n"
+        if role == 'assistant':
+            formatted_string += "assistant: " + content + "\n"
+        elif role == 'user':
+            formatted_string += "user: " + content + "\n"
+
+    return formatted_string
 def load_file(file_path, is_json=False):
     data = None
     with open(file_path, "r") as f:
@@ -93,3 +106,4 @@ def create_ws_data_packet(data, meta_info=None, is_md5_hash=False, llm_generated
         'data': data,
         'meta_info': metadata
     }
+

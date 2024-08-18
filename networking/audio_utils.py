@@ -1,9 +1,11 @@
 import io
 import copy
-from pydub import AudioSegment
-from Utils.logger_config import get_logger
 
-logger = get_logger(__name__)
+import torchaudio
+from pydub import AudioSegment
+from Utils.logger_config import configure_logger
+
+logger = configure_logger(__name__)
 
 def convert_audio_to_wav(audio_bytes, source_format='flac'):
     logger.info(f"CONVERTING AUDIO TO WAV {source_format}")
