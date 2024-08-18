@@ -3,16 +3,19 @@ import base64
 import json
 import os
 from collections import deque
-from fastapi import WebSocket, WebSocketDisconnect
-from Utils.logger_config import configure_logger
-from services import LLMFactory
-from text_to_speach import TTSFactory
+
+from fastapi import WebSocket, WebSocketDisconnect, FastAPI
+
+from Utils.singleton_logger import configure_logger
 from services import CallContext
 from speach_to_text import TranscriptionService
 from telephony import get_twilio_client
+from text_to_speach import TTSFactory
+from dotenv import load_dotenv
+load_dotenv()
+app = FastAPI()
 
-logger = configure_logger("WebSocketEndpoint")
-
+logger = configure_logger(__name__)
 
 class WebSocketManager:
     def __init__(self, websocket: WebSocket):

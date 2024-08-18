@@ -1,8 +1,8 @@
 
-from .telephone_base import BaseOutputHandler, BaseInputHandler
+from .telephone_base import TelephonyBaseInputHandler,TelephonyBaseOutputHandler
 
 
-class TelephonyInputHandler(BaseInputHandler):
+class TelephonyInputHandler(TelephonyBaseInputHandler):
     async def handle(self, packet):
         await super().handle(packet)
 
@@ -13,7 +13,7 @@ class TelephonyInputHandler(BaseInputHandler):
         await super().process_message(message)
 
 
-class TelephonyOutputHandler(BaseOutputHandler):
+class TelephonyOutputHandler(TelephonyBaseOutputHandler):
     async def handle(self, packet):
         await super().handle(packet)
 

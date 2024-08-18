@@ -2,10 +2,10 @@ import os
 
 from deepgram import DeepgramClient, LiveOptions, LiveTranscriptionEvents
 
-from Utils import basic_logger
 from EventHandlers import EventHandler
+from Utils.singleton_logger import configure_logger
 
-logger = basic_logger("Transcription")
+logger = configure_logger(__name__)
 
 '''
 Author: Sean Baker
@@ -156,7 +156,7 @@ class TranscriptionService(EventHandler):
             self_obj: The self object.
             warning: The warning message.
         """
-        logger.info('Deepgram warning:', warning)
+        logger.info('Deepgram warning: {warning}')
 
     async def handle_metadata(self, self_obj, metadata):
         """
@@ -166,7 +166,7 @@ class TranscriptionService(EventHandler):
             self_obj: The self object.
             metadata: The metadata.
         """
-        logger.info('Deepgram metadata:', metadata)
+        logger.info(f'Deepgram metadata: {metadata}')
 
     async def handle_close(self, self_obj, close):
         """

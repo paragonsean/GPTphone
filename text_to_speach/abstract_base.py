@@ -1,12 +1,10 @@
 from abc import ABC, abstractmethod
 from typing import Any, Dict
 
-from dotenv import load_dotenv
-from EventHandlers import EventHandler
-from Utils import basic_logger
+from EventHandlers.event_manager import EventHandler
+from Utils.singleton_logger import configure_logger
 
-load_dotenv()
-logger = basic_logger("TTS")
+logger = configure_logger(__name__)
 '''
 Author: Sean Baker
 Date: 2024-07-08 

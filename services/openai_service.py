@@ -1,9 +1,10 @@
 import os
 
+from openai import AsyncOpenAI
+
 from functions.function_manifest import tools
 from .call_details import CallContext
-from .gpt_service import AbstractLLMService, logger
-from openai import AsyncOpenAI
+from .gpt_service import AbstractLLMService
 
 
 class OpenAIService(AbstractLLMService):

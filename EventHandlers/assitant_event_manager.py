@@ -1,12 +1,14 @@
 import base64
 import json
-import re
-from typing_extensions import override
-from tools import TOOL_MAP
-from dotenv import load_dotenv
 import os
-from openai.lib.streaming import AsyncAssistantEventHandler
+import re
+
+from dotenv import load_dotenv
 from openai import AsyncOpenAI
+from openai.lib.streaming import AsyncAssistantEventHandler
+from typing_extensions import override
+
+from tools import TOOL_MAP
 
 # Load environment variables from a .env file
 load_dotenv()

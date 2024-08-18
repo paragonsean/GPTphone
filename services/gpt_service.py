@@ -2,23 +2,20 @@ import importlib
 import json
 import re
 from abc import ABC, abstractmethod
-from .call_details import CallContext
+
 from EventHandlers import EventHandler
+from Utils.singleton_logger import configure_logger
 from functions.function_manifest import tools
-from Utils import configure_logger
-
-
-
-logger = configure_logger("LLMService")
+from .call_details import CallContext
 
 '''
 Author: Sean Baker
 Date: 2024-07-22 
 Description: GPT-LIBRARY WITH INTERRUPTS HANDLERS AND EVENT HANDLING 
 '''
+logger = configure_logger(__name__)
 
-
-class AbstractLLMService(EventHandler, ABC):
+class AbstractLLMService(EventHandler, ABC, ):
     """
     This class represents an abstract Long-Lived Memory (LLM) service.
 

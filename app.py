@@ -11,14 +11,13 @@ from fastapi.responses import HTMLResponse
 from twilio.rest import Client
 from twilio.rest.insights.v1.call import CallContext
 from twilio.twiml.voice_response import Connect, VoiceResponse
-
-from Utils.logger_config import recursively_wrap_functions_in_directory, configured_logger
-from main import project_root, port
+import uvicorn
+from Utils.singleton_logger import configure_logger
+from networking import StreamService
 from services import CallContext
 from services import LLMFactory
-from networking import StreamService
 from speach_to_text import TranscriptionService
-from text_to_speach import TTSFactory
+from text_to_speach.tts_factory import TTSFactory
 
 '''
 Author: Sean Baker
@@ -27,8 +26,8 @@ Description: Primary app needs to be refactored, need to take a look at flask fr
 '''
 dotenv.load_dotenv()
 app = FastAPI()
-logger = configured_logger()
 
+logger = configure_logger(__name__)
 # Global dictionary to store call contexts for each server instance (should be replaced with a database in production)
 global call_contexts
 call_contexts = {}
@@ -292,11 +291,5 @@ async def get_all_transcripts():
 
 
 if __name__ == "__main__":
-    import uvicorn
-    logger.add("logs/app.log", format="{time} {level} {message}", level="INFO")
-    logger.info("Starting the application...")
-    logger.enable("text_to_speach")
-    recursively_wrap_functions_in_directory("text_to_speech")
-    logger.info("Starting server...")
-    logger.info(f"Backend server address set to: {os.getenv('SERVER')}")
+    port = int(os.getenv("PORT", 3000))
     uvicorn.run(app, host="0.0.0.0", port=port)

@@ -2,9 +2,8 @@ import asyncio
 import json
 
 import aiohttp
-from Utils import logger
-from Utils import convert_to_request_log
 
+from Utils import convert_to_request_log, logger
 
 
 async def trigger_api(url, method, param, api_token, meta_info, run_id, **kwargs):

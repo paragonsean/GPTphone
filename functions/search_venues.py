@@ -1,5 +1,6 @@
-import requests
 import os
+
+import requests
 
 api_key = os.getenv('TICKET_MASTER_API_KEY')  # Retrieve API key from environment variable
 

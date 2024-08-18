@@ -1,7 +1,5 @@
 from typing import List, Optional
 
-from openai import BaseModel
-
 
 class CallContext:
     """Store context for the current call."""

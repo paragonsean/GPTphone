@@ -1,8 +1,5 @@
 import asyncio
 from typing import Any, Callable, Dict, List
-from Utils.logger_config import log_function_call, configure_logger
-import re
-import json
 
 
 class EventHandler:

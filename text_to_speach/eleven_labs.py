@@ -1,9 +1,15 @@
 import base64
 import os
 from typing import Dict, Any
-import aiohttp
-from .abstract_base import AbstractTTSService, logger
 
+import aiohttp
+from dotenv import load_dotenv
+
+from Utils.singleton_logger import configure_logger
+from .abstract_base import AbstractTTSService
+
+logger = configure_logger(__name__)
+load_dotenv()
 
 class ElevenLabsTTS(AbstractTTSService):
     """

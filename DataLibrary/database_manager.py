@@ -1,11 +1,11 @@
+import json
 import os
-from typing import List, Optional
 from datetime import datetime
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+
 from sqlalchemy import Column, String, Boolean, Text, DateTime, Integer, ForeignKey
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
-import json
 
 
 class DatabaseManager:

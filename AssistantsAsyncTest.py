@@ -1,10 +1,10 @@
 import os
 
-from EventHandlers.assitant_event_manager import AssitantsEventHandler
 from dotenv import load_dotenv
-from Utils.logger_config import configure_logger, log_function_call
-import asyncio
 from openai import AsyncOpenAI
+
+from EventHandlers.assitant_event_manager import AssitantsEventHandler
+from Utils.logger_config import configure_logger, log_function_call
 
 load_dotenv()
 logger = configure_logger(__name__)

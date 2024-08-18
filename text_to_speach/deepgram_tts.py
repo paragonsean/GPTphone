@@ -1,8 +1,15 @@
 import base64
 import os
+
 import numpy as np
 from deepgram import DeepgramClient
-from .abstract_base import AbstractTTSService, logger
+from dotenv import load_dotenv
+
+from Utils.singleton_logger import configure_logger
+from .abstract_base import AbstractTTSService
+
+logger = configure_logger(__name__)
+load_dotenv()
 
 
 class DeepgramTTS(AbstractTTSService):

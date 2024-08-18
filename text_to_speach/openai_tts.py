@@ -1,17 +1,20 @@
-from collections import deque
-import os
-from dotenv import load_dotenv
-from bolna.helpers.logger_config import configure_logger
-from bolna.helpers.utils import convert_audio_to_wav, create_ws_data_packet, pcm_to_wav_bytes, resample
-from .abstract_base import AbstractTTSService
-from openai import AsyncOpenAI
 import io
+import os
+from collections import deque
+
+from dotenv import load_dotenv
+from openai import AsyncOpenAI
+
+from Utils.singleton_logger import configure_logger
+from Utils.utils import convert_audio_to_wav, create_ws_data_packet, resample
+from .abstract_base import AbstractTTSService
 
 logger = configure_logger(__name__)
 load_dotenv()
 
 
-class OPENAISynthesizer(AbstractTTSService):
+
+class OPENAITTS(AbstractTTSService):
     def __init__(self, voice, audio_format="mp3", model="text_to_speach-1", stream=False, sampling_rate=8000, buffer_size=400,
                  **kwargs):
         super().__init__(stream, buffer_size)

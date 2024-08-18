@@ -1,10 +1,17 @@
 import asyncio
 import copy
+import io
 import json
 import os
 from datetime import datetime
-import loguru as logger
+from .singleton_logger import configure_logger
 import aiofiles
+import torch
+import torchaudio
+from pydub import AudioSegment
+
+logger = configure_logger(__name__)
+
 
 
 def format_messages(messages, use_system_prompt=False):
@@ -107,3 +114,35 @@ def create_ws_data_packet(data, meta_info=None, is_md5_hash=False, llm_generated
         'meta_info': metadata
     }
 
+def pcm_to_wav_bytes(pcm_data, sample_rate = 16000, num_channels = 1, sample_width = 2):
+    buffer = io.BytesIO()
+    bit_depth = 16
+    if len(pcm_data)%2 == 1:
+        pcm_data += b'\x00'
+    tensor_pcm = torch.frombuffer(pcm_data, dtype=torch.int16)
+    tensor_pcm = tensor_pcm.float() / (2**(bit_depth - 1))
+    tensor_pcm = tensor_pcm.unsqueeze(0)
+    torchaudio.save(buffer, tensor_pcm, sample_rate, format='wav')
+    return buffer.getvalue()
+
+def convert_audio_to_wav(audio_bytes, source_format = 'flac'):
+    logger.info(f"CONVERTING AUDIO TO WAV {source_format}")
+    audio = AudioSegment.from_file(io.BytesIO(audio_bytes), format=source_format)
+    logger.info(f"GOT audio wav {audio}")
+    buffer = io.BytesIO()
+    audio.export(buffer, format="wav")
+    logger.info(f"SENDING BACK WAV")
+    return buffer.getvalue()
+
+
+def resample(audio_bytes, target_sample_rate, format = "mp3"):
+    audio_buffer = io.BytesIO(audio_bytes)
+    waveform, orig_sample_rate = torchaudio.load(audio_buffer, format = format)
+    if orig_sample_rate == target_sample_rate:
+        return audio_bytes
+    resampler = torchaudio.transforms.Resample(orig_sample_rate, target_sample_rate)
+    audio_waveform = resampler(waveform)
+    audio_buffer = io.BytesIO()
+    logger.info(f"Resampling from {orig_sample_rate} to {target_sample_rate}")
+    torchaudio.save(audio_buffer, audio_waveform, target_sample_rate, format="wav")
+    return audio_buffer.getvalue()

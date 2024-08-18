@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
-import asyncio
 
-class BaseInputHandler(ABC):
+
+class TelephonyBaseInputHandler(ABC):
     def __init__(self, queues=None, websocket=None, input_types=None, mark_set=None, turn_based_conversation=False):
         self.queues = queues
         self.websocket = websocket
@@ -40,7 +40,7 @@ class BaseInputHandler(ABC):
         print(f"{message}: {error}")
 
 
-class BaseOutputHandler(ABC):
+class TelephonyBaseOutputHandler(ABC):
     def __init__(self, io_provider='default', websocket=None):
         self.websocket = websocket
         self.io_provider = io_provider

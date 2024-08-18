@@ -1,9 +1,10 @@
-import io
 import copy
+import io
 
 import torchaudio
 from pydub import AudioSegment
-from Utils.logger_config import configure_logger
+
+from Utils.singleton_logger import configure_logger
 
 logger = configure_logger(__name__)
 

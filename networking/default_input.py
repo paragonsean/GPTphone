@@ -1,12 +1,14 @@
 import asyncio
 import base64
 import time
-from dotenv import load_dotenv
-from Utils import basic_logger
+
+
+
+from Utils.singleton_logger import configure_logger
 from Utils.utils import create_ws_data_packet
 
-logger = basic_logger(__name__)
-load_dotenv()
+logger = configure_logger(__name__)
+
 
 
 class DefaultInputHandler:
