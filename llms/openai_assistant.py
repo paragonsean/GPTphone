@@ -42,7 +42,7 @@ class AssistantService(AbstractLLMService, AssitantsEventHandler):
                 # Handle user input using inherited method from AssistantEventHandler
                 print(f'getting user input for')
                 user_input = await self.on_user_input(text, role, name)
-                self.user_context.append(user_input)
+                self.messages.append(user_input)
 
                 # Create a new thread
                 thread = await self.on_create_thread(self.client)

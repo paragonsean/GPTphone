@@ -1,5 +1,7 @@
 import importlib
 import json
+from logging import DEBUG
+
 import openai
 from openai import AsyncOpenAI, AsyncStream
 import aiohttp
@@ -160,9 +162,7 @@ class CallContext:
 
 
 @log_function_call()
-@log_function_call()
 async def call_function(tool_call, available_functions):
-    logger.warning("I am here")
     functions_name = tool_call['function']['name']
     function_args = json.loads(tool_call['function']['arguments'])  # Convert JSON string to dict
 
@@ -170,8 +170,6 @@ async def call_function(tool_call, available_functions):
         return "Function " + functions_name + " does not exist"
 
     function = available_functions[functions_name]  # Get the actual function object
-    logger.info(f"Function args: {function_args}")
-    logger.info(f"Function name: {functions_name}")
 
     # Call the function and ensure the result is awaited if necessary
     function_response = function(**function_args)  # Call the function using the correct reference
@@ -234,12 +232,14 @@ class OpenAIService(EventHandler):
     @log_function_call()
     async def get_tool_calls(self, stream, interaction_count):
         tool_calls = []
+        complete_sentence = ""
         async for chunk in stream:
+
             delta = chunk.choices[0].delta if chunk.choices and chunk.choices[0].delta is not None else None
 
             if delta and delta.content:
                 await self.emit_complete_sentences(delta.content, interaction_count)
-
+                complete_sentence += delta.content
             elif delta and delta.tool_calls:
                 for tc_chunk in delta.tool_calls:
                     if len(tool_calls) <= tc_chunk.index:
@@ -253,8 +253,8 @@ class OpenAIService(EventHandler):
                         tc["function"]["name"] += tc_chunk.function.name
                     if tc_chunk.function.arguments:
                         tc["function"]["arguments"] += tc_chunk.function.arguments
-        if len(tool_calls) > 0:
-            return tool_calls
+        if complete_sentence or tool_calls:
+            return tool_calls,complete_sentence
         else:
             return None
 
@@ -277,9 +277,7 @@ class OpenAIService(EventHandler):
             )
 
             for tool_call in tool_calls:
-                for key,value in tool_call.items():
-                    logger.info(f"Here is the key value pairs for tool_call {key}: {value}")
-                function_response,name = await call_function(tool_call, available_functions)
+                function_response, name = await call_function(tool_call, available_functions)
                 # Append the tool's output to the conversation
                 self.user_context.append(
                     {
@@ -293,33 +291,49 @@ class OpenAIService(EventHandler):
                 return function_response, name
         else:
             return None, None
+
     async def completion(self, text: str, interaction_count: int, role: str = 'user', name: str = 'user'):
         try:
-
+            if text == None or text == '':
+                return
             self.user_context.append({"role": role, "content": text, "name": name})
             messages = [{"role": "system", "content": self.system_message}] + self.user_context
 
+            start_time = time.time()
             stream = await self.client.chat.completions.create(
                 model="gpt-4o",
                 messages=messages,
                 tools=self.tools,
                 stream=True,
             )
-            available_functions = self.get_available_functions()
-            complete_response = ""
+            end_time = time.time()
+            if DEBUG:
+                logger.info(f'Latency: {end_time - start_time} seconds for OpenAI completion.')
 
+            if not stream:
+                logger.error("Failed to retrieve stream from OpenAI.")
+                return
 
-            tool_calls = []
-            tool_calls = await self.get_tool_calls(stream, interaction_count)
+            tool_calls, complete_sentence = await self.get_tool_calls(stream, interaction_count)
             if tool_calls:
-                response, name = await self.process_tool_calls(tool_calls, available_functions)
+
+                response, name = await self.process_tool_calls(tool_calls, self.available_functions)
                 if response:
-                    await self.completion(response, interaction_count, 'function', name)
+                    function_name = name
 
-            message = ''
+                    say = (f"Calling {function_name.split('_')} for you ")
 
-            message = get_user_input()
-            await self.completion(message, interaction_count, role='system', name='user')
+                    await self.createEvent('llmreply', {
+                        "partialResponseIndex": None,
+                        "partialResponse": say
+                    }, interaction_count)
+                    if function_name != "end_call":
+                        await self.completion(response, interaction_count, 'function', name)
+
+            # Get user input and continue the loop
+
+
+
 
             # Emit any remaining content in the buffer
             if self.sentence_buffer.strip():
@@ -329,12 +343,10 @@ class OpenAIService(EventHandler):
                 }, interaction_count)
                 self.sentence_buffer = ""
 
-            self.messages.append({"role": "assistant", "content": complete_response})
+            self.messages.append({"role": "assistant", "content": complete_sentence})
 
         except Exception as e:
             logger.error(f"Error in OpenAIService completion: {str(e)}")
-
-
 
 
 def init_messages():

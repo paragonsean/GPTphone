@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from openai import AsyncOpenAI
 from openai.lib.streaming import AsyncAssistantEventHandler
 from typing_extensions import override
-from tools import TOOL_MAP
+from functions.tools import TOOL_MAP
 
 
 # Load environment variables from a .env file

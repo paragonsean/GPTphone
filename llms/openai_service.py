@@ -2,11 +2,11 @@ import os
 import importlib
 import json
 from openai import AsyncOpenAI
-from functions.function_manifest import tools
+from functions.function_manifest import get_tools
 from .call_details import CallContext
 from .gpt_service import AbstractLLMService
 from Utils import log_function_call, configure_logger
-
+from functions import get_current_weather,transfer_call,end_call
 
 
 logger = configure_logger(__name__)
@@ -16,17 +16,17 @@ class OpenAIService(AbstractLLMService):
     def __init__(self, context: CallContext):
         super().__init__(context)
         self.openai = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-        self.context.set_tools()
-        se
+        self.context.tools = self.context.validate_and_load_tools()
+
     async def completion(self, text: str, interaction_count: int, role: str = 'user', name: str = 'user'):
         try:
-            self.user_context.append({"role": role, "content": text, "name": name})
-            messages = [{"role": "system", "content": self.system_message}] + self.user_context
-
+            self.messages.append({"role": role, "content": text, "name": name})
+            messages = [{"role": "system", "content": self.system_message}] + self.messages
+            logger.info(self.messages)
             stream = await self.openai.chat.completions.create(
                 model="gpt-4o",
                 messages=messages,
-                tools=self.context.tools,
+                tools=get_tools(),
                 tool_choice="auto",
                 stream=True,
             )
@@ -34,7 +34,7 @@ class OpenAIService(AbstractLLMService):
             complete_response = ""
             function_name = ""
             function_args = ""
-
+            tool_calls = []
             async for chunk in stream:
                 delta = chunk.choices[0].delta
                 content = delta.content or ""
@@ -84,7 +84,7 @@ class OpenAIService(AbstractLLMService):
                 }, interaction_count)
                 self.sentence_buffer = ""
 
-            self.user_context.append({"role": "assistant", "content": complete_response})
+            self.messages.append({"role": "assistant", "content": complete_response})
 
         except Exception as e:
             logger.error(f"Error in OpenAIService completion: {str(e)}")

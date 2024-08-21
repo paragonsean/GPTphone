@@ -281,7 +281,7 @@ async def get_all_transcripts():
         for call_sid, context in call_contexts.items():
             transcript_list.append({
                 "call_sid": call_sid,
-                "transcript": context.user_context,
+                "transcript": context.messages,
             })
         return {"transcripts": transcript_list}
     except Exception as e:

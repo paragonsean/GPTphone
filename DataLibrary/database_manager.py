@@ -119,7 +119,7 @@ class DatabaseManager:
             call_sid=call_context.call_sid,
             stream_sid=call_context.stream_sid,
             call_ended=call_context.call_ended,
-            user_context=json.dumps(call_context.user_context),
+            user_context=json.dumps(call_context.messages),
             system_message=call_context.system_message,
             initial_message=call_context.initial_message,
             start_time=call_context.start_time,
@@ -143,7 +143,7 @@ class DatabaseManager:
         if db_call_context:
             db_call_context.stream_sid = call_context.stream_sid
             db_call_context.call_ended = call_context.call_ended
-            db_call_context.user_context = json.dumps(call_context.user_context)
+            db_call_context.messages = json.dumps(call_context.messages)
             db_call_context.system_message = call_context.system_message
             db_call_context.initial_message = call_context.initial_message
             db_call_context.start_time = call_context.start_time

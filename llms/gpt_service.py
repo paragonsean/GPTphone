@@ -2,7 +2,7 @@ import importlib
 import json
 import re
 from abc import ABC, abstractmethod
-
+from functions.tools import TOOL_MAP
 from EventHandlers import EventHandler
 from Utils.my_logger import configure_logger
 from .call_details import CallContext
@@ -22,31 +22,36 @@ class AbstractLLMService(EventHandler, ABC):
     """
     def __init__(self, context: CallContext):
         super().__init__()
+
         self.system_message = context.system_message
         self.initial_message = context.initial_message
         self.context = context
-        self.user_context = [
+        self.messages = [
             {"role": "user", "content": "Hello"},
             {"role": "assistant", "content": self.initial_message}
         ]
+        for tool in TOOL_MAP:
+            function_name = tool['function']['name']
+            module = importlib.import_module(f'functions.{function_name}')
+            self.context.available_functions[function_name] = getattr(module, function_name)
         self.partial_response_index = 0
 
 
         self.sentence_buffer = ""
-        context.user_context = self.user_context
+       
     @abstractmethod
     async def completion(self, text: str, interaction_count: int, role: str = 'user', name: str = 'user'):
         pass
 
     def set_call_context(self, context: CallContext):
         self.context = context
-        self.user_context = [
+        self.messages = [
             {"role": "user", "content": "Hello"},
             {"role": "assistant", "content": context.initial_message}
         ]
-        context.user_context = self.user_context
-        self.system_message = context.system_message
-        self.initial_message = context.initial_message
+        self.context.messages = self.messages
+        self.system_message = self.context.system_message
+        self.initial_message = self.context.initial_message
 
 
     def reset(self):

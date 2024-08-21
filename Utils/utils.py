@@ -13,19 +13,25 @@ from pydub import AudioSegment
 logger = configure_logger(__name__)
 
 
-
 def format_messages(messages, use_system_prompt=False):
     formatted_string = ""
-    for message in messages:
-        role = message['role']
-        content = message['content']
 
-        if use_system_prompt and role == 'system':
-            formatted_string += "system: " + content + "\n"
-        if role == 'assistant':
-            formatted_string += "assistant: " + content + "\n"
-        elif role == 'user':
-            formatted_string += "user: " + content + "\n"
+    role_prefix_map = {
+        'system': 'system: ',
+        'assistant': 'assistant: ',
+        'user': 'user: '
+    }
+
+    for message in messages:
+        role = message.get('role')
+        content = message.get('content', '')
+
+        # Skip the system messages if not using system prompt
+        if role == 'system' and not use_system_prompt:
+            continue
+
+        prefix = role_prefix_map.get(role, '')
+        formatted_string += f"{prefix}{content}\n"
 
     return formatted_string
 def load_file(file_path, is_json=False):
@@ -43,15 +49,26 @@ def write_json_file(file_path, data):
     with open(file_path, 'w') as file:
         json.dump(data, file, indent=4, ensure_ascii=False)
 
+
 async def write_request_logs(message, run_id):
+    if message is None:
+        logger.error("Received None as message, cannot write request logs.")
+        return
+
+    if run_id is None:
+        logger.error("Received None as run_id, cannot write request logs.")
+        return
+
     component_details = [None, None, None, None, None]
     logger.info(f"Message {message}")
+
     message_data = message.get('data', '')
     if message_data is None:
         message_data = ''
 
     row = [message['time'], message["component"], message["direction"], message["leg_id"], message['sequence_id'],
            message['model']]
+
     if message["component"] == "llm":
         component_details = [message_data, message.get('input_tokens', 0), message.get('output_tokens', 0), None,
                              message.get('latency', None), message['cached'], None]
@@ -60,7 +77,7 @@ async def write_request_logs(message, run_id):
                              message.get('is_final', False)]
     elif message["component"] == "synthesizer":
         component_details = [message_data, None, None, len(message_data), message.get('latency', None),
-                             message['cached'], None, message['engine']]
+                             message['cached'], None, message.get('engine')]
     elif message["component"] == "function_call":
         component_details = [message_data, None, None, None, message.get('latency', None), None, None, None]
 
@@ -68,9 +85,11 @@ async def write_request_logs(message, run_id):
 
     header = "Time,Component,Direction,Leg ID,Sequence ID,Model,Data,Input Tokens,Output Tokens,Characters,Latency,Cached,Final Transcript,Engine\n"
     log_string = ','.join(['"' + str(item).replace('"', '""') + '"' if item is not None else '' for item in row]) + '\n'
-    log_dir = f"./logs/{run_id.split('#')[0]}"
+
+    log_dir = f"./logs/{run_id.split('#')[0]}" if run_id else "./logs/default"
     os.makedirs(log_dir, exist_ok=True)
-    log_file_path = f"{log_dir}/{run_id.split('#')[1]}.csv"
+
+    log_file_path = f"{log_dir}/{run_id.split('#')[1]}.csv" if run_id and '#' in run_id else f"{log_dir}/default.csv"
     file_exists = os.path.exists(log_file_path)
 
     async with aiofiles.open(log_file_path, mode='a') as log_file:
@@ -83,7 +102,7 @@ def convert_to_request_log(message, meta_info, model, component = "transcriber",
     log['direction'] = direction
     log['data'] = message
     log['leg_id'] = meta_info['request_id'] if "request_id" in meta_info else "1234"
-    log['time'] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    log['time'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     log['component'] = component
     log['sequence_id'] = meta_info['sequence_id']
     log['model'] = model

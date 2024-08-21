@@ -40,8 +40,8 @@ class GeminiService(AbstractLLMService):
 
     async def completion(self, text: str, interaction_count: int, role: str = 'user', name: str = 'user'):
         try:
-            self.user_context.append({"role": role, "content": text, "name": name})
-            messages = [{"role": "system", "content": self.system_message}] + self.user_context
+            self.messages.append({"role": role, "content": text, "name": name})
+            messages = [{"role": "system", "content": self.system_message}] + self.messages
             prompt = "\n".join([msg["content"] for msg in messages])
 
             response = genai.generate_text(
@@ -55,7 +55,7 @@ class GeminiService(AbstractLLMService):
             # Process response and emit
             complete_response = response.result
             await self.emit_complete_sentences(complete_response, interaction_count)
-            self.user_context.append({"role": "assistant", "content": complete_response})
+            self.messages.append({"role": "assistant", "content": complete_response})
 
         except Exception as e:
             logger.error(f"Error in GeminiService completion: {str(e)}")
