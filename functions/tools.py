@@ -28,22 +28,17 @@ TOOL_MAP = [
         "type": "function",
         "function": {
             "name": "get_current_weather",
-            "description": "Get the current weather",
+            "description": "Gives the temperature for a given location",
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "location": {
-                        "type": "string",
-                        "description": "The city and state, e.g. San Francisco, CA",
-                    },
-                    "format": {
-                        "type": "string",
-                        "enum": ["celsius", "fahrenheit"],
-                        "description": "The temperature unit to use. Infer this from the users location.",
-                    },
+                    "latitude": {"type": "number", "description": "The latitude of the location"},
+                    "longitude": {"type": "number", "description": "The longitude of the location"},
                 },
-                "required": ["location", "format"],
+                "required": ["latitude", "longitude"],
             },
+            "say": "Getting your current weather."
         }
-    },
+    }
+
 ]

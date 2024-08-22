@@ -8,7 +8,7 @@ import importlib
 import logging
 from datetime import datetime
 from Utils.utils import convert_to_request_log, write_json_file, write_request_logs, format_messages
-from functions import get_tools, get_current_weather
+from functions.tools import  TOOL_MAP
 from Utils import log_function_call
 logger = logging.getLogger(__name__)
 
@@ -56,7 +56,7 @@ class CallContext:
     def validate_and_load_tools(self):
         """Validate and load functions corresponding to the tools."""
         if not self.tools:
-            self.tools = get_tools()
+            self.tools = TOOL_MAP
 
         missing_functions = []
         for tool in self.tools:

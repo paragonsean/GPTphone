@@ -1,5 +1,6 @@
 import asyncio
 import base64
+import datetime
 import json
 import os
 from collections import deque
@@ -15,6 +16,7 @@ import uvicorn
 from Utils.my_logger import configure_logger
 from networking import StreamService
 from llms import CallContext, LLMFactory
+from networking.default_input import WebSocketService
 from speach_to_text import TranscriptionService
 from text_to_speach.tts_factory import TTSFactory
 
@@ -54,7 +56,10 @@ async def get_call_recording(call_sid: str):
     if not recording:
         return {"error": "Recording not found"}
 
-
+@app.websocket("/ws")
+async def websocket_endpoint_two(websocket: WebSocket):
+    service = WebSocketService(websocket)
+    await service.run()
 # Websocket route for Twilio to get media stream
 @app.websocket("/connection")
 async def websocket_endpoint(websocket: WebSocket):
@@ -100,7 +105,7 @@ async def websocket_endpoint(websocket: WebSocket):
 
     async def handle_utterance(text, stream_sid):
         try:
-            if len(marks) > 0 and text.strip():
+            if len(marks) > 3 and text.strip():
                 logger.info("Intruption detected, clearing system.")
                 await websocket.send_json({
                     "streamSid": stream_sid,
@@ -154,6 +159,7 @@ async def websocket_endpoint(websocket: WebSocket):
                 else:
                     # Call from UI, reuse the existing context
                     call_context = call_contexts[call_sid]
+                    logger.info(call_context)
 
                 llm_service.set_call_context(call_context)
 
@@ -165,8 +171,10 @@ async def websocket_endpoint(websocket: WebSocket):
                     "partialResponseIndex": None,
                     "partialResponse": call_context.initial_message
                 }, 1)
+
             elif msg['event'] == 'media':
                 asyncio.create_task(process_media(msg))
+
             elif msg['event'] == 'mark':
                 label = msg['mark']['name']
                 if label in marks:
@@ -221,9 +229,10 @@ async def start_call(request: Dict[str, str]):
             system_message=system_message or os.getenv("SYSTEM_MESSAGE"),
             initial_message=initial_message or os.getenv("Config.INITIAL_MESSAGE"),
             to_number=to_number,
-            from_number=os.getenv("APP_NUMBER")
+            from_number=os.getenv("APP_NUMBER"),
+            start_time=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),  # Add the start time
+            date=datetime.now().strftime("%Y-%m-%d")  # Add the current date
         )
-
 
 
         return {"call_sid": call_sid}
