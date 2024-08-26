@@ -40,8 +40,6 @@ class AssistantService(AbstractLLMService, AssitantsEventHandler):
         for attempt in range(max_retries):
             try:
                 # Handle user input using inherited method from AssistantEventHandler
-                print(f'getting user input for')
-                user_input = await self.on_user_input(text, role, name)
                 self.messages.append(user_input)
 
                 # Create a new thread

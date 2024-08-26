@@ -1,80 +1,65 @@
-from abc import ABC, abstractmethod
+import datetime
+import os
+from typing import Dict
+
+from twilio.rest import Client
+from twilio.rest.insights.v1.call import CallContext as TwilioCallContext
 
 
-class TelephonyBaseInputHandler(ABC):
-    def __init__(self, queues=None, websocket=None, input_types=None, mark_set=None, turn_based_conversation=False):
-        self.queues = queues
-        self.websocket = websocket
-        self.input_types = input_types
-        self.mark_set = mark_set
-        self.turn_based_conversation = turn_based_conversation
-        self.websocket_listen_task = None
-        self.running = True
-
-    @abstractmethod
-    async def call_start(self, packet):
-        """Handle the start of a call."""
-        pass
-
-    @abstractmethod
-    async def process_message(self, message):
-        """Process a received message."""
-        pass
-
-    async def stop_handler(self):
-        """Stop the handler gracefully."""
-        self.running = False
-        try:
-            if self.websocket:
-                await self.websocket.close()
-        except Exception as e:
-            self.log_error("Error closing WebSocket", e)
-
-    @abstractmethod
-    async def handle(self):
-        """Start handling incoming messages."""
-        pass
-
-    def log_error(self, message, error):
-        """Log an error."""
-        print(f"{message}: {error}")
 
 
-class TelephonyBaseOutputHandler(ABC):
-    def __init__(self, io_provider='default', websocket=None):
-        self.websocket = websocket
-        self.io_provider = io_provider
-        self.is_chunking_supported = True
+class TwilioService:
+    def __init__(self, call_contexts: Dict[str, TwilioCallContext]):
+        self.client = self.get_twilio_client()
+        self.call_contexts  = call_contexts
 
-    @abstractmethod
-    async def handle(self, packet):
-        """Handle sending a message through the output."""
-        pass
+    def get_twilio_client(self):
+        return Client(os.getenv("TWILIO_ACCOUNT_SID"), os.getenv("TWILIO_AUTH_TOKEN"))
 
-    @abstractmethod
-    async def handle_interruption(self):
-        """Handle interruption in the output stream."""
-        pass
+    def initiate_call(self, to_number: str, system_message: str, initial_message: str) -> str:
+        service_url = f"https://{os.getenv('SERVER')}/incoming"
+        call = self.client.calls.create(
+            to=to_number,
+            from_=os.getenv("APP_NUMBER"),
+            url=service_url
+        )
+        call_sid = call.sid
 
-    @abstractmethod
-    async def form_media_message(self, audio_data, audio_format):
-        """Form a media message for sending audio data."""
-        pass
+        # Create CallContext instance
+        call_context = TwilioCallContext(
+            call_sid=call_sid,
+            system_message=system_message or os.getenv("SYSTEM_MESSAGE"),
+            initial_message=initial_message or os.getenv("Config.INITIAL_MESSAGE"),
+            to_number=to_number,
+            from_number=os.getenv("APP_NUMBER"),
+            start_time=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            date=datetime.datetime.now().strftime("%Y-%m-%d")
+        )
+        self.call_contexts[call_sid] = call_context
 
-    @abstractmethod
-    async def form_mark_message(self, mark_id):
-        """Form a mark message for sending marks in the stream."""
-        pass
+        return call_sid
 
-    def get_provider(self):
-        """Get the provider name."""
-        return self.io_provider
+    def get_call_status(self, call_sid: str) -> str:
+        call = self.client.calls(call_sid).fetch()
+        return call.status
 
-    def process_in_chunks(self, yield_chunks=False):
-        """Determine if the output should be processed in chunks."""
-        return self.is_chunking_supported and yield_chunks
+    def end_call(self, call_sid: str):
+        self.client.calls(call_sid).update(status='completed')
 
-    def log_error(self, message, error):
-        """Log an error."""
-        print(f"{message}: {error}")
+    def get_call_recording(self, call_sid: str) -> str:
+        recordings = self.client.calls(call_sid).recordings.list()
+        if recordings:
+            return f"https://api.twilio.com/{recordings[0].uri}"
+        return None
 
+    def get_transcript(self, call_sid: str) -> Dict:
+        return self.call_contexts.get(call_sid)
+
+    def get_all_transcripts(self) -> Dict:
+        transcripts = []
+        for call_sid, context in self.call_contexts.items():
+            transcripts.append({
+                "call_sid": call_sid,
+                "transcript": context.messages,
+            })
+        return transcripts

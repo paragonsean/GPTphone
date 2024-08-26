@@ -16,8 +16,6 @@ logger = logging.getLogger(__name__)
 class CallContext:
     """Store context for the current call."""
     phone_number: Optional[str] = ""
-    first_name: Optional[str] = ""
-    last_name: Optional[str] = ""
     business_name: Optional[str] = ""
     from_phone: Optional[str] = ""
     call_duration: Optional[Any] = None
@@ -36,11 +34,6 @@ class CallContext:
     available_functions: Dict[str, Callable] = field(default_factory=dict)
     _write_timer = None
     _last_write_time = 0
-    @log_function_call
-    def set_tools(self, tools: Optional[List[Dict[str, Any]]] = None):
-        """Set the tools for the current context."""
-        self.tools = tools if tools is not None else get_tools()
-        self.validate_and_load_tools()
 
     def write_none_values_to_json(self, file_path: str):
         # Convert the dataclass to a dictionary
@@ -52,37 +45,8 @@ class CallContext:
         # Write the filtered dictionary to a JSON file
         with open(file_path, 'w') as json_file:
             json.dump(none_values_dict, json_file, indent=4)
-    @log_function_call
-    def validate_and_load_tools(self):
-        """Validate and load functions corresponding to the tools."""
-        if not self.tools:
-            self.tools = TOOL_MAP
 
-        missing_functions = []
-        for tool in self.tools:
-            function_name = tool['function']['name']
-            if not self.load_function(function_name):
-                missing_functions.append(function_name)
 
-        if missing_functions:
-            raise ValueError(
-                f"The following functions are missing or could not be loaded: {', '.join(missing_functions)}")
-
-        logger.info("All tools are correctly validated and loaded.")
-
-    def load_function(self, function_name: str) -> bool:
-        """Dynamically load a function by its name."""
-        try:
-            # Load the module from the 'functions' directory
-            module = importlib.import_module(f"functions.{function_name}")
-            # Retrieve the function from the module and store it in available_functions
-            self.available_functions[function_name] = getattr(module, function_name)
-            return True
-        except ImportError as e:
-            logger.error(f"Function module '{function_name}' could not be imported: {str(e)}")
-        except AttributeError as e:
-            logger.error(f"Function '{function_name}' could not be found in the module: {str(e)}")
-        return False
 
     @log_function_call
     def add_to_user_context(self, message: Dict[str, Any]):

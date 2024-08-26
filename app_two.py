@@ -1,6 +1,5 @@
 import asyncio
 import base64
-import datetime
 import json
 import os
 from collections import deque
@@ -9,15 +8,13 @@ from typing import Dict
 import dotenv
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException
 from fastapi.responses import HTMLResponse
-from twilio.rest import Client
-from twilio.rest.insights.v1.call import CallContext
 from twilio.twiml.voice_response import Connect, VoiceResponse
 import uvicorn
 from Utils.my_logger import configure_logger
-from networking import StreamService
+from networking import StreamService, WebSocketService
 from llms import CallContext, LLMFactory
-from networking.default_input import WebSocketService
 from speach_to_text import TranscriptionService
+from telephony import TwilioService
 from text_to_speach.tts_factory import TTSFactory
 
 '''
@@ -25,15 +22,15 @@ Author: Sean Baker
 Date: 2024-07-08 
 Description: Primary app needs to be refactored, need to take a look at flask frameworks, big libraries, so I can tell how they divide up the routes. 
 '''
+
 dotenv.load_dotenv()
 app = FastAPI()
 
 logger = configure_logger(__name__)
-# Global dictionary to store call contexts for each server instance (should be replaced with a database in production)
-global call_contexts
+
 call_contexts = {}
 
-
+twilio_service = TwilioService(call_contexts)
 
 # First route that gets called by Twilio when call is initiated
 @app.post("/incoming")
@@ -49,17 +46,18 @@ async def incoming_call() -> HTMLResponse:
 @app.get("/call_recording/{call_sid}")
 async def get_call_recording(call_sid: str):
     """Get the recording URL for a specific call."""
-    recording = get_twilio_client().calls(call_sid).recordings.list()
-    if recording:
-        print({"recording_url": f"https://api.twilio.com/{recording[0].uri}"})
-        return {"recording_url": f"https://api.twilio.com/{recording[0].uri}"}
-    if not recording:
-        return {"error": "Recording not found"}
+    recording_url = twilio_service.get_call_recording(call_sid)
+    if recording_url:
+        return {"recording_url": recording_url}
+    return {"error": "Recording not found"}
+
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     service = WebSocketService(websocket)
     await service.run()
+
+
 # Websocket route for Twilio to get media stream
 @app.websocket("/connection")
 async def websocket_endpoint(websocket: WebSocket):
@@ -147,18 +145,18 @@ async def websocket_endpoint(websocket: WebSocket):
                 call_context = CallContext()
 
                 if os.getenv("RECORD_CALLS") == "true":
-                    get_twilio_client().calls(call_sid).recordings.create({"recordingChannels": "dual"})
+                    twilio_service.get_twilio_client().calls(call_sid).recordings.create({"recordingChannels": "dual"})
 
                 # Decide if the call the call was initiated from the UI or is an inbound
-                if call_sid not in call_contexts:
+                if call_sid not in twilio_service.call_contexts:
                     # Inbound call
                     call_context.system_message = os.environ.get("SYSTEM_MESSAGE")
                     call_context.initial_message = os.environ.get("INITIAL_MESSAGE")
                     call_context.call_sid = call_sid
-                    call_contexts[call_sid] = call_context
+                    twilio_service.call_contexts[call_sid] = call_context
                 else:
                     # Call from UI, reuse the existing context
-                    call_context = call_contexts[call_sid]
+                    call_context = twilio_service.call_contexts[call_sid]
 
                 llm_service.set_call_context(call_context)
 
@@ -192,10 +190,6 @@ async def websocket_endpoint(websocket: WebSocket):
         await transcription_service.disconnect()
 
 
-def get_twilio_client():
-    return Client(os.getenv("TWILIO_ACCOUNT_SID"), os.getenv("TWILIO_AUTH_TOKEN"))
-
-
 # API route to initiate a call via UI
 @app.post("/start_call")
 async def start_call(request: Dict[str, str]):
@@ -208,30 +202,8 @@ async def start_call(request: Dict[str, str]):
         logger.error("Missing 'to_number' in request")
         raise HTTPException(status_code=400, detail="Missing 'to_number' in request")
 
-    service_url = f"https://{os.getenv('SERVER')}/incoming"
-
     try:
-        client = get_twilio_client()
-        logger.info(f"Initiating call to {to_number} via {service_url}")
-        call = client.calls.create(
-            to=to_number,
-            from_=os.getenv("APP_NUMBER"),
-            url=service_url
-        )
-        call_sid = call.sid
-
-        # Create CallContext instance
-        call_context = CallContext(
-            call_sid=call_sid,
-            system_message=system_message or os.getenv("SYSTEM_MESSAGE"),
-            initial_message=initial_message or os.getenv("Config.INITIAL_MESSAGE"),
-            to_number=to_number,
-            from_number=os.getenv("APP_NUMBER"),
-            start_time=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),  # Add the start time
-            date=datetime.now().strftime("%Y-%m-%d")  # Add the current date
-        )
-
-
+        call_sid = twilio_service.initiate_call(to_number, system_message, initial_message)
         return {"call_sid": call_sid}
     except Exception as e:
         logger.error(f"Error initiating call: {str(e)}")
@@ -243,9 +215,8 @@ async def start_call(request: Dict[str, str]):
 async def get_call_status(call_sid: str):
     """Get the status of a call."""
     try:
-        client = get_twilio_client()
-        call = client.calls(call_sid).fetch()
-        return {"status": call.status}
+        status = twilio_service.get_call_status(call_sid)
+        return {"status": status}
     except Exception as e:
         logger.error(f"Error fetching call status: {str(e)}")
         return {"error": f"Failed to fetch call status: {str(e)}"}
@@ -254,11 +225,10 @@ async def get_call_status(call_sid: str):
 # API route to end a call
 @app.post("/end_call")
 async def end_call(request: Dict[str, str]):
-    """Get the status of a call."""
+    """End a call."""
     try:
         call_sid = request.get("call_sid")
-        client = get_twilio_client()
-        client.calls(call_sid).update(status='completed')
+        twilio_service.end_call(call_sid)
         return {"status": "success"}
     except Exception as e:
         logger.error(f"Error ending call {str(e)}")
@@ -269,13 +239,12 @@ async def end_call(request: Dict[str, str]):
 @app.get("/transcript/{call_sid}")
 async def get_transcript(call_sid: str):
     """Get the entire transcript for a specific call."""
-    call_context = call_contexts.get(call_sid)
-
-    if not call_context:
+    transcript = twilio_service.get_transcript(call_sid)
+    if not transcript:
         logger.info(f"[GET] Call not found for call SID: {call_sid}")
         return {"error": "Call not found"}
 
-    return {"transcript": call_context.user_context}
+    return {"transcript": transcript.user_context}
 
 
 # API route to get all call transcripts
@@ -283,13 +252,8 @@ async def get_transcript(call_sid: str):
 async def get_all_transcripts():
     """Get a list of all current call transcripts."""
     try:
-        transcript_list = []
-        for call_sid, context in call_contexts.items():
-            transcript_list.append({
-                "call_sid": call_sid,
-                "transcript": context.messages,
-            })
-        return {"transcripts": transcript_list}
+        transcripts = twilio_service.get_all_transcripts()
+        return {"transcripts": transcripts}
     except Exception as e:
         logger.error(f"Error fetching all transcripts: {str(e)}")
         return {"error": f"Failed to fetch all transcripts: {str(e)}"}
