@@ -1,4 +1,5 @@
 import ast
+import asyncio
 import os
 from collections import defaultdict
 
@@ -20,6 +21,19 @@ def find_imports_in_file(filepath):
 
     return imports
 
+async def example(count: int) -> str:
+    await asyncio.sleep(0)
+    if count == 0:
+        return "result"
+    for i in range(count):
+        await asyncio.sleep(i)
+    return await example(count - 1)
+
+class TraceStep(asyncio.tasks._PyTask):
+    def _Task__step(self, exc=None):
+        print(f"<step name={self.get_name()} done={self.done()}>")
+        result = super()._Task__step(exc=exc)
+        print(f"</step name={self.get_name()} done={self.done()}>")
 
 def build_import_graph(directory):
     """Build an import graph from the directory structure."""

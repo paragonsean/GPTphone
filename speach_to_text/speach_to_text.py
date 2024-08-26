@@ -46,27 +46,25 @@ class TranscriptionService(EventHandler):
         self.stream_sid = None
 
     def set_stream_sid(self, stream_id):
-        """
-        Sets the stream ID associated with the transcription.
 
-        Args:
-            stream_id (str): The stream ID.
-        """
         self.stream_sid = stream_id
 
     def get_stream_sid(self):
-        """
-        Returns the stream ID associated with the transcription.
 
-        Returns:
-            str: The stream ID.
-        """
         return self.stream_sid
 
+    def setup_event_handlers(self):
+        self.deepgram_live.on(LiveTranscriptionEvents.Transcript, self.handle_transcription)
+        self.deepgram_live.on(LiveTranscriptionEvents.Error, self.handle_error)
+        self.deepgram_live.on(LiveTranscriptionEvents.Close, self.handle_close)
+        self.deepgram_live.on(LiveTranscriptionEvents.Warning, self.handle_warning)
+        self.deepgram_live.on(LiveTranscriptionEvents.Metadata, self.handle_metadata)
+        self.deepgram_live.on(LiveTranscriptionEvents.UtteranceEnd, self.handle_utterance_end)
+
+
     async def connect(self):
-        """
-        Connects to the Deepgram API and starts live transcription.
-        """
+
+        self.setup_event_handlers()
         self.deepgram_live = self.client.listen.asynclive.v("1")
         await self.deepgram_live.start(LiveOptions(
             model="nova-2",
@@ -77,24 +75,14 @@ class TranscriptionService(EventHandler):
             punctuate=True,
             interim_results=True,
             endpointing=200,
-            utterance_end_ms=1000
+            utterance_end_ms="1000"
         ))
 
-        self.deepgram_live.on(LiveTranscriptionEvents.Transcript, self.handle_transcription)
-        self.deepgram_live.on(LiveTranscriptionEvents.Error, self.handle_error)
-        self.deepgram_live.on(LiveTranscriptionEvents.Close, self.handle_close)
-        self.deepgram_live.on(LiveTranscriptionEvents.Warning, self.handle_warning)
-        self.deepgram_live.on(LiveTranscriptionEvents.Metadata, self.handle_metadata)
-        self.deepgram_live.on(LiveTranscriptionEvents.UtteranceEnd, self.handle_utterance_end)
+
+
 
     async def handle_utterance_end(self, self_obj, utterance_end):
-        """
-        Handles the event when an utterance ends.
 
-        Args:
-            self_obj: The self object.
-            utterance_end: The utterance end event.
-        """
         try:
             if not self.speech_final:
                 logger.info(
@@ -110,13 +98,7 @@ class TranscriptionService(EventHandler):
             e.print_stack()
 
     async def handle_transcription(self, self_obj, result):
-        """
-        Handles the event when a transcription is received.
 
-        Args:
-            self_obj: The self object.
-            result: The transcription result.
-        """
         try:
             alternatives = result.channel.alternatives if hasattr(result, 'channel') else []
             text = alternatives[0].transcript if alternatives else ""
@@ -138,61 +120,30 @@ class TranscriptionService(EventHandler):
             e.print_stack()
 
     async def handle_error(self, self_obj, error):
-        """
-        Handles the event when an error occurs.
 
-        Args:
-            self_obj: The self object.
-            error: The error message.
-        """
         logger.error(f"Deepgram error: {error}")
         self.is_connected = False
 
     async def handle_warning(self, self_obj, warning):
-        """
-        Handles the event when a warning occurs.
 
-        Args:
-            self_obj: The self object.
-            warning: The warning message.
-        """
         logger.info('Deepgram warning: {warning}')
 
     async def handle_metadata(self, self_obj, metadata):
-        """
-        Handles the event when metadata is received.
 
-        Args:
-            self_obj: The self object.
-            metadata: The metadata.
-        """
         logger.info(f'Deepgram metadata: {metadata}')
 
     async def handle_close(self, self_obj, close):
-        """
-        Handles the event when the connection is closed.
 
-        Args:
-            self_obj: The self object.
-            close: The close event.
-        """
         logger.info("Deepgram connection closed")
         self.is_connected = False
 
     async def send(self, payload: bytes):
-        """
-        Sends audio data to the Deepgram API for transcription.
 
-        Args:
-            payload (bytes): The audio data.
-        """
         if self.deepgram_live:
             await self.deepgram_live.send(payload)
 
     async def disconnect(self):
-        """
-        Disconnects from the Deepgram API.
-        """
+
         if self.deepgram_live:
             await self.deepgram_live.finish()
             self.deepgram_live = None

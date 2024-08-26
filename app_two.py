@@ -13,7 +13,7 @@ import uvicorn
 from Utils.my_logger import configure_logger
 from networking import StreamService, WebSocketService
 from llms import CallContext, LLMFactory
-from speach_to_text import TranscriptionService
+from speach_to_text import TranscriberFactory
 from telephony import TwilioService
 from text_to_speach.tts_factory import TTSFactory
 
@@ -71,13 +71,16 @@ async def websocket_endpoint(websocket: WebSocket):
 
     llm_service = LLMFactory.get_llm_service(llm_service_name, CallContext())
     stream_service = StreamService(websocket)
-    transcription_service = TranscriptionService()
+    transcription_service = TranscriberFactory.get_transcriber("microphone")
     tts_service = TTSFactory.get_tts_service(tts_service_name)
 
     marks = deque()
     interaction_count = 0
 
     await transcription_service.connect()
+
+    # The rest of your WebSocket logic remains unchanged
+
 
     async def process_media(msg):
         await transcription_service.send(base64.b64decode(msg['media']['payload']))
@@ -258,6 +261,12 @@ async def get_all_transcripts():
         logger.error(f"Error fetching all transcripts: {str(e)}")
         return {"error": f"Failed to fetch all transcripts: {str(e)}"}
 
+@app.on_event("startup")
+async def startup_event():
+    loop = asyncio.get_event_loop()
+    transcriber = TranscriberFactory.get_transcriber("microphone")
+
+    await asyncio.create_task(transcriber.connect())  # Start transcription in the background
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 3000))
