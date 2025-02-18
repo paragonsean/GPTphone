@@ -1,11 +1,11 @@
 import os
 
-from .call_details import CallContext
-from .gpt_service import AbstractLLMService,configure_logger
-import google.generativeai as genai
+from .call_context import CallContext
+from .gpt_service import AbstractLLMService,logger
 
 
-logger = configure_logger(__name__)
+
+
 
 
 class GeminiService(AbstractLLMService):

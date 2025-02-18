@@ -6,7 +6,7 @@ from fastapi import WebSocket
 from Utils.logger_config import get_logger
 from EventHandlers.event_manager import EventHandler
 
-logger = get_logger("Stream")
+logger = get_logger("INFO")
 '''
 Author: Sean Baker
 Date: 2024-07-22 
