@@ -2,10 +2,9 @@ import asyncio
 import json
 
 import aiohttp
-from bolna.helpers.logger_config import configure_logger
-from bolna.helpers.utils import convert_to_request_log
+from Utils import logger
+from Utils import convert_to_request_log
 
-logger = configure_logger(__name__)
 
 
 async def trigger_api(url, method, param, api_token, meta_info, run_id, **kwargs):

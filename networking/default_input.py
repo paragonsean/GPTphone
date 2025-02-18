@@ -2,10 +2,10 @@ import asyncio
 import base64
 import time
 from dotenv import load_dotenv
-from Utils import configure_logger
+from Utils import basic_logger
 from Utils.utils import create_ws_data_packet
 
-logger = configure_logger(__name__)
+logger = basic_logger(__name__)
 load_dotenv()
 
 

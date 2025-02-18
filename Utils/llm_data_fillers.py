@@ -1,5 +1,11 @@
 from datetime import datetime, timezone
-PREPROCESS_DIR = 'agent_data'
+from datetime import datetime, timezone
+from services import *
+from networking import *
+from EventHandlers import *
+from speach_to_text import *
+from text_to_speach import *
+
 
 HIGH_LEVEL_ASSISTANT_ANALYTICS_DATA = {
         "extraction_details":{},
@@ -63,9 +69,6 @@ TRANSFERING_CALL_FILLER = "Sure, I'll transfer the call for you. Please wait a m
 DEFAULT_USER_ONLINE_MESSAGE = "Hey, are you still there?"
 DEFAULT_USER_ONLINE_MESSAGE_TRIGGER_DURATION = 6
 
-from datetime import datetime
-
-
 EXTRACTION_PROMPT = """
 Given this transcript from the communication between user and an agent, your task is to extract following information:
 
@@ -128,3 +131,7 @@ FILLER_PROMPT = "Please, do not start your response with fillers like Got it, No
 DATE_PROMPT = "### Date\n Today\'s Date is {}"
 
 FUNCTION_CALL_PROMPT = "We did made a function calling for user. We hit the function : {} and send a {} request and it returned us the response as given below: {} \n\n . Understand the above response and convey this response in a context to user. ### Important\n1. If there was an issue with the API call, kindly respond with - Hey, I'm not able to use the system right now, can you please try later? \n2. IF YOU CALLED THE FUNCTION BEFORE, PLEASE DO NOT CALL THE SAME FUNCTION AGAIN!"
+
+SERVICES=StreamService,AssistantService,OpenAIService,GeminiService
+EVENTHANDLERS=EventHandler,AssitantsEventHandler
+telephony=BASE

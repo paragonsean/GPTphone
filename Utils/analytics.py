@@ -5,12 +5,12 @@ from dotenv import load_dotenv
 from dateutil import parser
 import copy
 from .utils import format_messages
-from .logger_config import configure_logger
-from bolna.prompts import CHECK_FOR_COMPLETION_PROMPT
-from bolna.constants import HIGH_LEVEL_ASSISTANT_ANALYTICS_DATA
+from .logger_config import basic_logger
+from .llm_data_fillers  import CHECK_FOR_COMPLETION_PROMPT
+from .llm_data_fillers import HIGH_LEVEL_ASSISTANT_ANALYTICS_DATA
 
 load_dotenv()
-logger = configure_logger(__name__)
+logger = basic_logger(__name__)
 
 
 def calculate_total_cost_of_llm_from_transcript(messages, cost_per_input_token, cost_per_output_token,

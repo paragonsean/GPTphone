@@ -3,16 +3,16 @@ from typing import Any, Dict
 
 from dotenv import load_dotenv
 from EventHandlers import EventHandler
-from Utils import configure_logger
-
+from Utils import basic_logger
 
 load_dotenv()
-logger = configure_logger("TTS")
+logger = basic_logger("TTS")
 '''
 Author: Sean Baker
 Date: 2024-07-08 
 Description: TTS text to speach currently implemented elevenlabs still need to finish deepgram if necessary
 '''
+
 
 class AbstractTTSService(EventHandler, ABC):
     """Abstract base class for Text-to-Speech (TTS) services."""

@@ -4,14 +4,14 @@ import json
 import os
 from collections import deque
 from fastapi import WebSocket, WebSocketDisconnect
-from Utils.logger_config import get_logger
+from Utils.logger_config import configure_logger
 from services import LLMFactory
 from text_to_speach import TTSFactory
 from services import CallContext
 from speach_to_text import TranscriptionService
-from telephony import
+from telephony import get_twilio_client
 
-logger = get_logger("WebSocketEndpoint")
+logger = configure_logger("WebSocketEndpoint")
 
 
 class WebSocketManager:
@@ -78,7 +78,7 @@ class StreamHandler:
         call_context = CallContext()
 
         if os.getenv("RECORD_CALLS") == "true":
-            get_twilio_client().calls(call_sid).recordings.create({"recordingChannels": "dual"})
+            get_twilio_client.calls(call_sid).recordings.create({"recordingChannels": "dual"})
 
         if call_sid not in self.call_contexts:
             call_context.system_message = os.environ.get("SYSTEM_MESSAGE")

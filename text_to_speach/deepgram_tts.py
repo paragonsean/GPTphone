@@ -4,6 +4,7 @@ import numpy as np
 from deepgram import DeepgramClient
 from .abstract_base import AbstractTTSService, logger
 
+
 class DeepgramTTS(AbstractTTSService):
     def __init__(self):
         super().__init__()
@@ -59,7 +60,8 @@ class DeepgramTTS(AbstractTTSService):
                 trimmed_audio_bytes = trimmed_audio.tobytes()
 
                 audio_base64 = base64.b64encode(trimmed_audio_bytes).decode('utf-8')
-                await self.createEvent('speech', partial_response_index, audio_base64, partial_response, interaction_count)
+                await self.createEvent('speech', partial_response_index, audio_base64, partial_response,
+                                       interaction_count)
             else:
                 logger.error("Error in TTS generation: No audio stream returned")
 
@@ -80,7 +82,6 @@ class DeepgramTTS(AbstractTTSService):
             NotImplementedError: If voice selection is not implemented for the Deepgram TTS service.
         """
         logger.info(f"Attempting to set voice to {voice_id}")
-
 
     async def disconnect(self):
         """

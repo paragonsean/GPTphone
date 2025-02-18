@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 from .call_details import CallContext
 from EventHandlers import EventHandler
 from functions.function_manifest import tools
-from Utils import configure_logger, log_function_call
+from Utils import configure_logger
 
 
 
@@ -59,7 +59,7 @@ class AbstractLLMService(EventHandler, ABC):
     def reset(self):
         self.partial_response_index = 0
 
-    @log_function_call
+
     def validate_function_args(self, args):
         try:
             return json.loads(args)
@@ -67,7 +67,7 @@ class AbstractLLMService(EventHandler, ABC):
             logger.info('Warning: Invalid function arguments returned by LLM:', args)
             return {}
 
-    @log_function_call
+
     def split_into_sentences(self, text):
         # Split the text into sentences, keeping the separators
         sentences = re.split(r'([.!?])', text)

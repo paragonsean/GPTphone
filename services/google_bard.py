@@ -1,8 +1,8 @@
 import os
 
-from .call_context import CallContext
+from .call_details import CallContext
 from .gpt_service import AbstractLLMService,logger
-
+import google.generativeai as genai
 
 
 

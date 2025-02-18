@@ -5,12 +5,12 @@ from dotenv import load_dotenv
 import asyncio
 from services.call_details import CallContext
 
-from Utils.logger_config import get_logger, log_function_call
+from Utils.logger_config import configure_logger, log_function_call
 from services.gpt_service import AbstractLLMService, LLMFactory
 from services.google_bard import GeminiService
 from services.openai_assistant import AssistantService
 
-logger = get_logger(__name__)
+logger = configure_logger(__name__)
 
 class TestLLMServices(unittest.TestCase):
 
@@ -23,7 +23,7 @@ class TestLLMServices(unittest.TestCase):
         self.context.system_message = "You are a helpful assistant."
         self.context.initial_message = "Hello! How can I help you today?"
         os.environ["OPENAI_API_KEY"] = "your-openai-api-key"
-    @log_function_call
+    
     @patch('openai.OpenAI')
     async def test_assistant_service_completion(self, mock_openai):
         # Mock the OpenAI client and its methods
@@ -60,7 +60,7 @@ class TestLLMServices(unittest.TestCase):
         mock_client.beta.threads.messages.list.assert_called_once_with(
             thread_id=mock_thread.id, order="asc"
         )
-    @log_function_call
+    
     @patch('services.event_manager.EventHandler.createEvent')
     async def test_emit_complete_sentences(self, mock_create_event):
         # Test emit_complete_sentences
@@ -74,7 +74,7 @@ class TestLLMServices(unittest.TestCase):
         mock_create_event.assert_called()
 
 
-    @log_function_call
+    
     def test_abstract_llm_service_methods(self):
         # Create a dummy subclass to test AbstractLLMService methods
         class DummyService(AbstractLLMService):
@@ -96,5 +96,4 @@ class TestLLMServices(unittest.TestCase):
         self.assertEqual(sentences, ["Hello!", " How are you?", " I'm fine.",''])
 
 
-if __name__ == '__main__':
-    asyncio.run(unittest.main())
+

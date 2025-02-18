@@ -38,7 +38,7 @@ class BaseInputHandler(ABC):
     def log_error(self, message, error):
         """Log an error."""
         print(f"{message}: {error}")
-from abc import ABC, abstractmethod
+
 
 class BaseOutputHandler(ABC):
     def __init__(self, io_provider='default', websocket=None):
@@ -77,3 +77,4 @@ class BaseOutputHandler(ABC):
     def log_error(self, message, error):
         """Log an error."""
         print(f"{message}: {error}")
+

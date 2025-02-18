@@ -2,11 +2,6 @@ import base64
 import json
 import re
 from typing_extensions import override
-from openai.lib.streaming import AsyncAssistantEventHandler
-from openai import AsyncOpenAI
-from Utils.logger_config import log_function_call
-from tools import TOOL_MAP
-from dotenv import load_dotenv
 from tools import TOOL_MAP
 from dotenv import load_dotenv
 import os
@@ -44,7 +39,7 @@ class AssitantsEventHandler(AsyncAssistantEventHandler):
         pass
 
     @override
-    @log_function_call
+ 
     async def on_text_created(self, text):
         self.session_state["current_message"] = ""
         print("Assistant:")
@@ -59,7 +54,7 @@ class AssitantsEventHandler(AsyncAssistantEventHandler):
             print(text_value, end="", flush=True)
 
     @override
-    @log_function_call
+ 
     async def on_text_done(self, text):
         format_text = self.format_annotation(text)
         print("\n" + format_text)
@@ -120,14 +115,14 @@ class AssitantsEventHandler(AsyncAssistantEventHandler):
                 )
 
             async with self.client.beta.threads.runs.submit_tool_outputs_stream(
-                thread_id=thread.id,
+                thread_id=self.thread.id,
                 run_id=self.current_run.id,
                 tool_outputs=tool_outputs,
                 event_handler=AssitantsEventHandler(),
             ) as stream:
                 await stream.until_done()
 
-    @log_function_call
+
     def format_annotation(self, text):
         citations = []
         text_value = text.value
