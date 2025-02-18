@@ -1,4 +1,9 @@
 /DOCS/
 /.idea/
 *.cpp
+.env
+.run/
+__pycache__/
+*.yaml 
+*.cpp
 
