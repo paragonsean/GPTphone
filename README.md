@@ -4,17 +4,13 @@ Sean Baker
 
 Building GPTPhone
 
-July,30 2024
-8 minute read
+August,30 2024
 
-TL;DR
+
 
 I built GPTPhone, a full-stack Python application for interruptible and near-human quality AI phone calls by integrating Large Language Models (LLMs), speech processing, text-to-speech services, and Twilio’s phone API. This post is a companion piece to the GitHub repository and highlights how GPTPhone leverages AI function calling to dynamically handle tasks and instructions mid-call.
 
-![GPTPhone Screenshot]
-GPTPhone's web user interface
 
-Example audio recording with GPTPhone
 
 Background
 
@@ -24,7 +20,6 @@ In recent years, AI technologies for text and speech processing have made signif
 
 How it works
 
-![Simplified architecture of GPTPhone]
 
 Inspired by a Twilio Labs project, this application consists of several key components:
 
